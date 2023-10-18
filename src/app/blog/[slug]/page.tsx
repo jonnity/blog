@@ -5,7 +5,9 @@ const entriesPath = path.join(process.cwd(), "/src/entries");
 type Post = { slug: string; body: string };
 export async function generateStaticParams() {
   const entryFiles = await fs.readdir(entriesPath);
-  return entryFiles.map((filename) => filename.replace(/\.txt$/, ""));
+  return entryFiles.map((filename) => {
+    return { slug: filename.replace(/\.txt$/, "") };
+  });
 }
 
 export default async function Page({ params }: { params: Post }) {
