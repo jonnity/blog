@@ -1,22 +1,36 @@
-import path from "path";
-import * as fs from "node:fs/promises";
+type Metadata = { isPublic?: boolean };
 
+import path from "path";
+import * as fs from "node:fs";
+
+import frontMatter from "front-matter";
 import ReactMarkdown from "react-markdown";
 
 const entriesPath = path.join(process.cwd(), "/src/entries");
+function entryFilePath(filename: string) {
+  return path.join(entriesPath, filename);
+}
 
 type Post = { slug: string; body: string };
 export async function generateStaticParams() {
-  const entryFiles = await fs.readdir(entriesPath);
-  return entryFiles.map((filename) => {
-    return { slug: filename.replace(/\.md$/, "") };
-  });
+  const entryFiles = fs.readdirSync(entriesPath);
+  return entryFiles
+    .map((filename) => {
+      const contents = frontMatter<Metadata>(
+        fs.readFileSync(entryFilePath(filename), "utf-8")
+      );
+      return contents.attributes?.isPublic === false
+        ? null
+        : { slug: filename.replace(/\.md$/, "") };
+    })
+    .filter((params) => {
+      return !!params?.slug;
+    });
 }
 
 export default async function Page({ params }: { params: Post }) {
   const { slug } = params;
-  const entryFilePath = path.join(entriesPath, `${slug}.md`);
-  const contents = await fs.readFile(entryFilePath, "utf-8");
+  const contents = fs.readFileSync(entryFilePath(`${slug}.md`), "utf-8");
 
   return (
     <>
