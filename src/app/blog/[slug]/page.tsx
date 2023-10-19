@@ -1,5 +1,6 @@
-export const dynamic = "force-static";
-export const dynamicParams = false;
+const isDev = process.env.NODE_ENV === "development";
+export const dynamic = isDev ? "auto" : "force-static";
+export const dynamicParams = isDev ? true : false;
 
 type Metadata = { isPublic?: boolean };
 
