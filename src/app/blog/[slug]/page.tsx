@@ -1,3 +1,6 @@
+export const dynamic = "force-static";
+export const dynamicParams = false;
+
 type Metadata = { isPublic?: boolean };
 
 import path from "path";
