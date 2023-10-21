@@ -2,45 +2,37 @@ const isDev = process.env.NODE_ENV === "development";
 export const dynamic = isDev ? "auto" : "force-static";
 export const dynamicParams = isDev ? true : false;
 
-type Metadata = { isPublic?: boolean };
-
-import path from "path";
-import * as fs from "node:fs";
-
-import frontMatter from "front-matter";
 import ReactMarkdown from "react-markdown";
+import { Entry } from "@/domain/Entriy";
 
-const entriesPath = path.join(process.cwd(), "/src/entries");
-function entryFilePath(filename: string) {
-  return path.join(entriesPath, filename);
-}
+type PageParams = { slug: string };
 
-type Post = { slug: string; body: string };
-export async function generateStaticParams() {
-  const entryFiles = fs.readdirSync(entriesPath);
-  return entryFiles
+export function generateStaticParams(): PageParams[] {
+  const entryFiles = Entry.getEntriesFileList();
+  const staticParams = entryFiles
     .map((filename) => {
-      const contents = frontMatter<Metadata>(
-        fs.readFileSync(entryFilePath(filename), "utf-8")
-      );
-      return contents.attributes?.isPublic === false
-        ? null
-        : { slug: filename.replace(/\.md$/, "") };
+      const entry = new Entry(filename);
+      return entry.isPublic ? { slug: entry.getSlug() } : null;
     })
-    .filter((params) => {
+    .filter((params): params is PageParams => {
       return !!params?.slug;
     });
+  return staticParams;
 }
 
-export default async function Page({ params }: { params: Post }) {
+export default async function Page({ params }: { params: PageParams }) {
   const { slug } = params;
-  const contents = fs.readFileSync(entryFilePath(`${slug}.md`), "utf-8");
+  const entry = new Entry(`${slug}.md`);
 
   return (
     <>
-      <h1>{slug}</h1>
-      <ReactMarkdown>{contents}</ReactMarkdown>
+      <h1>{entry.metadata.title}</h1>
+      <p>created at {entry.metadata.createdAt.toDateString()}</p>
+      {entry.metadata.updatedAt ? (
+        <p>(updated at {entry.metadata.updatedAt.toDateString()})</p>
+      ) : null}
+      <p>tags: {entry.metadata.tags.join(", ")}</p>
+      <ReactMarkdown>{entry.body}</ReactMarkdown>
     </>
   );
-  // ...
 }
