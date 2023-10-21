@@ -18,30 +18,42 @@ const pastDateString = z.string().transform((dateStr, ctx) => {
 });
 
 const metadata = z.object({
-  isPublic: z.boolean().default(false),
-  tags: z.string().array().default([]),
+  title: z.string(),
   createdAt: pastDateString,
-  updatedAt: pastDateString.nullable(),
+  tags: z.string().array().optional().default([]),
+  updatedAt: pastDateString.optional(),
 });
 type Metadata = z.infer<typeof metadata>;
-
+const metadataWithCatch = metadata.catch({
+  title: "default title",
+  createdAt: new Date(0),
+  tags: [],
+});
 export class Entry {
+  public readonly isPublic: boolean;
   public readonly metadata: Metadata;
   public readonly body: string;
 
   private static entriesDir = path.join(process.cwd(), "/src/entries");
-  private static fileExtensionRegExp = /.*\.md$/;
+  private static mdFilenameWithSlug = /.+\.md$/;
+  private static mdFileExtension = /\.md$/;
   static getEntriesFileList() {
     const entryFiles = fs.readdirSync(Entry.entriesDir);
     return entryFiles.filter((filename) =>
-      filename.match(Entry.fileExtensionRegExp)
+      filename.match(Entry.mdFilenameWithSlug)
     );
   }
 
-  constructor(filename: string) {
+  constructor(public readonly filename: string) {
     const filePath = path.join(Entry.entriesDir, filename);
-    const parsedData = frontMatter(fs.readFileSync(filePath, "utf-8"));
-    this.metadata = metadata.parse(parsedData.attributes);
+    const parsedData = frontMatter<any>(fs.readFileSync(filePath, "utf-8"));
+    this.isPublic = !!parsedData.attributes?.isPublic;
+    this.metadata = this.isPublic
+      ? metadata.parse(parsedData.attributes)
+      : metadataWithCatch.parse(parsedData.attributes);
     this.body = parsedData.body;
+  }
+  getSlug() {
+    return this.filename.replace(Entry.mdFileExtension, "");
   }
 }
