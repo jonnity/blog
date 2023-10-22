@@ -44,7 +44,7 @@ export class Entry {
     );
   }
 
-  constructor(public readonly filename: string) {
+  constructor(private readonly filename: string) {
     const filePath = path.join(Entry.entriesDir, filename);
     const parsedData = frontMatter<any>(fs.readFileSync(filePath, "utf-8"));
     this.isPublic = !!parsedData.attributes?.isPublic;
