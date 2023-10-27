@@ -1,6 +1,6 @@
-const isDev = process.env.NODE_ENV === "development";
-export const dynamic = isDev ? "auto" : "force-static";
-export const dynamicParams = isDev ? true : false;
+// const isDev = process.env.NODE_ENV === "development";
+// export const dynamic = isDev ? "auto" : "force-static";
+// export const dynamicParams = isDev ? true : false;
 
 import ReactMarkdown from "react-markdown";
 import { Entry } from "@/domain/Entriy";
