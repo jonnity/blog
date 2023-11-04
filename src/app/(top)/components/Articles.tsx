@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { Entry } from "@/domain/Entriy";
+import { Entry } from "@/domain/Entry";
 
 export function Articles() {
   const entries = Entry.getDiplayedEntriesList();

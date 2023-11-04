@@ -1,5 +1,5 @@
 import ReactMarkdown from "react-markdown";
-import { Entry } from "@/domain/Entriy";
+import { Entry } from "@/domain/Entry";
 
 type PageParams = { slug: string };
 
