@@ -32,7 +32,7 @@ export default function RootLayout({
             <div className="flex w-full flex-col items-center  sm:w-9/12">
               {children}
             </div>
-            <aside className="w-full rounded border border-zinc-800 bg-white sm:w-2/12">
+            <aside className="my-4 w-full place-self-start rounded border border-zinc-800 bg-white sm:w-2/12">
               <p className="p-1">Prifile: todo</p>
             </aside>
           </main>
