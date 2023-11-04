@@ -2,6 +2,7 @@ import "./globals.css";
 
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,9 +21,11 @@ export default function RootLayout({
       <body className={`${inter.className}`}>
         <header className="max-h-32 w-full bg-slate-200 px-12 py-3">
           <p>todo: title banner</p>
-          <a href="/" className="block w-fit">
-            <h1 className="py-3 text-4xl">jonnity&apos;s site</h1>
-          </a>
+          <h1 className="py-3 text-4xl">
+            <Link href="/" className="block w-fit">
+              jonnity&apos;s site
+            </Link>
+          </h1>
         </header>
         <div className="flex w-full justify-center">
           <main className="m-3 flex w-full max-w-7xl flex-col items-center justify-between px-4 py-2 sm:flex-row sm:px-12 sm:py-4 md:px-24">
