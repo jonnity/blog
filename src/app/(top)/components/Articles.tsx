@@ -1,8 +1,8 @@
 import Link from "next/link";
 
 import { Entry } from "@/domain/Entry";
-import { TagListSpan } from "./Tags";
-import { DateInfo } from "./DateInfo";
+import { TagListSpan } from "@/components/Tags";
+import { DateInfo } from "@/components/DateInfo";
 
 export function Articles() {
   const entries = Entry.getDiplayedEntriesList();
