@@ -4,21 +4,16 @@ import { Entry } from "@/domain/Entriy";
 type PageParams = { slug: string };
 
 export function generateStaticParams(): PageParams[] {
-  const entryFiles = Entry.getEntriesFileList();
-  const staticParams = entryFiles
-    .map((filename) => {
-      const entry = new Entry(filename);
-      return entry.isPublic ? { slug: entry.getSlug() } : null;
-    })
-    .filter((params): params is PageParams => {
-      return !!params?.slug;
-    });
+  const entries = Entry.getDiplayedEntriesList();
+  const staticParams = entries.map((entry) => {
+    return { slug: entry.slug };
+  });
   return staticParams;
 }
 
 export default async function Page({ params }: { params: PageParams }) {
   const { slug } = params;
-  const entry = new Entry(`${slug}.md`);
+  const entry = Entry.getEntryWithSlug(slug);
 
   return (
     <>
