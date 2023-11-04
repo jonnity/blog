@@ -1,4 +1,5 @@
 import "./globals.css";
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
@@ -16,13 +17,24 @@ export default function RootLayout({
 }) {
   return (
     <html lang="jp">
-      <body className={inter.className}>
-        <main className="flex w-full flex-col items-center justify-between  px-4 py-12">
-          <header className="w-full">
-            <h1 className="text-4xl">jonnity&apos;s site</h1>
-          </header>
-          {children}
-        </main>
+      <body className={`${inter.className}`}>
+        <header className="max-h-32 w-full bg-slate-200 px-12 py-3">
+          <p>todo: title banner</p>
+          <a href="/" className="block w-fit">
+            <h1 className="py-3 text-4xl">jonnity&apos;s site</h1>
+          </a>
+        </header>
+        <div className="flex w-full justify-center">
+          <main className="m-3 flex w-full max-w-7xl flex-col items-center justify-between px-4 py-2 sm:flex-row sm:px-12 sm:py-4 md:px-24">
+            <div className="flex w-full flex-col items-center  sm:w-9/12">
+              {children}
+            </div>
+            <aside className="w-full rounded border border-zinc-800 bg-white sm:w-2/12">
+              <p className="p-1">Prifile: todo</p>
+            </aside>
+          </main>
+        </div>
+        <footer className="w-full"></footer>
       </body>
     </html>
   );
