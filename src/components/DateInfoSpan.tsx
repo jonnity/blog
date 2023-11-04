@@ -3,7 +3,7 @@ type Prop = {
   updatedAt?: Date;
 };
 
-export const DateInfo: React.FC<Prop> = (prop) => {
+export const DateInfoSpan: React.FC<Prop> = (prop) => {
   const { createdAt, updatedAt } = prop;
   if (!updatedAt) {
     return <span>{createdAt.toLocaleDateString()}</span>;
