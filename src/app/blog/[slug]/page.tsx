@@ -1,5 +1,8 @@
 import ReactMarkdown from "react-markdown";
+
 import { Entry } from "@/domain/Entry";
+import { TagListSpan } from "@/components/TagListSpan";
+import { DateInfoSpan } from "@/components/DateInfoSpan";
 
 type PageParams = { slug: string };
 
@@ -17,13 +20,22 @@ export default async function Page({ params }: { params: PageParams }) {
 
   return (
     <>
-      <h1>{entry.metadata.title}</h1>
-      <p>created at {entry.metadata.createdAt.toDateString()}</p>
-      {entry.metadata.updatedAt ? (
-        <p>(updated at {entry.metadata.updatedAt.toDateString()})</p>
-      ) : null}
-      <p>tags: {entry.metadata.tags.join(", ")}</p>
-      <ReactMarkdown>{entry.body}</ReactMarkdown>
+      <article className="w-full rounded border border-zinc-800 p-2">
+        <div>
+          <h1 className="text-3xl font-bold">{entry.metadata.title}</h1>
+          <p>
+            <TagListSpan tags={entry.metadata.tags} />
+          </p>
+          <p>
+            <DateInfoSpan
+              createdAt={entry.metadata.createdAt}
+              updatedAt={entry.metadata.updatedAt}
+            />
+          </p>
+        </div>
+        <hr className="my-4" />
+        <ReactMarkdown>{entry.body}</ReactMarkdown>
+      </article>
     </>
   );
 }
