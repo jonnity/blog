@@ -17,9 +17,10 @@ export class EnvCollector {
     }
   }
   private constructor() {
-    this.SHOW_DRAFT_ARTICLE = showDraftArticleParser.parse(
-      process.env.SHOW_DRAFT_ARTICLE,
-    );
+    this.SHOW_DRAFT_ARTICLE =
+      process.env.NODE_ENV === "production"
+        ? false
+        : showDraftArticleParser.parse(process.env.SHOW_DRAFT_ARTICLE);
   }
 
   public readonly SHOW_DRAFT_ARTICLE: boolean;
