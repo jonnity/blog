@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { Entry } from "@/domain/Entry";
 import { TagListSpan } from "@/components/TagListSpan";
-import { DateInfo } from "@/components/DateInfoSpan";
+import { DateInfoSpan } from "@/components/DateInfoSpan";
 
 export function Articles() {
   const entries = Entry.getDiplayedEntriesList();
@@ -19,7 +19,7 @@ export function Articles() {
             <TagListSpan tags={entry.metadata.tags} />
           </p>
           <p className="text-sm">
-            <DateInfo
+            <DateInfoSpan
               createdAt={entry.metadata.createdAt}
               updatedAt={entry.metadata.updatedAt}
             />
