@@ -1,24 +1,31 @@
 import Link from "next/link";
 
 import { Entry } from "@/domain/Entry";
+import { TagListSpan } from "./Tags";
+import { DateInfo } from "./DateInfo";
 
 export function Articles() {
   const entries = Entry.getDiplayedEntriesList();
 
-  return entries.map((entry) => (
-    <Link href={`./blog/${entry.slug}`}>
-      <article
-        className="relative border border-solid border-slate-600 p-1"
-        key={entry.slug}
-      >
-        <p className="text-xl">{entry.metadata.title}</p>
-        <p>created at {entry.metadata.createdAt.toLocaleDateString()}</p>
-        <p>
-          {entry.metadata.tags.length > 0
-            ? `tags: ${entry.metadata.tags.join(", ")}`
-            : "no tags"}
-        </p>
-      </article>
-    </Link>
-  ));
+  return entries.map((entry) => {
+    return (
+      <Link href={`./blog/${entry.slug}`}>
+        <article
+          className="m-2 border border-solid border-slate-600 p-1"
+          key={entry.slug}
+        >
+          <p className="text-xl font-bold">{entry.metadata.title}</p>
+          <p>
+            <TagListSpan tags={entry.metadata.tags} />
+          </p>
+          <p className="text-sm">
+            <DateInfo
+              createdAt={entry.metadata.createdAt}
+              updatedAt={entry.metadata.updatedAt}
+            />
+          </p>
+        </article>
+      </Link>
+    );
+  });
 }
