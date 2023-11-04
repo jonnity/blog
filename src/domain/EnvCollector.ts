@@ -1,6 +1,9 @@
 import { z } from "zod";
 
-const showDraftArticleParser = z.boolean().default(false);
+const showDraftArticleParser = z
+  .string()
+  .transform((envStr) => envStr === "true")
+  .default("false");
 
 export class EnvCollector {
   public static instance: EnvCollector | null;
