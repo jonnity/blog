@@ -23,7 +23,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy --project-name=blog
+          command: pages deploy ./out/ --project-name=blog
       - name: slack notification of success
         if: ${{ success() }}
         uses: rtCamp/action-slack-notify@v2
