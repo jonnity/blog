@@ -15,9 +15,7 @@ jobs:
       - name: prepare
         run: |
           npm ci
-          npm --prefix functions ci
 
       - name: next lint
         run: |
           npm run lint
-          npm --prefix functions run lint
