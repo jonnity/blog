@@ -1,8 +1,8 @@
-name: deploy the contents of master branch
+name: deploy the contents of main branch
 on:
   push:
     branches:
-      - master
+      - main
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
