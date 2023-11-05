@@ -1,0 +1,43 @@
+name: deploy the contents of master branch
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: npm
+      - name: prepare
+        run: |
+          npm ci
+          npm --prefix functions ci
+      - name: build
+        run: |
+          npm run build
+      - name: Deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy --project-name=blog
+      - name: slack notification of success
+        if: ${{ success() }}
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_TITLE: Success to ${{ github.ref_name }} deploy
+          SLACK_COLOR: good
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_MESSAGE: Success to ${{ github.ref_name }} deploy
+      - name: slack notification of fail
+        if: ${{ failure() }}
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_TITLE: Fail to ${{ github.ref_name }} deploy
+          SLACK_COLOR: danger
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_MESSAGE: Fail to ${{ github.ref_name }} deploy
