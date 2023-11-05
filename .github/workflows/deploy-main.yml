@@ -15,7 +15,6 @@ jobs:
       - name: prepare
         run: |
           npm ci
-          npm --prefix functions ci
       - name: build
         run: |
           npm run build
