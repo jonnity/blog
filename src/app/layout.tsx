@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import Link from "next/link";
 import Image, { StaticImageData } from "next/image";
 
+import logo_keybourd from "@/assets/logo_keybourd.svg";
 import github_logo_black from "@/assets/github-logo-black.svg";
 import x_logo_black from "@/assets/x-logo-black.svg";
 import threads_logo_black from "@/assets/threads-logo-black.svg";
@@ -24,13 +25,18 @@ export default function RootLayout({
   return (
     <html lang="jp">
       <body className={`${inter.className}`}>
-        <header className="max-h-32 w-full bg-slate-200 px-12 py-3">
-          <p>todo: title banner</p>
-          <h1 className="py-3 text-4xl">
-            <Link href="/" className="block w-fit">
-              jonnity&apos;s site
-            </Link>
-          </h1>
+        <header className="flex h-16 w-full justify-between bg-gray-50 px-12 py-3 sm:h-20 sm:px-24">
+          <Link href="/" className="relative block h-full w-fit">
+            <Image
+              src={logo_keybourd}
+              alt="アズマオオズアリの頭部とキーボードを模したアイコンとjonnityという文字"
+              width={0}
+              height={0}
+              className="h-full w-auto"
+            />
+          </Link>
+          {/* カテゴリ表示をする前提でスタイリングするために、不可視要素を追加 */}
+          <p className="invisible self-end">category: hoge</p>
         </header>
         <div className="flex w-full justify-center">
           <main className="m-3 flex w-full max-w-7xl flex-col items-center justify-between px-4 py-2 sm:flex-row sm:px-12 sm:py-4 md:px-24">
