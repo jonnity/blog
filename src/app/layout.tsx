@@ -24,53 +24,52 @@ export default function RootLayout({
 }) {
   return (
     <html lang="jp">
-      <body className={`${inter.className}`}>
-        <header className="flex h-16 w-full justify-between bg-gray-50 px-12 py-3 sm:h-20 sm:px-24">
-          <Link href="/" className="relative block h-full w-fit">
-            <Image
-              src={logo_keybourd}
-              alt="アズマオオズアリの頭部とキーボードを模したアイコンとjonnityという文字"
-              width={0}
-              height={0}
-              className="h-full w-auto"
-            />
-          </Link>
-          {/* カテゴリ表示をする前提でスタイリングするために、不可視要素を追加 */}
-          <p className="invisible self-end">category: hoge</p>
+      <body className={`${inter.className} bg-orange-50`}>
+        <header className="flex h-16 w-full justify-center bg-gray-50 lg:h-20">
+          <div className="mx-4 flex h-full w-full justify-between lg:mx-0 lg:w-11/12 xl:w-3/4">
+            <Link href="/" className="relative block h-full w-fit">
+              <Image
+                src={logo_keybourd}
+                alt="アズマオオズアリの頭部とキーボードを模したアイコンとjonnityという文字"
+                width={0}
+                height={0}
+                className="h-full w-auto"
+              />
+            </Link>
+            {/* カテゴリ表示をする前提でスタイリングするために、不可視要素を追加 */}
+            <p className="invisible self-end">category: hoge</p>
+          </div>
         </header>
-        <div className="flex w-full justify-center">
-          <main className="m-3 flex w-full max-w-7xl flex-col items-center justify-between px-4 py-2 sm:flex-row sm:px-12 sm:py-4 md:px-24">
-            <div className="flex w-full flex-col items-center  sm:w-2/3">
-              {children}
-            </div>
-            <aside className="m-0 w-full place-self-start rounded border border-zinc-800 bg-white p-2 sm:m-4 sm:w-1/3">
-              <div className="flex items-center gap-2">
-                <h2 className="text-lg">About jonnity: </h2>
-                <SNSLogoWithLink
-                  logo={github_logo_black}
-                  alt="github logo linked to the user page of @jonnity"
-                  url="https://github.com/jonnity"
-                />
-                <SNSLogoWithLink
-                  logo={x_logo_black}
-                  alt="X (SNS) logo linked to the user page of @jonnied_man"
-                  url="https://twitter.com/jonnied_man"
-                />
-                <SNSLogoWithLink
-                  logo={threads_logo_black}
-                  alt="threads logo linked to the user page of @jonnied_man"
-                  url="https://www.threads.net/@jonnied_man"
-                />
-              </div>
-              <hr className="my-1" />
-              <p>
-                個人開発やアリ飼育などをして生きています。ゆゆ式が好きです。
-              </p>
-              <p>
-                このサイトは、エンジニア的なアウトプットを中心とした雑多な文章を自由に書ける場所として作りました。
-              </p>
-            </aside>
+        <div className="m-4 flex flex-col justify-center lg:mx-0 lg:flex-row">
+          {/* <main className="flex w-1/2 flex-col items-center justify-between px-8 py-2 sm:flex-row sm:px-12 sm:py-4 md:px-24"> */}
+          <main className="mb-4 flex w-full rounded border border-gray-300 bg-gray-50 p-4 shadow-xl lg:w-3/5 xl:w-1/2">
+            {children}
           </main>
+          <aside className="m-0 w-full place-self-start rounded border border-gray-300 bg-gray-50 p-2 shadow-xl lg:mx-4 lg:w-1/4 xl:w-1/5">
+            <div className="flex items-center gap-2">
+              <h2 className="pr-1 text-lg">About jonnity</h2>
+              <SNSLogoWithLink
+                logo={github_logo_black}
+                alt="github logo linked to the user page of @jonnity"
+                url="https://github.com/jonnity"
+              />
+              <SNSLogoWithLink
+                logo={x_logo_black}
+                alt="X (SNS) logo linked to the user page of @jonnied_man"
+                url="https://twitter.com/jonnied_man"
+              />
+              <SNSLogoWithLink
+                logo={threads_logo_black}
+                alt="threads logo linked to the user page of @jonnied_man"
+                url="https://www.threads.net/@jonnied_man"
+              />
+            </div>
+            <hr className="my-1" />
+            <p>個人開発やアリ飼育などをして生きています。ゆゆ式が好きです。</p>
+            <p>
+              このサイトは、エンジニア的なアウトプットを中心とした雑多な文章を自由に書ける場所として作りました。
+            </p>
+          </aside>
         </div>
         <footer className="w-full"></footer>
       </body>
