@@ -5,7 +5,7 @@ import frontMatter from "front-matter";
 import { z } from "zod";
 import { EnvCollector } from "./EnvCollector";
 
-const pastDateString = z.string().transform((dateStr, ctx) => {
+const pastDateStringSchema = z.string().transform((dateStr, ctx) => {
   const inputtedDate = new Date(dateStr);
   inputtedDate.setHours(0, 0, 0, 0);
   if (inputtedDate > new Date()) {
@@ -18,18 +18,28 @@ const pastDateString = z.string().transform((dateStr, ctx) => {
   return inputtedDate;
 });
 
+const titleSchema = z.string().min(1);
+const tagsSchema = z.string().array().optional().default([]);
 const metadata = z.object({
-  title: z.string(),
-  createdAt: pastDateString,
-  tags: z.string().array().optional().default([]),
-  updatedAt: pastDateString.optional(),
+  title: titleSchema,
+  createdAt: pastDateStringSchema,
+  tags: tagsSchema,
+  updatedAt: pastDateStringSchema.optional(),
 });
 type Metadata = z.infer<typeof metadata>;
-const metadataWithCatch = metadata.catch({
+
+const defaultParam = {
   title: "default title",
   createdAt: new Date(0),
   tags: [],
-});
+};
+const metadataWithCatch = z
+  .object({
+    title: titleSchema.catch(defaultParam.title),
+    createdAt: pastDateStringSchema.catch(defaultParam.createdAt),
+    tags: tagsSchema.catch(defaultParam.tags),
+  })
+  .catch(defaultParam);
 export class Entry {
   public readonly isPublic: boolean;
   public readonly metadata: Metadata;
