@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="jp">
       <body className={`${inter.className} bg-orange-50`}>
-        <header className="flex h-16 w-full justify-center bg-gray-50 lg:h-20">
+        <header className="flex h-16 w-full justify-center bg-orange-200 lg:h-20">
           <div className="mx-4 flex h-full w-full justify-between lg:mx-0 lg:w-11/12 xl:w-3/4">
             <Link href="/" className="relative block h-full w-fit">
               <Image
