@@ -1,4 +1,5 @@
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 import { Entry } from "@/domain/Entry";
 import { TagListSpan } from "@/components/TagListSpan";
@@ -34,7 +35,12 @@ export default async function Page({ params }: { params: PageParams }) {
           </p>
         </div>
         <hr className="my-4" />
-        <ReactMarkdown>{entry.body}</ReactMarkdown>
+        <ReactMarkdown
+          remarkPlugins={[remarkGfm]}
+          className={"entry-written-in-md"}
+        >
+          {entry.body}
+        </ReactMarkdown>
       </article>
     </>
   );
