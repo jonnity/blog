@@ -38,6 +38,7 @@ export default async function Page({ params }: { params: PageParams }) {
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           className={"entry-written-in-md"}
+          urlTransform={(url) => `/entry/${entry.slug}/${url}`}
         >
           {entry.body}
         </ReactMarkdown>
