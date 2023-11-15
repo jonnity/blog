@@ -21,7 +21,7 @@ export default async function Page({ params }: { params: PageParams }) {
 
   return (
     <>
-      <article className="w-full rounded border border-zinc-800 p-2">
+      <article>
         <div>
           <h1 className="text-3xl font-bold">{entry.metadata.title}</h1>
           <p>
@@ -34,7 +34,7 @@ export default async function Page({ params }: { params: PageParams }) {
             />
           </p>
         </div>
-        <hr className="my-4" />
+        <hr className="my-4 w-full border-gray-400" />
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           className={"entry-written-in-md"}
