@@ -4,13 +4,33 @@ import type { Components } from "react-markdown";
 const srcSchema = z.string();
 const altSchema = z.string();
 export const MarkdownComponents: Components = {
-  img: (props) => {
-    const src = srcSchema.parse(props.src);
-    const alt = altSchema.parse(props.alt);
+  em(props) {
+    const { node, ...rest } = props;
+    return <i style={{ color: "red" }} {...rest} />;
+  },
+  p: ({ node, ...rest }) => {
+    const defaultParagraph = <p>{rest.children}</p>;
+    const firstChild = node?.children[0];
+    const secondChild = node?.children[1];
+    const firstChildIsImage =
+      firstChild?.type === "element" && firstChild.tagName === "img";
+    const secondChildIsText = secondChild?.type === "text";
+    if (
+      typeof node?.children?.length !== "number" ||
+      node.children.length !== 2 ||
+      !firstChildIsImage ||
+      !secondChildIsText
+    ) {
+      return defaultParagraph;
+    }
+
+    const src = srcSchema.parse(firstChild.properties.src);
+    const alt = altSchema.parse(firstChild.properties.alt);
     return (
-      <span className="flex w-full justify-center">
+      <p className="flex flex-col items-center">
         <img src={src} alt={alt} />
-      </span>
+        <span>{secondChild.value}</span>
+      </p>
     );
   },
 };
