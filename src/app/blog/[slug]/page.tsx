@@ -4,7 +4,7 @@ import remarkGfm from "remark-gfm";
 import { Entry } from "@/domain/Entry";
 import { TagListSpan } from "@/components/TagListSpan";
 import { DateInfoSpan } from "@/components/DateInfoSpan";
-import { ImageViewer } from "./ImageViewer";
+import { MarkdownComponents } from "./MarkdownComponents";
 
 type PageParams = { slug: string };
 
@@ -42,9 +42,7 @@ export default async function Page({ params }: { params: PageParams }) {
           urlTransform={(url) =>
             /^https?:/.test(url) ? url : `/entry/${entry.slug}/${url}`
           }
-          components={{
-            img: (props) => <ImageViewer src={props.src} alt={props.alt} />,
-          }}
+          components={MarkdownComponents}
         >
           {entry.body}
         </ReactMarkdown>
