@@ -84,3 +84,5 @@ export class Entry {
     this.body = parsedData.body;
   }
 }
+
+export type EntryProp = { entry: Entry };
