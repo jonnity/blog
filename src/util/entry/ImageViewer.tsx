@@ -9,11 +9,11 @@ export const ImageViewer: React.FC<Prop> = (prop) => {
   const openModal = useCallback(() => {
     document.body.classList.add(hiddenScrollbarClassName);
     setShowModal(true);
-  }, [showModal]);
+  }, [setShowModal]);
   const closeModal = useCallback(() => {
     setShowModal(false);
     document.body.classList.remove(hiddenScrollbarClassName);
-  }, [showModal]);
+  }, [setShowModal]);
 
   useEffect(() => {
     const escapeKeyListener = (event: KeyboardEvent) => {
@@ -25,7 +25,7 @@ export const ImageViewer: React.FC<Prop> = (prop) => {
     return () => {
       document.removeEventListener("keydown", escapeKeyListener);
     };
-  }, []);
+  }, [closeModal]);
 
   const ImageModal = () => {
     return showModal ? (
