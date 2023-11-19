@@ -3,7 +3,7 @@ import * as fs from "node:fs";
 
 import frontMatter from "front-matter";
 import { z } from "zod";
-import { EnvCollector } from "./EnvCollector";
+import { EnvCollector } from "../EnvCollector";
 
 const pastDateStringSchema = z.string().transform((dateStr, ctx) => {
   const inputtedDate = new Date(dateStr);
@@ -84,3 +84,5 @@ export class Entry {
     this.body = parsedData.body;
   }
 }
+
+export type EntryProp = { entry: Entry };
