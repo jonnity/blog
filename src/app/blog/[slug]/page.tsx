@@ -1,10 +1,10 @@
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
-import { Entry } from "@/domain/Entry";
-import { TagListSpan } from "@/components/TagListSpan";
-import { DateInfoSpan } from "@/components/DateInfoSpan";
-import { MarkdownComponents } from "./MarkdownComponents";
+import { Entry } from "@/util/entry/Entry";
+import { TagListSpan } from "@/util/entry/TagListSpan";
+import { DateInfoSpan } from "@/util/entry/DateInfoSpan";
+import { MarkdownComponents } from "../../../util/entry/MarkdownComponents";
 
 type PageParams = { slug: string };
 
