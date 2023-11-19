@@ -33,4 +33,20 @@ export const MarkdownComponents: Components = {
       </p>
     );
   },
+  a(prop) {
+    if (prop.node?.children[0].type !== "text") {
+      throw new Error(
+        `markdownにテキストの指定のないリンクがある: ${prop.href}`,
+      );
+    }
+
+    const target = /^https?:/.test(prop.href || "") ? "_blant" : "_self";
+    const textChild = prop.node?.children[0];
+
+    return (
+      <a href={prop.href} target={target}>
+        {textChild.value}
+      </a>
+    );
+  },
 };

@@ -39,9 +39,12 @@ export default async function Page({ params }: { params: PageParams }) {
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           className={"entry-written-in-md"}
-          urlTransform={(url) =>
-            /^https?:/.test(url) ? url : `/entry/${entry.slug}/${url}`
-          }
+          urlTransform={(url, _key, { tagName }) => {
+            if (tagName === "img") {
+              return /^https?:/.test(url) ? url : `/entry/${entry.slug}/${url}`;
+            }
+            return url;
+          }}
           components={MarkdownComponents}
         >
           {entry.body}
