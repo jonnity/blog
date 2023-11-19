@@ -1,3 +1,106 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Additional vertical padding used by kbd tag. */
+.py-05 {
+  padding-top: 0.125rem;
+  padding-bottom: 0.125rem;
+}
+
+.entry-written-in-md {
+  @apply break-words leading-normal text-gray-900;
+}
+
+.entry-written-in-md > * + * {
+  @apply mb-4 mt-0;
+}
+
+.entry-written-in-md li + li {
+  @apply mt-1;
+}
+
+.entry-written-in-md li > p + p {
+  @apply mt-6;
+}
+
+.entry-written-in-md strong {
+  @apply font-semibold;
+}
+
+.entry-written-in-md a {
+  @apply font-semibold text-blue-600;
+}
+
+.entry-written-in-md strong a {
+  @apply font-bold;
+}
+
+.entry-written-in-md h1 {
+  @apply mb-4 mt-6 border-b pb-2 text-4xl font-semibold leading-tight;
+}
+
+.entry-written-in-md h2 {
+  @apply mb-4 mt-6 border-b pb-2 text-2xl font-semibold leading-tight;
+}
+
+.entry-written-in-md h3 {
+  @apply mb-4 mt-6 text-lg font-semibold leading-snug;
+}
+
+.entry-written-in-md h4 {
+  @apply mb-4 mt-6 text-base font-semibold leading-none;
+}
+
+.entry-written-in-md h5 {
+  @apply mb-4 mt-6 text-sm font-semibold leading-tight;
+}
+
+.entry-written-in-md h6 {
+  @apply mb-4 mt-6 text-sm font-semibold leading-tight text-gray-600;
+}
+
+.entry-written-in-md blockquote {
+  @apply border-l-4 border-gray-300 pl-4 pr-4 text-base text-gray-600;
+}
+
+.entry-written-in-md code {
+  @apply py-05 inline rounded bg-gray-200 px-1 font-mono text-sm;
+}
+
+.entry-written-in-md pre {
+  @apply rounded bg-gray-100 p-4;
+}
+
+.entry-written-in-md pre code {
+  @apply block overflow-visible rounded-none bg-transparent p-0;
+}
+
+.entry-written-in-md ul {
+  @apply list-disc pl-8 text-base;
+}
+
+.entry-written-in-md ol {
+  @apply list-decimal pl-8 text-base;
+}
+
+.entry-written-in-md kbd {
+  @apply py-05 inline-block rounded border px-1 align-middle font-mono text-xs font-normal shadow;
+}
+
+.entry-written-in-md table {
+  @apply border-gray-600 text-base;
+}
+
+.entry-written-in-md th {
+  @apply border px-3 py-1;
+}
+
+.entry-written-in-md td {
+  @apply border px-3 py-1;
+}
+
+/* Override pygments style background color. */
+.entry-written-in-md .highlight pre {
+  @apply bg-gray-100 !important;
+}
