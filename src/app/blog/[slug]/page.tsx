@@ -1,8 +1,10 @@
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 import { Entry } from "@/domain/Entry";
 import { TagListSpan } from "@/components/TagListSpan";
 import { DateInfoSpan } from "@/components/DateInfoSpan";
+import { MarkdownComponents } from "./MarkdownComponents";
 
 type PageParams = { slug: string };
 
@@ -20,7 +22,7 @@ export default async function Page({ params }: { params: PageParams }) {
 
   return (
     <>
-      <article className="w-full rounded border border-zinc-800 p-2">
+      <article>
         <div>
           <h1 className="text-3xl font-bold">{entry.metadata.title}</h1>
           <p>
@@ -33,8 +35,17 @@ export default async function Page({ params }: { params: PageParams }) {
             />
           </p>
         </div>
-        <hr className="my-4" />
-        <ReactMarkdown>{entry.body}</ReactMarkdown>
+        <hr className="my-4 w-full border-gray-400" />
+        <ReactMarkdown
+          remarkPlugins={[remarkGfm]}
+          className={"entry-written-in-md"}
+          urlTransform={(url) =>
+            /^https?:/.test(url) ? url : `/entry/${entry.slug}/${url}`
+          }
+          components={MarkdownComponents}
+        >
+          {entry.body}
+        </ReactMarkdown>
       </article>
     </>
   );
