@@ -1,5 +1,6 @@
 import { z } from "zod";
 import type { Components } from "react-markdown";
+import { ImageViewer } from "./ImageViewer";
 
 const srcSchema = z.string();
 const altSchema = z.string();
@@ -26,11 +27,22 @@ export const MarkdownComponents: Components = {
 
     const src = srcSchema.parse(firstChild.properties.src);
     const alt = altSchema.parse(firstChild.properties.alt);
+    return <ImageViewer src={src} alt={alt} caption={secondChild.value} />;
+  },
+  a(prop) {
+    if (prop.node?.children[0].type !== "text") {
+      throw new Error(
+        `markdownにテキストの指定のないリンクがある: ${prop.href}`,
+      );
+    }
+
+    const target = /^https?:/.test(prop.href || "") ? "_blant" : "_self";
+    const textChild = prop.node?.children[0];
+
     return (
-      <p className="flex flex-col items-center">
-        <img src={src} alt={alt} />
-        <span>{secondChild.value}</span>
-      </p>
+      <a href={prop.href} target={target}>
+        {textChild.value}
+      </a>
     );
   },
 };

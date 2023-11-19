@@ -1,10 +1,6 @@
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-
-import { Entry } from "@/domain/Entry";
-import { TagListSpan } from "@/components/TagListSpan";
-import { DateInfoSpan } from "@/components/DateInfoSpan";
-import { MarkdownComponents } from "./MarkdownComponents";
+import { Entry } from "@/util/entry/Entry";
+import { BlogHeader } from "./BlogHeader";
+import { BlogBody } from "./BlogBody";
 
 type PageParams = { slug: string };
 
@@ -23,29 +19,9 @@ export default async function Page({ params }: { params: PageParams }) {
   return (
     <>
       <article>
-        <div>
-          <h1 className="text-3xl font-bold">{entry.metadata.title}</h1>
-          <p>
-            <TagListSpan tags={entry.metadata.tags} />
-          </p>
-          <p>
-            <DateInfoSpan
-              createdAt={entry.metadata.createdAt}
-              updatedAt={entry.metadata.updatedAt}
-            />
-          </p>
-        </div>
+        <BlogHeader entry={entry} />
         <hr className="my-4 w-full border-gray-400" />
-        <ReactMarkdown
-          remarkPlugins={[remarkGfm]}
-          className={"entry-written-in-md"}
-          urlTransform={(url) =>
-            /^https?:/.test(url) ? url : `/entry/${entry.slug}/${url}`
-          }
-          components={MarkdownComponents}
-        >
-          {entry.body}
-        </ReactMarkdown>
+        <BlogBody entry={entry} />
       </article>
     </>
   );
