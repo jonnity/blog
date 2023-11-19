@@ -46,9 +46,9 @@ export const ImageViewer: React.FC<Prop> = (prop) => {
   };
   return (
     <>
-      <p className="flex flex-col items-center">
+      <p className="flex h-fit flex-col items-center">
         <img
-          className="hover:cursor-zoom-in"
+          className="max-h-96 max-w-full object-contain hover:cursor-zoom-in"
           src={prop.src}
           alt={prop.alt}
           onClick={openModal}
