@@ -1,3 +1,5 @@
+import type { Metadata, ResolvingMetadata } from "next";
+
 import { Entry } from "@/util/entry/Entry";
 import { BlogHeader } from "./BlogHeader";
 import { BlogBody } from "./BlogBody";
@@ -25,4 +27,20 @@ export default async function Page({ params }: { params: PageParams }) {
       </article>
     </>
   );
+}
+
+type MetadataProps = {
+  params: PageParams;
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+export async function generateMetadata({
+  params,
+}: MetadataProps): Promise<Metadata> {
+  const entry = Entry.getEntryWithSlug(params.slug);
+  const metadata = entry.metadata;
+
+  return {
+    title: metadata.title,
+    description: metadata.tags.join(", "),
+  };
 }
