@@ -11,9 +11,45 @@ import threads_logo_black from "@/assets/threads-logo-black.svg";
 
 const inter = Inter({ subsets: ["latin"] });
 
+const title = "jonnity blog";
+const description =
+  "個人開発の進捗報告や、アリ飼育の様子などを書くブログサイトです";
+const url = new URL("https://jonnity.com");
+const logoImagePath = "/logo_keybourd.svg";
 export const metadata: Metadata = {
-  title: "jonnity's site",
-  description: "Implementing...",
+  title: `${title} | top`,
+  description,
+
+  generator: "Next.js",
+  referrer: "origin-when-cross-origin",
+  keywords: ["個人開発", "エンジニア", "アリ飼育"],
+  creator: "jonnity",
+  publisher: "jonnity",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+
+  metadataBase: url,
+  openGraph: {
+    title,
+    description,
+    url: url.toString(),
+    siteName: title,
+    locale: "ja_JP",
+    type: "profile",
+    images: [{ url: logoImagePath }],
+  },
+  icons: { icon: { url: logoImagePath } },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+    creator: "jonnity",
+    creatorId: "@jonnied_man",
+    images: [logoImagePath],
+  },
 };
 
 export default function RootLayout({
