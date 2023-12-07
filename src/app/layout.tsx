@@ -5,7 +5,6 @@ import { Inter } from "next/font/google";
 import Link from "next/link";
 import Image, { StaticImageData } from "next/image";
 
-import logo_keybourd from "@/assets/logo_keybourd.svg";
 import github_logo_black from "@/assets/github-logo-black.svg";
 import x_logo_black from "@/assets/x-logo-black.svg";
 import threads_logo_black from "@/assets/threads-logo-black.svg";
@@ -29,7 +28,7 @@ export default function RootLayout({
           <div className="mx-4 flex h-full w-full justify-between lg:mx-0 lg:w-11/12 xl:w-3/4">
             <Link href="/" className="relative block h-full w-fit">
               <Image
-                src={logo_keybourd}
+                src={logoImagePath}
                 alt="アズマオオズアリの頭部とキーボードを模したアイコンとjonnityという文字"
                 width={0}
                 height={0}
