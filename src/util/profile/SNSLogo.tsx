@@ -37,7 +37,7 @@ export const SNSLogo: React.FC<Prop> = ({ serviceName, height }) => {
   const { logo, alt, url } = snsInfo[serviceName];
   const fixedHeight = height || 20;
   return (
-    <Link href={url} target="_blank">
+    <Link href={url.toString()} target="_blank">
       <Image
         src={logo}
         alt={alt}
