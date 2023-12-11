@@ -2,8 +2,6 @@ import "./globals.css";
 
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import Link from "next/link";
-import Image from "next/image";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -56,21 +54,6 @@ export default function RootLayout({
   return (
     <html lang="jp">
       <body className={`${inter.className} bg-orange-50`}>
-        <header className="mb-4 flex h-16 w-full justify-center bg-orange-200 lg:h-20">
-          <div className="mx-4 flex h-full w-full justify-between lg:mx-0 lg:w-11/12 xl:w-3/4">
-            <Link href="/" className="relative block h-full w-fit">
-              <Image
-                src={logoImagePath}
-                alt="アズマオオズアリの頭部とキーボードを模したアイコンとjonnityという文字"
-                width={0}
-                height={0}
-                className="h-full w-auto"
-              />
-            </Link>
-            {/* カテゴリ表示をする前提でスタイリングするために、不可視要素を追加 */}
-            <p className="invisible self-end">category: hoge</p>
-          </div>
-        </header>
         <main>{children}</main>
         <footer className="mt-4 w-full"></footer>
       </body>
