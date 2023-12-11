@@ -53,10 +53,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="jp">
-      <body className={`${inter.className} bg-orange-50`}>
-        <main>{children}</main>
-        <footer className="mt-4 w-full"></footer>
-      </body>
+      <body className={`${inter.className} bg-orange-50`}>{children}</body>
     </html>
   );
 }
