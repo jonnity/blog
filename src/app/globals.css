@@ -105,6 +105,10 @@
   @apply bg-gray-100 !important;
 }
 
+.contents-base {
+  @apply rounded bg-white bg-opacity-90;
+}
+
 @layer utilities {
   .hidden-scrollbar {
     overflow: hidden;
