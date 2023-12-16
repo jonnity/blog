@@ -1,4 +1,4 @@
-import type { Metadata, ResolvingMetadata } from "next";
+import type { Metadata } from "next";
 
 import { Entry } from "@/util/entry/Entry";
 import { BlogHeader } from "./BlogHeader";
@@ -36,8 +36,7 @@ type MetadataProps = {
 export async function generateMetadata({
   params,
 }: MetadataProps): Promise<Metadata> {
-  const entry = Entry.getEntryWithSlug(params.slug);
-  const metadata = entry.metadata;
+  const { metadata } = Entry.getEntryWithSlug(params.slug);
 
   return {
     title: metadata.title,
