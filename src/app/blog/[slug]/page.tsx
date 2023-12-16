@@ -1,4 +1,8 @@
+import type { Metadata } from "next";
+
 import { Entry } from "@/util/entry/Entry";
+import { defaultDescription } from "@/util/metadata";
+
 import { BlogHeader } from "./BlogHeader";
 import { BlogBody } from "./BlogBody";
 
@@ -25,4 +29,23 @@ export default async function Page({ params }: { params: PageParams }) {
       </article>
     </>
   );
+}
+
+type MetadataProps = {
+  params: PageParams;
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+export async function generateMetadata({
+  params,
+}: MetadataProps): Promise<Metadata> {
+  const { metadata } = Entry.getEntryWithSlug(params.slug);
+  const title = metadata.title;
+  const description = metadata.description || defaultDescription;
+
+  return {
+    title,
+    description,
+    openGraph: { title, description },
+    twitter: { title, description },
+  };
 }

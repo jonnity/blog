@@ -10,7 +10,7 @@ export function Articles() {
   return entries.map((entry) => {
     return (
       <Link key={entry.slug} href={`./blog/${entry.slug}`}>
-        <article className="m-2 border border-solid border-slate-600 p-1">
+        <article className="border border-solid border-slate-600 p-1">
           <p className="text-xl font-bold">{entry.metadata.title}</p>
           <p>
             <TagListSpan tags={entry.metadata.tags} />
