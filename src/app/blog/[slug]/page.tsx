@@ -39,9 +39,13 @@ export async function generateMetadata({
   params,
 }: MetadataProps): Promise<Metadata> {
   const { metadata } = Entry.getEntryWithSlug(params.slug);
+  const title = metadata.title;
+  const description = metadata.description || defaultDescription;
 
   return {
-    title: metadata.title,
-    description: metadata.description || defaultDescription,
+    title,
+    description,
+    openGraph: { title, description },
+    twitter: { title, description },
   };
 }
