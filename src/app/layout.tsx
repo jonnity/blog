@@ -3,20 +3,15 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
+import { defaultDescription, defaultTitle, titleParam } from "@/util/metadata";
+
 const inter = Inter({ subsets: ["latin"] });
 
-const defaultTitle = "jonnity blog";
-const titleParam = {
-  default: defaultTitle,
-  template: `%s | ${defaultTitle}`,
-};
-const description =
-  "個人開発の進捗報告や、アリ飼育の様子などを書くブログサイトです";
 const url = new URL("https://jonnity.com");
 const logoImagePath = "/logo_keybourd.svg";
 export const metadata: Metadata = {
   title: titleParam,
-  description,
+  description: defaultDescription,
 
   generator: "Next.js",
   referrer: "origin-when-cross-origin",
@@ -32,7 +27,7 @@ export const metadata: Metadata = {
   metadataBase: url,
   openGraph: {
     title: titleParam,
-    description,
+    description: defaultDescription,
     url: url.toString(),
     siteName: defaultTitle,
     locale: "ja_JP",
@@ -43,7 +38,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: titleParam,
-    description,
+    description: defaultDescription,
     creator: "jonnity",
     creatorId: "@jonnied_man",
     images: [logoImagePath],
