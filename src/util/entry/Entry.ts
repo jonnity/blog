@@ -4,6 +4,7 @@ import * as fs from "node:fs";
 import frontMatter from "front-matter";
 import { z } from "zod";
 import { EnvCollector } from "../EnvCollector";
+import { defaultDescription } from "../metadata";
 
 const pastDateStringSchema = z.string().transform((dateStr, ctx) => {
   const inputtedDate = new Date(dateStr);
@@ -34,12 +35,14 @@ const defaultParam = {
   title: "default title",
   createdAt: new Date(0),
   tags: [],
+  description: defaultDescription,
 };
 const metadataWithCatch = z
   .object({
     title: titleSchema.catch(defaultParam.title),
     createdAt: pastDateStringSchema.catch(defaultParam.createdAt),
     tags: tagsSchema.catch(defaultParam.tags),
+    description: descriptionSchema,
   })
   .catch(defaultParam);
 export class Entry {
