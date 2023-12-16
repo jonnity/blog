@@ -27,11 +27,11 @@ export default function BlogPageLayout({
         </div>
       </header>
       <div className="m-4 flex flex-col justify-center lg:mx-0 lg:flex-row">
-        <main className="mb-4 flex w-full rounded border border-gray-300 bg-gray-50 p-4 shadow-xl lg:w-3/5 xl:w-1/2">
+        <main className="contents-base mb-4 flex w-full p-4  lg:w-3/5 xl:w-1/2">
           <section className="w-full">{children}</section>
         </main>
 
-        <aside className="m-0 w-full place-self-start rounded border border-gray-300 bg-gray-50 p-2 shadow-xl lg:mx-4 lg:w-1/4 xl:w-1/5">
+        <aside className="contents-base m-0 w-full place-self-start p-2 lg:mx-4 lg:w-1/4 xl:w-1/5">
           <div className="flex items-center gap-2">
             <h2 className="pr-1 text-lg">About jonnity</h2>
             <SNSLogo serviceName="github" />
