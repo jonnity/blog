@@ -53,7 +53,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="jp">
-      <body className={`${inter.className} bg-orange-50`}>{children}</body>
+      <body className={`${inter.className} bg-ant-nest bg-cover`}>
+        {children}
+      </body>
     </html>
   );
 }
