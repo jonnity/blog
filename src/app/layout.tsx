@@ -53,7 +53,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="jp">
-      <body className={`${inter.className} bg-ant-nest bg-cover`}>
+      <body className={`${inter.className} bg-ant-nest bg-cover bg-fixed`}>
         {children}
       </body>
     </html>
