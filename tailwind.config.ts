@@ -5,9 +5,8 @@ const config: Config = {
   theme: {
     extend: {
       backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        "ant-nest_landscpe": "url('/bg-ant-nest_landscape.webp')",
+        "ant-nest_portrait": "url('/bg-ant-nest_portrait.webp')",
       },
     },
   },

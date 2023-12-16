@@ -12,8 +12,8 @@
   @apply break-words leading-normal text-gray-900;
 }
 
-.entry-written-in-md > * + * {
-  @apply mb-4 mt-0;
+.entry-written-in-md > * {
+  @apply mb-2 mt-0 indent-4;
 }
 
 .entry-written-in-md li + li {
@@ -103,6 +103,10 @@
 /* Override pygments style background color. */
 .entry-written-in-md .highlight pre {
   @apply bg-gray-100 !important;
+}
+
+.contents-base {
+  @apply rounded bg-white bg-opacity-90;
 }
 
 @layer utilities {
