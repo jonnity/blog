@@ -6,7 +6,7 @@ import { SNSLogo } from "@/util/profile/SNSLogo";
 export default function Home() {
   return (
     <div className="flex w-full justify-center">
-      <main className="my-2 flex w-11/12 flex-col gap-4 rounded border border-gray-300 bg-gray-50 p-4 shadow-xl lg:m-8 lg:w-3/5 xl:w-1/2">
+      <main className="my-2 flex w-11/12 flex-col gap-4 rounded bg-white bg-opacity-80 p-4 shadow-xl backdrop-blur-lg lg:m-8 lg:w-3/5 xl:w-1/2">
         <section>
           <h2 className="flex items-center gap-4 text-2xl">
             <span>About</span>
