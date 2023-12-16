@@ -20,10 +20,12 @@ const pastDateStringSchema = z.string().transform((dateStr, ctx) => {
 
 const titleSchema = z.string().min(1);
 const tagsSchema = z.string().array().optional().default([]);
+const descriptionSchema = z.string();
 const metadata = z.object({
   title: titleSchema,
   createdAt: pastDateStringSchema,
   tags: tagsSchema,
+  description: descriptionSchema.optional(),
   updatedAt: pastDateStringSchema.optional(),
 });
 type Metadata = z.infer<typeof metadata>;

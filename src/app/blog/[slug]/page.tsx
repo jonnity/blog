@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 
 import { Entry } from "@/util/entry/Entry";
+import { defaultDescription } from "@/util/metadata";
+
 import { BlogHeader } from "./BlogHeader";
 import { BlogBody } from "./BlogBody";
 
@@ -40,6 +42,6 @@ export async function generateMetadata({
 
   return {
     title: metadata.title,
-    description: metadata.tags.join(", "),
+    description: metadata.description || defaultDescription,
   };
 }
