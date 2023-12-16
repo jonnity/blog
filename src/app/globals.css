@@ -12,8 +12,12 @@
   @apply break-words leading-normal text-gray-900;
 }
 
-.entry-written-in-md > * {
+.entry-written-in-md > p {
   @apply mb-2 mt-0 indent-4;
+}
+
+.entry-written-in-md > * + * {
+  @apply mb-2 mt-0;
 }
 
 .entry-written-in-md li + li {
