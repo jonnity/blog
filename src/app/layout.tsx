@@ -5,18 +5,22 @@ import { Inter } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
 
-const title = "jonnity blog";
+const defaultTitle = "jonnity blog";
+const titleParam = {
+  default: defaultTitle,
+  template: `%s | ${defaultTitle}`,
+};
 const description =
   "個人開発の進捗報告や、アリ飼育の様子などを書くブログサイトです";
 const url = new URL("https://jonnity.com");
 const logoImagePath = "/logo_keybourd.svg";
 export const metadata: Metadata = {
-  title: `${title} | top`,
+  title: titleParam,
   description,
 
   generator: "Next.js",
   referrer: "origin-when-cross-origin",
-  keywords: ["個人開発", "エンジニア", "アリ飼育"],
+  keywords: ["個人開発", "エンジニア", "アリ飼育", "ブログ", "ポートフォリオ"],
   creator: "jonnity",
   publisher: "jonnity",
   formatDetection: {
@@ -27,10 +31,10 @@ export const metadata: Metadata = {
 
   metadataBase: url,
   openGraph: {
-    title,
+    title: titleParam,
     description,
     url: url.toString(),
-    siteName: title,
+    siteName: defaultTitle,
     locale: "ja_JP",
     type: "profile",
     images: [{ url: logoImagePath }],
@@ -38,7 +42,7 @@ export const metadata: Metadata = {
   icons: { icon: { url: logoImagePath } },
   twitter: {
     card: "summary_large_image",
-    title,
+    title: titleParam,
     description,
     creator: "jonnity",
     creatorId: "@jonnied_man",
