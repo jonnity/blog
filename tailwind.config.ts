@@ -5,7 +5,8 @@ const config: Config = {
   theme: {
     extend: {
       backgroundImage: {
-        "ant-nest": "url('/bg-ant-nest.webp')",
+        "ant-nest_landscpe": "url('/bg-ant-nest_landscape.webp')",
+        "ant-nest_portrait": "url('/bg-ant-nest_portrait.webp')",
       },
     },
   },
