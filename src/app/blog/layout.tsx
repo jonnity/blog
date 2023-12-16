@@ -11,7 +11,7 @@ export default function BlogPageLayout({
 }) {
   return (
     <>
-      <header className="mb-4 flex h-16 w-full justify-center bg-orange-200 lg:h-20">
+      <header className="mb-4 flex h-16 w-full justify-center bg-orange-200 bg-opacity-80 lg:h-20">
         <div className="mx-4 flex h-full w-full justify-between lg:mx-0 lg:w-11/12 xl:w-3/4">
           <Link href="/" className="relative block h-full w-fit">
             <Image
@@ -38,11 +38,13 @@ export default function BlogPageLayout({
             <SNSLogo serviceName="x" />
             <SNSLogo serviceName="threads" />
           </div>
-          <hr className="my-1" />
-          <p>個人開発やアリ飼育などをして生きています。ゆゆ式が好きです。</p>
-          <p>
-            このサイトは、エンジニア的なアウトプットを中心とした雑多な文章を自由に書ける場所として作りました。
-          </p>
+          <hr className="my-1 h-px border-0 bg-gray-500" />
+          <div className="p-2">
+            <p>個人開発やアリ飼育などをして生きています。ゆゆ式が好きです。</p>
+            <p>
+              このサイトは、エンジニア的なアウトプットを中心とした雑多な文章を自由に書ける場所として作りました。
+            </p>
+          </div>
         </aside>
       </div>
     </>
