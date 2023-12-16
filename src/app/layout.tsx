@@ -53,7 +53,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="jp">
-      <body className={`${inter.className} bg-ant-nest bg-cover bg-fixed`}>
+      <body
+        className={`${inter.className} landscape:bg-ant-nest_landscpe portrait:bg-ant-nest_portrait bg-cover bg-fixed bg-repeat-y`}
+      >
         {children}
       </body>
     </html>
