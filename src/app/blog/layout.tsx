@@ -25,7 +25,7 @@ export default function BlogPageLayout({
           <p className="invisible self-end">category: hoge</p>
         </div>
       </header>
-      <main>{children}</main>
+      {children}
     </>
   );
 }
