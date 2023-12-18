@@ -23,10 +23,10 @@ export default async function Page({ params }: { params: PageParams }) {
   return (
     <>
       <div className="m-4 flex flex-col justify-center gap-4 lg:mx-0 lg:flex-row">
-        <article className="contents-base w-full p-4 lg:w-3/5 xl:w-1/2">
+        <article className="w-full lg:w-3/5 xl:w-1/2">
           <BlogEntry entry={entry} />
         </article>
-        <aside className="contents-base w-full place-self-start p-2 lg:w-1/4 xl:w-1/5">
+        <aside className="w-full place-self-start lg:w-1/4 xl:w-1/5">
           <SideBarInfo entry={entry} />
         </aside>
       </div>
