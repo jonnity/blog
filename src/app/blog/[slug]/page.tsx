@@ -4,8 +4,7 @@ import { Entry } from "@/util/entry/Entry";
 import { defaultDescription } from "@/util/metadata";
 import { SNSLogo } from "@/util/profile/SNSLogo";
 
-import { BlogHeader } from "./BlogHeader";
-import { BlogBody } from "./BlogBody";
+import { BlogEntry } from "./components/BlogEntry";
 
 type PageParams = { slug: string };
 
@@ -24,15 +23,9 @@ export default async function Page({ params }: { params: PageParams }) {
   return (
     <>
       <div className="m-4 flex flex-col justify-center lg:mx-0 lg:flex-row">
-        <main className="contents-base mb-4 flex w-full p-4  lg:w-3/5 xl:w-1/2">
-          <section className="w-full">
-            <article>
-              <BlogHeader entry={entry} />
-              <hr className="my-4 w-full border-gray-400" />
-              <BlogBody entry={entry} />
-            </article>
-          </section>
-        </main>
+        <article className="contents-base mb-4 w-full p-4 lg:w-3/5 xl:w-1/2">
+          <BlogEntry entry={entry} />
+        </article>
         <aside className="contents-base m-0 w-full place-self-start p-2 lg:mx-4 lg:w-1/4 xl:w-1/5">
           <div className="flex items-center gap-2">
             <h2 className="pr-1 text-lg">About jonnity</h2>
@@ -40,7 +33,7 @@ export default async function Page({ params }: { params: PageParams }) {
             <SNSLogo serviceName="x" />
             <SNSLogo serviceName="threads" />
           </div>
-          <hr className="my-1 h-px border-0 bg-gray-500" />
+          <hr className="my-1 h-px border-0 bg-gray-400" />
           <div className="p-2">
             <p>個人開発やアリ飼育などをして生きています。ゆゆ式が好きです。</p>
             <p>
