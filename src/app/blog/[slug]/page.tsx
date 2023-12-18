@@ -26,7 +26,7 @@ export default async function Page({ params }: { params: PageParams }) {
         <article className="w-full lg:w-3/5 xl:w-1/2">
           <BlogEntry entry={entry} />
         </article>
-        <aside className="w-full place-self-start lg:w-1/4 xl:w-1/5">
+        <aside className="w-full lg:w-1/4 xl:w-1/5">
           <SideBarInfo entry={entry} />
         </aside>
       </div>

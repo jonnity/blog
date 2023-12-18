@@ -4,20 +4,23 @@ import { EntryProp } from "@/util/entry/Entry";
 export const SideBarInfo: React.FC<EntryProp> = ({ entry }) => {
   return (
     <>
-      <Profile />
+      <div className="flex flex-col gap-2">
+        <Profile />
+        <EntryTOC entry={entry} />
+      </div>
     </>
   );
 };
 
-const Profile: React.FC = () => (
+const Profile = () => (
   <div className="contents-base p-2">
     <div className="flex items-center gap-2">
-      <h2 className="pr-1 text-lg">About jonnity</h2>
+      <h2 className="text-lg">About jonnity</h2>
       <SNSLogo serviceName="github" />
       <SNSLogo serviceName="x" />
       <SNSLogo serviceName="threads" />
     </div>
-    <hr className="my-1 h-px border-0 bg-gray-400" />
+    <SideBarDivider />
     <div className="p-2">
       <p>個人開発やアリ飼育などをして生きています。ゆゆ式が好きです。</p>
       <p>
@@ -26,3 +29,19 @@ const Profile: React.FC = () => (
     </div>
   </div>
 );
+
+const EntryTOC: React.FC<EntryProp> = ({ entry }) => {
+  return (
+    <>
+      <div className="contents-base hidden p-2 lg:block">
+        <h2 className="pr-1 text-lg">目次</h2>
+        <SideBarDivider />
+        <div>ここに目次を挿入する</div>
+      </div>
+    </>
+  );
+};
+
+const SideBarDivider = () => {
+  return <hr className="my-1 w-full border-gray-400" />;
+};
