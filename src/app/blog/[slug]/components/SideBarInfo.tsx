@@ -10,7 +10,7 @@ export const SideBarInfo: React.FC<EntryProp> = ({ entry }) => {
 };
 
 const Profile: React.FC = () => (
-  <>
+  <div className="contents-base p-2">
     <div className="flex items-center gap-2">
       <h2 className="pr-1 text-lg">About jonnity</h2>
       <SNSLogo serviceName="github" />
@@ -24,5 +24,5 @@ const Profile: React.FC = () => (
         このサイトは、エンジニア的なアウトプットを中心とした雑多な文章を自由に書ける場所として作りました。
       </p>
     </div>
-  </>
+  </div>
 );
