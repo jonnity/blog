@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
@@ -9,7 +10,11 @@ export const MarkdownToc: React.FC<EntryProp> = ({ entry }) => {
       remarkPlugins={[remarkGfm]}
       allowedElements={["h2"]}
       components={{
-        h2: (node, ..._rest) => <p>{node?.children}</p>,
+        h2: (node, ..._rest) => (
+          <p>
+            <Link href={`#${node?.children}`}>{node?.children}</Link>
+          </p>
+        ),
       }}
     >
       {entry.body}
