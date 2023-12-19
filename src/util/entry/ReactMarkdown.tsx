@@ -23,7 +23,7 @@ export const ReactMarkdown: React.FC<EntryProp> = ({ entry }) => {
           const { node, ...rest } = props;
           return <i style={{ color: "red" }} {...rest} />;
         },
-        p: ({ node, ...rest }) => {
+        p({ node, ...rest }) {
           const defaultParagraph = <p>{rest.children}</p>;
           const firstChild = node?.children[0];
           const secondChild = node?.children[1];
