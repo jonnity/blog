@@ -1,5 +1,6 @@
 import { SNSLogo } from "@/util/profile/SNSLogo";
 import { EntryProp } from "@/util/entry/Entry";
+import { MarkdownToc } from "@/util/entry/MarkdownToc";
 
 export const SideBarInfo: React.FC<EntryProp> = ({ entry }) => {
   return (
@@ -36,7 +37,9 @@ const EntryTOC: React.FC<EntryProp> = ({ entry }) => {
       <div className="contents-base hidden p-2 lg:block">
         <h2 className="pr-1 text-lg">目次</h2>
         <SideBarDivider />
-        <div>ここに目次を挿入する</div>
+        <div>
+          <MarkdownToc entry={entry} />
+        </div>
       </div>
     </>
   );
