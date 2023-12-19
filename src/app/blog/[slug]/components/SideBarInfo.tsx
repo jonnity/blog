@@ -37,7 +37,7 @@ const EntryTOC: React.FC<EntryProp> = ({ entry }) => {
       <div className="contents-base hidden p-2 lg:block">
         <h2 className="pr-1 text-lg">目次</h2>
         <SideBarDivider />
-        <div>
+        <div className="p-2">
           <MarkdownToc entry={entry} />
         </div>
       </div>
