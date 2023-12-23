@@ -79,11 +79,11 @@ export class EntryManager {
   private constructor() {
     const entryFiles = fs
       .readdirSync(entriesDir)
-      .filter((filename) => filename.match(/.+\.md$/));
+      .filter((filename) => filename.match(this.mdExtentionReg));
     console.info(`entryFiles: ${entryFiles}`);
 
     entryFiles.forEach((filename) => {
-      const slug = filename.split(".md")[0];
+      const slug = filename.split(this.mdExtentionReg)[0];
       const fileContents = fs.readFileSync(
         path.join(entriesDir, filename),
         "utf-8",
@@ -91,6 +91,7 @@ export class EntryManager {
       this.entryRecord[slug] = new Entry(slug, fileContents);
     });
   }
+  private mdExtentionReg = /.+\.md$/;
 }
 
 export type EntryProp = { entry: Entry };
