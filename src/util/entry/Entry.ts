@@ -3,8 +3,6 @@ import * as fs from "node:fs";
 
 import frontMatter from "front-matter";
 import { z } from "zod";
-import { EnvCollector } from "@/util/EnvCollector";
-import { defaultDescription } from "@/util//metaTagInfo";
 
 const pastDateStringSchema = z.string().transform((dateStr, ctx) => {
   const inputtedDate = new Date(dateStr);
@@ -21,72 +19,70 @@ const pastDateStringSchema = z.string().transform((dateStr, ctx) => {
 
 const titleSchema = z.string().min(1);
 const tagsSchema = z.string().array().optional().default([]);
-const descriptionSchema = z.string();
-const metadata = z.object({
+const descriptionSchema = z.string().optional();
+const createdAtSchema = pastDateStringSchema;
+const updatedAtSchema = pastDateStringSchema.optional();
+const metadataSchema = z.object({
   title: titleSchema,
-  createdAt: pastDateStringSchema,
   tags: tagsSchema,
-  description: descriptionSchema.optional(),
-  updatedAt: pastDateStringSchema.optional(),
+  description: descriptionSchema,
+  createdAt: createdAtSchema,
+  updatedAt: updatedAtSchema,
 });
-type Metadata = z.infer<typeof metadata>;
+type Metadata = z.infer<typeof metadataSchema>;
 
-const defaultParam = {
-  title: "default title",
-  createdAt: new Date(0),
-  tags: [],
-  description: defaultDescription,
-};
-const metadataWithCatch = z
-  .object({
-    title: titleSchema.catch(defaultParam.title),
-    createdAt: pastDateStringSchema.catch(defaultParam.createdAt),
-    tags: tagsSchema.catch(defaultParam.tags),
-    description: descriptionSchema,
-  })
-  .catch(defaultParam);
-export class Entry {
-  public readonly isPublic: boolean;
+const entriesDir = path.join(process.cwd(), "/src/entries");
+
+class Entry {
   public readonly metadata: Metadata;
   public readonly body: string;
-  public readonly slug: string;
-
-  private static entriesDir = path.join(process.cwd(), "/src/entries");
-  private static mdFilenameWithSlug = /.+\.md$/;
-
-  static getDiplayedEntriesList() {
-    const env = EnvCollector.getEnv();
-    const entryFiles = fs
-      .readdirSync(Entry.entriesDir)
-      .filter((filename) => filename.match(Entry.mdFilenameWithSlug));
-    const displayedEntries = entryFiles
-      .map((filename) => {
-        const entry = new Entry(filename);
-        if (env.SHOW_DRAFT_ARTICLE) {
-          return entry;
-        } else {
-          return entry.isPublic ? entry : null;
-        }
-      })
-      .filter(function (entry): entry is Entry {
-        return !!entry;
-      });
-    return displayedEntries;
-  }
-  public static getEntryWithSlug(slug: string) {
-    const filename = `${slug}.md`;
-    return new Entry(filename);
-  }
-
-  private constructor(filename: string) {
-    const filePath = path.join(Entry.entriesDir, filename);
-    const parsedData = frontMatter<any>(fs.readFileSync(filePath, "utf-8"));
-    this.isPublic = !!parsedData.attributes?.isPublic;
-    this.slug = filename.split(".md")[0];
-    this.metadata = this.isPublic
-      ? metadata.parse(parsedData.attributes)
-      : metadataWithCatch.parse(parsedData.attributes);
+  public constructor(
+    public readonly slug: string,
+    mdContents: string,
+  ) {
+    const parsedData = frontMatter<any>(mdContents);
+    this.metadata = metadataSchema.parse(parsedData.attributes);
     this.body = parsedData.body;
+  }
+}
+export class EntryManager {
+  public static instance: EntryManager | null = null;
+  public static getInstance() {
+    if (EntryManager.instance) {
+      return EntryManager.instance;
+    } else {
+      const instance = new EntryManager();
+      EntryManager.instance = instance;
+      return instance;
+    }
+  }
+
+  getEntryMetadataList(sort: "asc" | "desc" = "desc"): Entry[] {
+    return this.entryList.sort((a, b) => {
+      if (sort === "asc") {
+        return a.metadata.createdAt > b.metadata.createdAt ? 1 : -1;
+      } else if (sort === "desc") {
+        return a.metadata.createdAt > b.metadata.createdAt ? -1 : 1;
+      }
+      return 0;
+    });
+  }
+
+  private entryList: Entry[] = [];
+  private constructor() {
+    const entryFiles = fs
+      .readdirSync(entriesDir)
+      .filter((filename) => filename.match(/.+\.md$/));
+    console.info(`entryFiles: ${entryFiles}`);
+
+    this.entryList = entryFiles.map((filename) => {
+      const slug = filename.split(".md")[0];
+      const fileContents = fs.readFileSync(
+        path.join(entriesDir, filename),
+        "utf-8",
+      );
+      return new Entry(slug, fileContents);
+    });
   }
 }
 
