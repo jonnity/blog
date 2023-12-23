@@ -68,6 +68,12 @@ export class EntryManager {
       return 0;
     });
   }
+  getEntry(slug: string) {
+    if (!this.entryRecord[slug]) {
+      throw new Error("invalid slug is specified");
+    }
+    return this.entryRecord[slug];
+  }
 
   private entryRecord: { [slug: string]: Entry } = {};
   private constructor() {
@@ -82,7 +88,7 @@ export class EntryManager {
         path.join(entriesDir, filename),
         "utf-8",
       );
-      this.entryRecord.slug = new Entry(slug, fileContents);
+      this.entryRecord[slug] = new Entry(slug, fileContents);
     });
   }
 }
