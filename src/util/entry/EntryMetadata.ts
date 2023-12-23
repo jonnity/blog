@@ -1,4 +1,3 @@
-import frontMatter from "front-matter";
 import { z } from "zod";
 
 const pastDateStringSchema = z.string().transform((dateStr, ctx) => {
@@ -28,9 +27,8 @@ export class EntryMetadata {
   public readonly updatedAt: z.infer<typeof updatedAtSchema>;
   constructor(
     public readonly slug: string,
-    mdString: string,
+    attributes: any,
   ) {
-    const { attributes } = frontMatter<any>(mdString);
     this.title = titleSchema.parse(attributes.title);
     this.createdAt = createdAtSchema.parse(attributes.createdAt);
     this.tags = tagsSchema.parse(attributes.tags);
