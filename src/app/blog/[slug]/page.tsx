@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { Entry } from "@/util/entry/Entry";
-import { defaultDescription } from "@/util/metadata";
+import { defaultDescription } from "@/util/metaTagInfo";
 
 import { BlogEntry } from "./components/BlogEntry";
 import { SideBarInfo } from "./components/SideBarInfo";
