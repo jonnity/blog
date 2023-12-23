@@ -13,7 +13,7 @@ export const MarkdownToc: React.FC<EntryProp> = ({ entry }) => {
         h2: (node, ..._rest) => {
           if (typeof node?.children === "string")
             return (
-              <p>
+              <p className="pl-4 -indent-4 before:content-['・']">
                 <Link href={`#${node.children}`}>{node.children}</Link>
               </p>
             );
