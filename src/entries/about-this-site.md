@@ -1,5 +1,4 @@
 ---
-isPublic: false
 createdAt: 
 title: このサイトについて
 description: このブログ・ポートフォリオサイト、および作成者であるjonnityについてのエントリです。技術スタック等の情報と、自己紹介、このサイトの目的等をまとめています。

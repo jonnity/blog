@@ -21,7 +21,6 @@ const createdAtSchema = pastDateStringSchema;
 const updatedAtSchema = pastDateStringSchema.optional();
 
 export class EntryMetadata {
-  public readonly isPublic: boolean;
   public readonly title: z.infer<typeof titleSchema>;
   public readonly createdAt: z.infer<typeof createdAtSchema>;
   public readonly tags: z.infer<typeof tagsSchema>;
@@ -32,7 +31,6 @@ export class EntryMetadata {
     mdString: string,
   ) {
     const { attributes } = frontMatter<any>(mdString);
-    this.isPublic = !!attributes?.isPublic;
     this.title = titleSchema.parse(attributes.title);
     this.createdAt = createdAtSchema.parse(attributes.createdAt);
     this.tags = tagsSchema.parse(attributes.tags);
