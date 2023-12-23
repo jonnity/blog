@@ -57,7 +57,7 @@ export class EntryManager {
     }
   }
 
-  getEntryMetadataList(sort: "asc" | "desc" = "desc"): Entry[] {
+  getEntryList(sort: "asc" | "desc" = "desc"): Entry[] {
     return this.entryList.sort((a, b) => {
       if (sort === "asc") {
         return a.metadata.createdAt > b.metadata.createdAt ? 1 : -1;
