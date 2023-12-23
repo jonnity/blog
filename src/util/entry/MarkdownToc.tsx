@@ -10,14 +10,14 @@ export const MarkdownToc: React.FC<EntryProp> = ({ entry }) => {
       remarkPlugins={[remarkGfm]}
       allowedElements={["h2"]}
       components={{
-        h2: (node, ..._rest) =>
-          !node?.children ? (
-            <></>
-          ) : (
-            <p>
-              <Link href={`#${node.children}`}>{node.children}</Link>
-            </p>
-          ),
+        h2: (node, ..._rest) => {
+          if (typeof node?.children === "string")
+            return (
+              <p>
+                <Link href={`#${node.children}`}>{node.children}</Link>
+              </p>
+            );
+        },
       }}
     >
       {entry.body}
