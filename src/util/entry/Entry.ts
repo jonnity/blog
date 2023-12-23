@@ -58,7 +58,8 @@ export class EntryManager {
   }
 
   getEntryList(sort: "asc" | "desc" = "desc"): Entry[] {
-    return this.entryList.sort((a, b) => {
+    const entryList = Object.values(this.entryRecord);
+    return entryList.sort((a, b) => {
       if (sort === "asc") {
         return a.metadata.createdAt > b.metadata.createdAt ? 1 : -1;
       } else if (sort === "desc") {
@@ -68,20 +69,20 @@ export class EntryManager {
     });
   }
 
-  private entryList: Entry[] = [];
+  private entryRecord: { [slug: string]: Entry } = {};
   private constructor() {
     const entryFiles = fs
       .readdirSync(entriesDir)
       .filter((filename) => filename.match(/.+\.md$/));
     console.info(`entryFiles: ${entryFiles}`);
 
-    this.entryList = entryFiles.map((filename) => {
+    entryFiles.forEach((filename) => {
       const slug = filename.split(".md")[0];
       const fileContents = fs.readFileSync(
         path.join(entriesDir, filename),
         "utf-8",
       );
-      return new Entry(slug, fileContents);
+      this.entryRecord.slug = new Entry(slug, fileContents);
     });
   }
 }
