@@ -1,5 +1,3 @@
-import { EntryMetadata } from "./entry/EntryMetadata";
-
 export const defaultTitle = "jonnity blog";
 export const titleParam = {
   default: defaultTitle,
