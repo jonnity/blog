@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import { Entry } from "@/util/entry/Entry";
 import { defaultDescription } from "@/util/metadata";
 
-import { BlogHeader } from "./BlogHeader";
-import { BlogBody } from "./BlogBody";
+import { BlogEntry } from "./components/BlogEntry";
+import { SideBarInfo } from "./components/SideBarInfo";
 
 type PageParams = { slug: string };
 
@@ -22,11 +22,14 @@ export default async function Page({ params }: { params: PageParams }) {
 
   return (
     <>
-      <article>
-        <BlogHeader entry={entry} />
-        <hr className="my-4 w-full border-gray-400" />
-        <BlogBody entry={entry} />
-      </article>
+      <div className="m-4 flex flex-col justify-center gap-4 lg:mx-0 lg:flex-row">
+        <article className="w-full lg:w-3/5 xl:w-1/2">
+          <BlogEntry entry={entry} />
+        </article>
+        <aside className="w-full lg:w-1/4 xl:w-1/5">
+          <SideBarInfo entry={entry} />
+        </aside>
+      </div>
     </>
   );
 }
