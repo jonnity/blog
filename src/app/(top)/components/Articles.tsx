@@ -1,11 +1,12 @@
 import Link from "next/link";
 
-import { Entry } from "@/util/entry/Entry";
+import { EntryManager } from "@/util/entry/Entry";
 import { TagListSpan } from "@/util/entry/components/TagListSpan";
 import { DateInfoSpan } from "@/util/entry/components/DateInfoSpan";
 
 export function Articles() {
-  const entries = Entry.getDiplayedEntriesList();
+  const entryManager = EntryManager.getInstance();
+  const entries = entryManager.getEntryList();
 
   return entries.map((entry) => {
     return (
