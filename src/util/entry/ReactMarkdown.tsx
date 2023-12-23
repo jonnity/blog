@@ -65,6 +65,22 @@ export const ReactMarkdown: React.FC<EntryProp> = ({ entry }) => {
           const id = `${node.children}`;
           return !node?.children ? <></> : <h2 id={id}>{node.children}</h2>;
         },
+        h3(node) {
+          const id = `${node.children}`;
+          return !node?.children ? <></> : <h3 id={id}>{node.children}</h3>;
+        },
+        h4(node) {
+          const id = `${node.children}`;
+          return !node?.children ? <></> : <h4 id={id}>{node.children}</h4>;
+        },
+        h5(node) {
+          const id = `${node.children}`;
+          return !node?.children ? <></> : <h5 id={id}>{node.children}</h5>;
+        },
+        h6(node) {
+          const id = `${node.children}`;
+          return !node?.children ? <></> : <h6 id={id}>{node.children}</h6>;
+        },
       }}
     >
       {entry.body}
