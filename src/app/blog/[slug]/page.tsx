@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { Entry } from "@/util/entry/Entry";
+import { EntryManager } from "@/util/entry/Entry";
 import { defaultDescription } from "@/util/metaTagInfo";
 
 import { BlogEntry } from "./components/BlogEntry";
@@ -8,17 +8,16 @@ import { SideBarInfo } from "./components/SideBarInfo";
 
 type PageParams = { slug: string };
 
+const entryManager = EntryManager.getInstance();
 export function generateStaticParams(): PageParams[] {
-  const entries = Entry.getDiplayedEntriesList();
-  const staticParams = entries.map((entry) => {
-    return { slug: entry.slug };
+  return entryManager.getEntryList().map(({ slug }) => {
+    return { slug };
   });
-  return staticParams;
 }
 
 export default async function Page({ params }: { params: PageParams }) {
   const { slug } = params;
-  const entry = Entry.getEntryWithSlug(slug);
+  const entry = entryManager.getEntry(slug);
 
   return (
     <>
@@ -41,7 +40,8 @@ type MetadataProps = {
 export async function generateMetadata({
   params,
 }: MetadataProps): Promise<Metadata> {
-  const { metadata } = Entry.getEntryWithSlug(params.slug);
+  const { metadata } = entryManager.getEntry(params.slug);
+
   const title = metadata.title;
   const description = metadata.description || defaultDescription;
 
