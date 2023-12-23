@@ -3,8 +3,8 @@ import * as fs from "node:fs";
 
 import frontMatter from "front-matter";
 import { z } from "zod";
-import { EnvCollector } from "../EnvCollector";
-import { defaultDescription } from "../metadata";
+import { EnvCollector } from "@/util/EnvCollector";
+import { defaultDescription } from "@/util//metaTagInfo";
 
 const pastDateStringSchema = z.string().transform((dateStr, ctx) => {
   const inputtedDate = new Date(dateStr);
