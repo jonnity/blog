@@ -22,12 +22,20 @@ const tagsSchema = z.string().array().optional().default([]);
 const descriptionSchema = z.string().optional();
 const createdAtSchema = pastDateStringSchema;
 const updatedAtSchema = pastDateStringSchema.optional();
+const thumbnailSchema = z
+  .object({
+    url: z.string(),
+    alt: z.string(),
+  })
+  .optional();
+
 const metadataSchema = z.object({
   title: titleSchema,
   tags: tagsSchema,
   description: descriptionSchema,
   createdAt: createdAtSchema,
   updatedAt: updatedAtSchema,
+  thumbnail: thumbnailSchema,
 });
 type Metadata = z.infer<typeof metadataSchema>;
 
@@ -43,6 +51,19 @@ class Entry {
     const parsedData = frontMatter<any>(mdContents);
     this.metadata = metadataSchema.parse(parsedData.attributes);
     this.body = parsedData.body;
+  }
+  getThumbnail() {
+    if (this.metadata.thumbnail?.url && this.metadata.thumbnail?.alt) {
+      return {
+        url: `/entry/${this.slug}/${this.metadata.thumbnail.url}`,
+        alt: this.metadata.thumbnail.alt,
+      };
+    } else {
+      return {
+        url: "/icon_keybourd.webp",
+        alt: "デフォルトのサムネイル",
+      };
+    }
   }
 }
 export class EntryManager {
