@@ -1,9 +1,11 @@
 import Link from "next/link";
 
-import { Articles } from "./components/Articles";
 import { SNSLogo } from "@/util/profile/SNSLogo";
+import { EntryManager } from "@/util/entry/Entry";
+import { EntryLink } from "@/util/entry/components/EntryLink";
 
 export default function Home() {
+  const entryManager = EntryManager.getInstance();
   return (
     <div className="flex w-full justify-center">
       <main className="contents-base my-2 flex w-11/12 flex-col gap-4 p-4 shadow-xl backdrop-blur-lg lg:m-8 lg:w-3/5 xl:w-1/2">
@@ -41,8 +43,10 @@ export default function Home() {
         </section>
         <section>
           <h2 className="text-2xl lg:text-3xl">記事一覧</h2>
-          <div className="p-4">
-            <Articles />
+          <div className="flex flex-wrap gap-4 p-4">
+            {entryManager.getEntryList().map((entry) => (
+              <EntryLink key={entry.slug} entry={entry} />
+            ))}
           </div>
         </section>
       </main>

@@ -1,7 +1,7 @@
 import { EntryProp } from "@/util/entry/Entry";
-import { DateInfoSpan } from "@/util/entry/DateInfoSpan";
-import { ReactMarkdown } from "@/util/entry/ReactMarkdown";
-import { TagListSpan } from "@/util/entry/TagListSpan";
+import { DateInfoSpan } from "@/util/entry/components/DateInfoSpan";
+import { ReactMarkdown } from "@/util/entry/components/ReactMarkdown";
+import { TagListSpan } from "@/util/entry/components/TagListSpan";
 
 export const BlogEntry: React.FC<EntryProp> = ({ entry }) => {
   return (
