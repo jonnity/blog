@@ -1,6 +1,6 @@
 import { SNSLogo } from "@/util/profile/SNSLogo";
 import { EntryProp } from "@/util/entry/Entry";
-import { MarkdownToc } from "@/util/entry/MarkdownToc";
+import { MarkdownToc } from "@/util/entry/components/MarkdownToc";
 
 export const SideBarInfo: React.FC<EntryProp> = ({ entry }) => {
   return (

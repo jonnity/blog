@@ -4,7 +4,7 @@ import { z } from "zod";
 const srcSchema = z.string();
 const altSchema = z.string();
 
-import { EntryProp } from "./Entry";
+import { EntryProp } from "../Entry";
 import { ImageViewer } from "./ImageViewer";
 
 export const ReactMarkdown: React.FC<EntryProp> = ({ entry }) => {
