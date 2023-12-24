@@ -1,15 +1,12 @@
 import Link from "next/link";
 
-import { EntryManager } from "@/util/entry/Entry";
-import { TagListSpan } from "@/util/entry/components/TagListSpan";
-import { DateInfoSpan } from "@/util/entry/components/DateInfoSpan";
+import { EntryProp } from "../Entry";
+import { TagListSpan } from "./TagListSpan";
+import { DateInfoSpan } from "./DateInfoSpan";
 
-export function Articles() {
-  const entryManager = EntryManager.getInstance();
-  const entries = entryManager.getEntryList();
-
-  return entries.map((entry) => {
-    return (
+export const EntryLink: React.FC<EntryProp> = ({ entry }) => {
+  return (
+    <>
       <Link key={entry.slug} href={`./blog/${entry.slug}`}>
         <article className="border border-solid border-slate-600 p-1">
           <p className="text-xl font-bold">{entry.metadata.title}</p>
@@ -24,6 +21,6 @@ export function Articles() {
           </p>
         </article>
       </Link>
-    );
-  });
-}
+    </>
+  );
+};
