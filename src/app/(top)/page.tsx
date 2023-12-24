@@ -43,7 +43,7 @@ export default function Home() {
         </section>
         <section>
           <h2 className="text-2xl lg:text-3xl">記事一覧</h2>
-          <div className="p-4">
+          <div className="flex flex-wrap gap-4 p-4">
             {entryManager.getEntryList().map((entry) => (
               <EntryLink key={entry.slug} entry={entry} />
             ))}
