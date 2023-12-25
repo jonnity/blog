@@ -17,8 +17,14 @@ const pastDateStringSchema = z.string().transform((dateStr, ctx) => {
   return inputtedDate;
 });
 
+export const settableTagList = ["開発", "ブログ", "進捗"] as const;
+const settableTagSchema = z.enum(settableTagList);
 const titleSchema = z.string().min(1);
-const tagsSchema = z.string().array().optional().default([]);
+const tagsSchema = settableTagSchema
+  .array()
+  .optional()
+  .default([])
+  .refine((tags) => tags.length === new Set(tags).size, "タグが重複しています");
 const descriptionSchema = z.string().optional();
 const createdAtSchema = pastDateStringSchema;
 const updatedAtSchema = pastDateStringSchema.optional();
