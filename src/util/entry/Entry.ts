@@ -4,6 +4,8 @@ import * as fs from "node:fs";
 import frontMatter from "front-matter";
 import { z } from "zod";
 
+import { settableTags } from "./settableTags";
+
 const pastDateStringSchema = z.string().transform((dateStr, ctx) => {
   const inputtedDate = new Date(dateStr);
   inputtedDate.setHours(0, 0, 0, 0);
@@ -17,8 +19,7 @@ const pastDateStringSchema = z.string().transform((dateStr, ctx) => {
   return inputtedDate;
 });
 
-export const settableTagList = ["開発", "ブログ", "進捗"] as const;
-const settableTagSchema = z.enum(settableTagList);
+const settableTagSchema = z.enum(settableTags);
 const titleSchema = z.string().min(1);
 const tagsSchema = settableTagSchema
   .array()
