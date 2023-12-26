@@ -46,20 +46,12 @@ export const ReactMarkdown: React.FC<EntryProp> = ({ entry }) => {
           );
         },
         a(prop) {
-          if (prop.node?.children[0].type !== "text") {
-            throw new Error(
-              `markdownにテキストの指定のないリンクがある: ${prop.href}`,
-            );
+          const { node, href, ...rest } = prop;
+          if (node?.children.length === 0) {
+            throw new Error(`Titleの指定のないリンクがある: ${href}`);
           }
-
           const target = /^https?:/.test(prop.href || "") ? "_blant" : "_self";
-          const textChild = prop.node?.children[0];
-
-          return (
-            <a href={prop.href} target={target}>
-              {textChild.value}
-            </a>
-          );
+          return <a href={href} target={target} {...rest} />;
         },
         h2(node) {
           const id = `${node.children}`;
