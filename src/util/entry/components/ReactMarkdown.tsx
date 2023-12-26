@@ -19,10 +19,6 @@ export const ReactMarkdown: React.FC<EntryProp> = ({ entry }) => {
         return url;
       }}
       components={{
-        em(props) {
-          const { node, ...rest } = props;
-          return <i style={{ color: "red" }} {...rest} />;
-        },
         p({ node, ...rest }) {
           const defaultParagraph = <p>{rest.children}</p>;
           const firstChild = node?.children[0];
