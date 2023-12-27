@@ -69,6 +69,10 @@ class Entry {
 export class EntryManager {
   public static instance: EntryManager | null = null;
   public static getInstance() {
+    if (process.env.NODE_ENV === "development") {
+      return new EntryManager();
+    }
+
     if (EntryManager.instance) {
       return EntryManager.instance;
     } else {
