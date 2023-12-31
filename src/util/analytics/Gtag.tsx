@@ -6,13 +6,12 @@ export const Gtag = () => {
   return (
     <>
       <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} />
-      <Script id="define-gtag">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
+      <Script id="define-gtag">{`
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
-          gtag('config', 'G-2Z7BZJHYWR');
+        gtag('config', 'G-2Z7BZJHYWR');
       `}
       </Script>
     </>
