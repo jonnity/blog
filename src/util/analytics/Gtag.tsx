@@ -6,15 +6,21 @@ export const Gtag = () => {
   return (
     <>
       <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} />
-      <Script id="define-gtag">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
+      <Script id="define-gtag">{`
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
-          gtag('config', 'G-2Z7BZJHYWR');
-      `}
-      </Script>
+        gtag('config', 'G-2Z7BZJHYWR');
+      `}</Script>
     </>
+  );
+};
+
+export const EmitPageView = () => {
+  return (
+    <Script id="page-view">{`
+      gtag('event', 'page_view', {page_location: window.location.pathname || 'unknown_pathname'});
+    `}</Script>
   );
 };
