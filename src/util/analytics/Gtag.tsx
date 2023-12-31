@@ -17,10 +17,10 @@ export const Gtag = () => {
   );
 };
 
-export const EmitPageView: React.FC<{ url: string }> = ({ url }) => {
+export const EmitPageView = () => {
   return (
     <Script id="page-view">{`
-      gtag('event', 'page_view', {page_location: '${url}'});
+      gtag('event', 'page_view', {page_location: window.location.pathname || 'unknown_pathname'});
     `}</Script>
   );
 };
