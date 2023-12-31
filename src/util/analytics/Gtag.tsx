@@ -12,8 +12,15 @@ export const Gtag = () => {
         gtag('js', new Date());
 
         gtag('config', 'G-2Z7BZJHYWR');
-      `}
-      </Script>
+      `}</Script>
     </>
+  );
+};
+
+export const EmitPageView = (url: string) => {
+  return (
+    <Script id="page-view">{`
+      gtag('event', 'page_view', {page_location: '${url}'});
+    `}</Script>
   );
 };
