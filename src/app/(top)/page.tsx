@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 import { SNSLogo } from "@/util/profile/SNSLogo";
 import { EntryManager } from "@/util/entry/Entry";
 import { EntryLink } from "@/util/entry/components/EntryLink";
