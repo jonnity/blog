@@ -57,8 +57,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="jp">
-      <Gtag />
-      <EmitPageView />
+      <head>
+        <Gtag />
+        <EmitPageView />
+      </head>
       <body
         className={`${inter.className} bg-cover bg-fixed bg-repeat-y portrait:bg-ant-nest_portrait landscape:bg-ant-nest_landscpe`}
       >
