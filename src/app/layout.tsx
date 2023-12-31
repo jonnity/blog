@@ -3,7 +3,12 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-import { defaultDescription, defaultTitle, titleParam } from "@/util/metaTagInfo";
+import {
+  defaultDescription,
+  defaultTitle,
+  titleParam,
+} from "@/util/metaTagInfo";
+import { Gtag } from "@/util/analytics/Gtag";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -52,8 +57,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="jp">
+      <Gtag />
       <body
-        className={`${inter.className} landscape:bg-ant-nest_landscpe portrait:bg-ant-nest_portrait bg-cover bg-fixed bg-repeat-y`}
+        className={`${inter.className} bg-cover bg-fixed bg-repeat-y portrait:bg-ant-nest_portrait landscape:bg-ant-nest_landscpe`}
       >
         {children}
       </body>
