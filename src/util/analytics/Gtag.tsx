@@ -17,7 +17,7 @@ export const Gtag = () => {
   );
 };
 
-export const EmitPageView = (url: string) => {
+export const EmitPageView: React.FC<{ url: string }> = ({ url }) => {
   return (
     <Script id="page-view">{`
       gtag('event', 'page_view', {page_location: '${url}'});
