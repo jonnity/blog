@@ -1,19 +1,24 @@
 "use client";
-import { useCallback, useEffect, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useCallback, useEffect } from "react";
 
 const hiddenScrollbarClassName = "hidden-scrollbar";
 
 type Prop = { src: string; alt: string; caption: string };
 export const ImageViewer: React.FC<Prop> = (prop) => {
-  const [showModal, setShowModal] = useState<boolean>(false);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const openModal = useCallback(() => {
     document.body.classList.add(hiddenScrollbarClassName);
-    setShowModal(true);
-  }, [setShowModal]);
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("om", "1");
+    router.push(pathname + "?" + params.toString(), { scroll: false });
+  }, [router]);
   const closeModal = useCallback(() => {
-    setShowModal(false);
     document.body.classList.remove(hiddenScrollbarClassName);
-  }, [setShowModal]);
+    router.back();
+  }, [router]);
 
   useEffect(() => {
     const escapeKeyListener = (event: KeyboardEvent) => {
@@ -28,7 +33,7 @@ export const ImageViewer: React.FC<Prop> = (prop) => {
   }, [closeModal]);
 
   const ImageModal = () => {
-    return showModal ? (
+    return searchParams.get("om") === "1" ? (
       <div
         className="absolute left-0 top-0 flex h-screen w-screen justify-center bg-black bg-opacity-70 hover:cursor-zoom-out"
         style={{ top: window.scrollY }}
