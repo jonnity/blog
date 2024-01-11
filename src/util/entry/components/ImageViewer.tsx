@@ -1,66 +1,93 @@
 "use client";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 const hiddenScrollbarClassName = "hidden-scrollbar";
+const showModalParamKey = "sm";
+const showModalValue = "1";
 
-type Prop = { src: string; alt: string; caption: string };
-export const ImageViewer: React.FC<Prop> = (prop) => {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const openModal = useCallback(() => {
-    document.body.classList.add(hiddenScrollbarClassName);
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("om", "1");
-    router.push(pathname + "?" + params.toString(), { scroll: false });
-  }, [router]);
-  const closeModal = useCallback(() => {
-    document.body.classList.remove(hiddenScrollbarClassName);
-    router.back();
-  }, [router]);
+const ImageModal: React.FC<{
+  src: string;
+  alt: string;
+  show: boolean;
+  closeModal: () => void;
+}> = ({ src, alt, show, closeModal }) => {
+  const escapeKeyListener = (event: KeyboardEvent) => {
+    if (event.key === "Escape") {
+      closeModal();
+    }
+  };
 
   useEffect(() => {
-    const escapeKeyListener = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        closeModal();
-      }
-    };
-    document.addEventListener("keydown", escapeKeyListener);
+    if (show) {
+      document.addEventListener("keydown", escapeKeyListener);
+      document.body.classList.add(hiddenScrollbarClassName);
+    } else {
+      document.removeEventListener("keydown", escapeKeyListener);
+      document.body.classList.remove(hiddenScrollbarClassName);
+    }
     return () => {
       document.removeEventListener("keydown", escapeKeyListener);
     };
-  }, [closeModal]);
+  }, [show]);
 
-  const ImageModal = () => {
-    return searchParams.get("om") === "1" ? (
-      <div
-        className="absolute left-0 top-0 flex h-screen w-screen justify-center bg-black bg-opacity-70 hover:cursor-zoom-out"
-        style={{ top: window.scrollY }}
-        onClick={closeModal}
-      >
-        <img
-          src={prop.src}
-          alt={prop.alt}
-          className="m-0 object-scale-down lg:m-8"
-        />
-      </div>
-    ) : (
-      <></>
-    );
-  };
+  return show ? (
+    <div
+      className="absolute left-0 top-0 flex h-screen w-screen justify-center bg-black bg-opacity-70 hover:cursor-zoom-out"
+      style={{ top: window.scrollY }}
+      onClick={closeModal}
+    >
+      <img src={src} alt={alt} className="m-0 object-scale-down lg:m-8" />
+    </div>
+  ) : (
+    <></>
+  );
+};
+
+type Prop = { src: string; alt: string; caption: string };
+export const ImageViewer: React.FC<Prop> = ({ src, alt, caption }) => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const [showThisImageModal, setShowThisImageModal] = useState<boolean>(false);
+  const hasShowModalParam = useMemo(
+    () => searchParams.get(showModalParamKey) === showModalValue,
+    [searchParams],
+  );
+  useEffect(() => {
+    if (!hasShowModalParam && showThisImageModal) {
+      setShowThisImageModal(false);
+    }
+  }, [hasShowModalParam]);
+
+  const openModalNavigation = useCallback(() => {
+    setShowThisImageModal(true);
+    const params = new URLSearchParams(searchParams.toString());
+    params.set(showModalParamKey, showModalValue);
+    router.push(pathname + "?" + params.toString(), { scroll: false });
+  }, [router]);
+  const closeModalNavigation = useCallback(() => {
+    setShowThisImageModal(false);
+    router.back();
+  }, [router]);
+
   return (
     <>
       <p className="flex h-fit flex-col items-center">
         <img
           className="max-h-96 max-w-full object-contain hover:cursor-zoom-in"
-          src={prop.src}
-          alt={prop.alt}
-          onClick={openModal}
+          src={src}
+          alt={alt}
+          onClick={openModalNavigation}
         />
-        <span>{prop.caption}</span>
+        <span>{caption}</span>
       </p>
-      <ImageModal />
+      <ImageModal
+        src={src}
+        alt={alt}
+        show={hasShowModalParam && showThisImageModal}
+        closeModal={closeModalNavigation}
+      />
     </>
   );
 };
