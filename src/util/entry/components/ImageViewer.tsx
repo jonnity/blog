@@ -48,26 +48,19 @@ type Prop = { src: string; alt: string; caption: string };
 export const ImageViewer: React.FC<Prop> = ({ src, alt, caption }) => {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const [showThisImageModal, setShowThisImageModal] = useState<boolean>(false);
-  const hasShowModalParam = useMemo(
-    () => searchParams.get(showModalParamKey) === showModalValue,
-    [searchParams],
-  );
-  useEffect(() => {
-    if (!hasShowModalParam && showThisImageModal) {
-      setShowThisImageModal(false);
-    }
-  }, [hasShowModalParam]);
+  const currentSearchParams = useSearchParams();
+  const [isModalTarget, setIsModalTarget] = useState<boolean>(false);
+  const hasShowModalParam =
+    currentSearchParams.get(showModalParamKey) === showModalValue;
 
-  const openModalNavigation = useCallback(() => {
-    setShowThisImageModal(true);
-    const params = new URLSearchParams(searchParams.toString());
+  const openModal = useCallback(() => {
+    setIsModalTarget(true);
+    const params = new URLSearchParams(currentSearchParams.toString());
     params.set(showModalParamKey, showModalValue);
     router.push(pathname + "?" + params.toString(), { scroll: false });
   }, [router]);
-  const closeModalNavigation = useCallback(() => {
-    setShowThisImageModal(false);
+  const closeModal = useCallback(() => {
+    setIsModalTarget(false);
     router.back();
   }, [router]);
 
@@ -78,15 +71,15 @@ export const ImageViewer: React.FC<Prop> = ({ src, alt, caption }) => {
           className="max-h-96 max-w-full object-contain hover:cursor-zoom-in"
           src={src}
           alt={alt}
-          onClick={openModalNavigation}
+          onClick={openModal}
         />
         <span>{caption}</span>
       </p>
       <ImageModal
         src={src}
         alt={alt}
-        show={hasShowModalParam && showThisImageModal}
-        closeModal={closeModalNavigation}
+        show={hasShowModalParam && isModalTarget}
+        closeModal={closeModal}
       />
     </>
   );
