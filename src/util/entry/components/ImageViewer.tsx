@@ -27,11 +27,11 @@ const ImageModal: React.FC<{
 
   return (
     <div
-      className="absolute left-0 top-0 flex h-screen w-screen justify-center bg-black bg-opacity-70 hover:cursor-zoom-out"
+      className="absolute left-0 top-0 flex h-dvh w-dvw justify-center bg-black bg-opacity-70 p-2 hover:cursor-zoom-out lg:p-8"
       style={{ top: window.scrollY }}
       onClick={() => router.back()}
     >
-      <img src={src} alt={alt} className="m-0 object-scale-down lg:m-8" />
+      <img src={src} alt={alt} className="object-scale-down" />
     </div>
   );
 };
