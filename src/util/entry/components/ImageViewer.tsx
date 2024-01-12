@@ -1,6 +1,6 @@
 "use client";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const hiddenScrollbarClassName = "hidden-scrollbar";
 const showModalParamKey = "sm";
@@ -9,38 +9,30 @@ const showModalValue = "1";
 const ImageModal: React.FC<{
   src: string;
   alt: string;
-  show: boolean;
-  closeModal: () => void;
-}> = ({ src, alt, show, closeModal }) => {
-  const escapeKeyListener = (event: KeyboardEvent) => {
-    if (event.key === "Escape") {
-      closeModal();
-    }
-  };
-
+}> = ({ src, alt }) => {
+  const router = useRouter();
   useEffect(() => {
-    if (show) {
-      document.addEventListener("keydown", escapeKeyListener);
-      document.body.classList.add(hiddenScrollbarClassName);
-    } else {
-      document.removeEventListener("keydown", escapeKeyListener);
-      document.body.classList.remove(hiddenScrollbarClassName);
-    }
+    const escapeKeyListener = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        router.back();
+      }
+    };
+    document.addEventListener("keydown", escapeKeyListener);
+    document.body.classList.add(hiddenScrollbarClassName);
     return () => {
       document.removeEventListener("keydown", escapeKeyListener);
+      document.body.classList.remove(hiddenScrollbarClassName);
     };
-  }, [show]);
+  }, [router]);
 
-  return show ? (
+  return (
     <div
       className="absolute left-0 top-0 flex h-screen w-screen justify-center bg-black bg-opacity-70 hover:cursor-zoom-out"
       style={{ top: window.scrollY }}
-      onClick={closeModal}
+      onClick={() => router.back()}
     >
       <img src={src} alt={alt} className="m-0 object-scale-down lg:m-8" />
     </div>
-  ) : (
-    <></>
   );
 };
 
@@ -53,16 +45,18 @@ export const ImageViewer: React.FC<Prop> = ({ src, alt, caption }) => {
   const hasShowModalParam =
     currentSearchParams.get(showModalParamKey) === showModalValue;
 
+  useEffect(() => {
+    if (!hasShowModalParam) {
+      setIsModalTarget(false);
+    }
+  }, [hasShowModalParam]);
+
   const openModal = useCallback(() => {
     setIsModalTarget(true);
     const params = new URLSearchParams(currentSearchParams.toString());
     params.set(showModalParamKey, showModalValue);
     router.push(pathname + "?" + params.toString(), { scroll: false });
-  }, [router]);
-  const closeModal = useCallback(() => {
-    setIsModalTarget(false);
-    router.back();
-  }, [router]);
+  }, [router, pathname, currentSearchParams]);
 
   return (
     <>
@@ -75,12 +69,7 @@ export const ImageViewer: React.FC<Prop> = ({ src, alt, caption }) => {
         />
         <span>{caption}</span>
       </p>
-      <ImageModal
-        src={src}
-        alt={alt}
-        show={hasShowModalParam && isModalTarget}
-        closeModal={closeModal}
-      />
+      {hasShowModalParam && isModalTarget && <ImageModal src={src} alt={alt} />}
     </>
   );
 };
