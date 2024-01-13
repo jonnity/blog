@@ -68,9 +68,15 @@ export const ReactMarkdown: React.FC<EntryProp> = ({ entry }) => {
           const codeClassName = Array.isArray(codeNode.properties.className)
             ? codeNode.properties.className[0].toString()
             : "";
-          const language = codeClassName.replace("language-", "");
-
-          return <SyntaxHighlightedCodeBlock code={code} language={language} />;
+          const [languageInfo, filename] = codeClassName.split(":");
+          const language = languageInfo.replace("language-", "");
+          return (
+            <SyntaxHighlightedCodeBlock
+              code={code}
+              language={language}
+              filename={filename}
+            />
+          );
         },
         h2(node) {
           const id = `${node.children}`;
