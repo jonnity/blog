@@ -5,13 +5,17 @@ export const SyntaxHighlightedCodeBlock: React.FC<{
   code: string;
   language: string;
   filename?: string;
-}> = ({ code, language }) => {
+}> = ({ code, language, filename }) => {
   return (
     <>
+      {filename && (
+        <div>
+          <span>{filename}</span>
+        </div>
+      )}
       <SyntaxHighlighter language={language} showLineNumbers style={monokai}>
         {code}
       </SyntaxHighlighter>
-      ;
     </>
   );
 };
