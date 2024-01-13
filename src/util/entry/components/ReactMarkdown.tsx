@@ -72,7 +72,7 @@ export const ReactMarkdown: React.FC<EntryProp> = ({ entry }) => {
           const language = languageInfo.replace("language-", "");
           return (
             <SyntaxHighlightedCodeBlock
-              code={code}
+              code={code.replace(/\n$/, "")}
               language={language}
               filename={filename}
             />
