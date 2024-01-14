@@ -10,7 +10,8 @@ export const DateInfoSpan: React.FC<Prop> = (prop) => {
   } else {
     return (
       <span>
-        {updatedAt.toLocaleDateString()} ({createdAt.toLocaleDateString()}作成)
+        {updatedAt.toLocaleDateString("ja-JP")} (
+        {createdAt.toLocaleDateString("ja-JP")}作成)
       </span>
     );
   }
