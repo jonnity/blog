@@ -5,57 +5,97 @@ description: このブログの画像の拡大表示に使用しているモー�
 tags: 
   - 個人開発
   - ブログ
+thumbnail:
+  url: thumbnail.webp
+  alt: 左側にモーダルが開かれている画面、右側にそのモーダルが閉じた画面のスクリーンショットが配置されていて、左側の画面にはAndroidの「戻る」ジェスチャーの実行中であることを示す「＜」マークがある。「＜」マークは丸で囲んで強調されており、そこから右の画面への矢印があり、モーダルを閉じる動作が表されている。
 ---
 
 皆さんは『モーダルを消そうと思って「戻る」をしたら意図せず前の画面に戻ってしまった』ことはありますか？私はあります。
 このブログでも上記のことが起こるようになっており、直したので、それについてまとめます。
 
-PCだと、Escapeキーで消そうとして消えないこともあります。Escapeは何も起きないだけなのでましですが、消えてほしい。
-
-![モーダルの例示](todo)
+![ブログ内の画像をクリックすると、画像が画面いっぱいに表示される挙動のアニメーション](openModal.gif)
 モーダルってのはこういうの
 
 ## 問題点
 
 冒頭で説明したシチュエーションを体験したことのない人のために問題点を説明します。
-そういう人はどうせiPhoneを使ってるんだろうと思います。
+そんなやつはどうせiPhoneでも使ってやがるんだろうと思います。
 
-というのも、Android端末をよく使う人にはわかってもらえていると思うのですが、Androidの「戻る」ボタン/ジェスチャーで、モーダルを消せる気がするんですよね。
-ただ、単にページ内の状態管理だけで実装しているモーダルだと、当然前の画面に戻ってしまいます。
-なので、
+というのも、Android端末をよく使う人にはわかってもらえると思うのですが、Androidの「戻る」ボタン/ジェスチャーで、モーダルを消せる気がするんですよね。
+そのとき、単にページ内の状態管理だけで実装しているモーダルだと、当然前の画面に戻ってしまいます。
 
-![モーダル表示までの画面遷移](todo)
-こうなってから
+なので、「戻る」と↓こうなっちゃっていました。
 
-![そこからの戻る動作](todo)
-「戻る」とこうなっちゃう
+![問題に感じていた動作: モーダルを開いているときに「戻る」ジェスチャーを実行し、前の画面に戻ってしまうAndroidの操作アニメーション](backInModal.gif)
+このアニメーション中でやってる「戻る」ジェスチャーが、モーダル消せますって顔してる
 
-![更新した戻る動作](todo)
-こうなって欲しいのにね (このブログは、今はこうなってる)
-
-という感じです。
+![更新後の動作: モーダルを開いているときに「戻る」ジェスチャーを実行するとモーダルが閉じるアニメーション](backCloseModal.gif)
+こうなって欲しい (このブログは、今はこうなってる)
 
 余談ですが、そう思うと、「戻る」に対してはiPhoneの「画面の左端からスワイプする」って動作のほうが直感的なのかもしれないですね。
+あとPCだと、Escapeキーで消そうとして消えないこともあります。Escapeは何も起きないだけなのでましですが、消えてほしい。
 
-## このブログにおける対応
+## 対応方法
 
-このブログの画像は、クリックすると画面いっぱいにその画像をモーダルで表示するようにしているのですが、「戻る」で消せませんでした。
-この記事の公開と同時に「戻る」で消えるようにしたので、その対応についてまとめます (該当の変更は、[このPR](https://github.com/jonnity/blog/pull/63)でしてます)。
+このブログでは、この記事の公開と同時に「戻る」で消えるようにしました (該当の変更は[このPR](https://github.com/jonnity/blog/pull/63))。
 
-* 調べるとフラグメントでやるといいみたいな記事は出てきた
-* でも各節タイトルのスクロール位置への移動のためにフラグメントは使っているから、クエリパラメータでやった
-  * 多分一緒
-* それだけだと不都合があったから、クエリパラメータと画像を表示するコンポーネント内の状態管理を併用して実装した
-* その結果、↓が実現できて、これが一番直感的な気がする
-  * モーダルは「戻る」で消せる
-  * その後「進む」で再表示はできない
+まず、主に想定しているのはAndroidの「戻る」ボタン/ジェスチャーですが、これはブラウザ側での「戻る」実行になってしまうので、Webサイトで直接イベントとして拾うことはできないようです。
+なので、単にブラウザの「戻る」でモーダルが消えるようにする必要があります。
+そのために、モーダルを開くときにブラウザの履歴に「クエリパラメータ付きの同ページ」を追加するようにしました (↓な感じ)。
 
-具体的な実装は↓な感じ
+```typescript:ImageViewer.tsxの抜粋
+const openModal = useCallback(() => {
+  setIsModalTarget(true);
+  const params = new URLSearchParams(currentSearchParams.toString());
+  params.set(showModalParamKey, showModalValue);
+  router.push(pathname + "?" + params.toString(), { scroll: false });
+}, [router, pathname, currentSearchParams]);
+```
 
-モーダル部分をこんな感じで実装して、
+その上で、「戻る」を検知してモーダルを閉じるようにしています (↓な感じ)。
 
-```tsx
-({ src, alt }) => {
+```typescript:ImageViewer.tsxの抜粋
+useEffect(() => {
+  if (!hasShowModalParam) {
+    setIsModalTarget(false);
+  }
+}, [hasShowModalParam]);
+```
+
+ちなみに、`popState`イベントで`setIsModalTarget(false)`を実行しても同じことはできました。
+
+```typescript
+useEffect(() => {
+    const popStateListener = () => {
+      setIsModalTarget(false);
+    };
+    window.addEventListener("popstate", popStateListener);
+    return () => {
+      window.removeEventListener("popstate", popStateListener);
+    };
+  }, []);
+```
+
+なお、モーダルを開くときに追加しているクエリパラメータは、具体的には"sm=1"という意味のない値で、どの画像をモーダルとして開くかは各コンポーネント内に状態を持つことで管理しています。
+それに起因して、このブログでは、『「戻る」で拡大画像を消した後、「進む」をしても再表示できない』ようになっています。
+クエリパラメータを各画像のID情報を持たせたりすれば、そのような逆操作も可能にできるとは思いますが、できないほうが直感的かなと思いそうしています。
+モーダルは半ばウィンドウのようなものなので、その再表示にはモーダルを開くときの操作 (今回なら画像をクリック) が改めて必要なほうが、他の物の挙動に似るのでいいのではないでしょうか。
+
+最終的な`ImageViewer.tsx`の全体像は↓のようになりました。
+
+```typescript:/src/util/entry/components/ImageViewer.tsx
+"use client";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
+
+const hiddenScrollbarClassName = "hidden-scrollbar";
+const showModalParamKey = "sm";
+const showModalValue = "1";
+
+const ImageModal: React.FC<{
+  src: string;
+  alt: string;
+}> = ({ src, alt }) => {
   const router = useRouter();
   useEffect(() => {
     const escapeKeyListener = (event: KeyboardEvent) => {
@@ -81,11 +121,7 @@ PCだと、Escapeキーで消そうとして消えないこともあります。
     </div>
   );
 };
-```
 
-それの表示非表示を
-
-```tsx
 type Prop = { src: string; alt: string; caption: string };
 export const ImageViewer: React.FC<Prop> = ({ src, alt, caption }) => {
   const router = useRouter();
@@ -125,8 +161,14 @@ export const ImageViewer: React.FC<Prop> = ({ src, alt, caption }) => {
 };
 ```
 
-で管理してる
+＃`{hasShowModalParam && isModalTarget && <ImageModal src={src} alt={alt} />}`の`hasShowModalParam &&`は不要ですね…。`hasShowModalParam`が`false`のときは必ず`isModalTarget`も`false`になるので…。
 
 ## まとめ
 
-PC/iOSでは、「戻る」でモーダルを消そうとすることはないかもしれませんが、ぜひAndroidユーザーのために、モーダルは「戻る」で消せるようにしてください。
+* Androidの「戻る」ボタン/ジェスチャーはモーダルを閉じれる気がしてしまう
+  * そのときに何もしていないとそのまま前のページに戻ってしまう
+* ↑を防ぐためには、モーダルを開くときに履歴に何かを追加する必要がある
+* その上で「戻る」を検知してモーダルを閉じるといい感じ
+  * そのとき「進む」で再表示されないほうが直感的な気がする
+
+PC/iOSでは「戻る」でモーダルを消そうとすることはないかもしれませんが、ぜひAndroidユーザーのために、モーダルは「戻る」で消せるようにしてください。
