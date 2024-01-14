@@ -20,7 +20,9 @@ export const Gtag = () => {
 export const EmitPageView = () => {
   return (
     <Script id="page-view">{`
+    if(window.location.origin === "https://jonnity.com"){
       gtag('event', 'page_view', {page_location: window.location.pathname || 'unknown_pathname'});
+    }
     `}</Script>
   );
 };
