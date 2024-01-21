@@ -6,13 +6,16 @@ type Prop = {
 export const DateInfoSpan: React.FC<Prop> = (prop) => {
   const { createdAt, updatedAt } = prop;
   if (!updatedAt) {
-    return <span>{createdAt.toLocaleDateString("ja-JP")}</span>;
+    return <span>{getDateString(createdAt)}</span>;
   } else {
     return (
       <span>
-        {updatedAt.toLocaleDateString("ja-JP")} (
-        {createdAt.toLocaleDateString("ja-JP")}作成)
+        {getDateString(updatedAt)} ({getDateString(createdAt)}作成)
       </span>
     );
   }
 };
+
+function getDateString(date: Date) {
+  return date.toLocaleDateString("ja-JP");
+}
