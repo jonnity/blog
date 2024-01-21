@@ -1,5 +1,6 @@
 import "./globals.css";
 
+import path from "path";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
@@ -13,7 +14,7 @@ import { Gtag } from "@/util/analytics/Gtag";
 const inter = Inter({ subsets: ["latin"] });
 
 const url = new URL("https://jonnity.com");
-const logoImagePath = "/logo_keybourd.svg";
+const logoImagePath = path.join(url.toString(), "/logo_keybourd.svg");
 export const metadata: Metadata = {
   title: titleParam,
   description: defaultDescription,
@@ -40,14 +41,6 @@ export const metadata: Metadata = {
     images: [{ url: logoImagePath }],
   },
   icons: { icon: { url: logoImagePath } },
-  twitter: {
-    card: "summary_large_image",
-    title: titleParam,
-    description: defaultDescription,
-    creator: "jonnity",
-    creatorId: "@jonnied_man",
-    images: [logoImagePath],
-  },
 };
 
 export default function RootLayout({
