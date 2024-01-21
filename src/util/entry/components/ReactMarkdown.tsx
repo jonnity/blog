@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { z } from "zod";
@@ -39,7 +40,9 @@ export const ReactMarkdown: React.FC<EntryProp> = ({ entry }) => {
           const src = srcSchema.parse(firstChild.properties.src);
           const alt = altSchema.parse(firstChild.properties.alt);
           return (
-            <ImageViewer src={src} alt={alt} caption={secondChild.value} />
+            <Suspense>
+              <ImageViewer src={src} alt={alt} caption={secondChild.value} />
+            </Suspense>
           );
         },
         a(prop) {
