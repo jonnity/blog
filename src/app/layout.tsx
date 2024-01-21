@@ -8,7 +8,7 @@ import {
   defaultTitle,
   titleParam,
 } from "@/util/metaTagInfo";
-import { EmitPageView, Gtag } from "@/util/analytics/Gtag";
+import { Gtag } from "@/util/analytics/Gtag";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -59,7 +59,6 @@ export default function RootLayout({
     <html lang="ja">
       <head>
         <Gtag />
-        <EmitPageView />
       </head>
       <body
         className={`${inter.className} bg-cover bg-fixed bg-repeat-y portrait:bg-ant-nest_portrait landscape:bg-ant-nest_landscpe`}
