@@ -40,15 +40,15 @@ type MetadataProps = {
 export async function generateMetadata({
   params,
 }: MetadataProps): Promise<Metadata> {
-  const { metadata } = entryManager.getEntry(params.slug);
+  const entry = entryManager.getEntry(params.slug);
 
-  const title = metadata.title;
-  const description = metadata.description || defaultDescription;
+  const title = entry.metadata.title;
+  const description = entry.metadata.description || defaultDescription;
+  const openGraph = entry.getOGPMetadata();
 
   return {
     title,
     description,
-    openGraph: { title, description },
-    twitter: { title, description },
+    openGraph,
   };
 }
