@@ -14,7 +14,7 @@ import { Gtag } from "@/util/analytics/Gtag";
 const inter = Inter({ subsets: ["latin"] });
 
 const url = new URL("https://jonnity.com");
-const logoImagePath = path.join(url.toString(), "/logo_keybourd.svg");
+const logoImagePath = path.join(url.toString(), "/icon_keybourd.webp");
 export const metadata: Metadata = {
   title: titleParam,
   description: defaultDescription,
