@@ -65,6 +65,24 @@ class Entry {
       };
     }
   }
+  getOGPMetadata() {
+    const { url: thumbnailPath } = this.getThumbnail();
+    return {
+      title: this.metadata.title,
+      description: this.metadata.title,
+      url: `https://jonnity.com/blog/${this.slug}`,
+      siteName: this.metadata.title,
+      images: [
+        {
+          url: `https://jonnity.com/${thumbnailPath}`, // Must be an absolute URL
+          width: 480,
+          height: 288,
+        },
+      ],
+      locale: "ja_JP",
+      type: "website",
+    };
+  }
 }
 export class EntryManager {
   public static instance: EntryManager | null = null;
