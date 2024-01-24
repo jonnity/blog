@@ -40,6 +40,7 @@ export const metadata: Metadata = {
     type: "profile",
     images: [{ url: logoImagePath }],
   },
+  robots: { index: true },
   icons: { icon: { url: logoImagePath } },
 };
 
