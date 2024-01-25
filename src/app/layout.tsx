@@ -9,7 +9,7 @@ import {
   defaultTitle,
   titleParam,
 } from "@/util/metaTagInfo";
-import { Gtag } from "@/util/analytics/Gtag";
+import { Gtag } from "@/util/google/Analytics";
 
 const inter = Inter({ subsets: ["latin"] });
 
