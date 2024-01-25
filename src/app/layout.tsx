@@ -10,6 +10,7 @@ import {
   titleParam,
 } from "@/util/metaTagInfo";
 import { Gtag } from "@/util/google/Analytics";
+import { Adsbygoogle } from "@/util/google/Adsense";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -53,6 +54,7 @@ export default function RootLayout({
     <html lang="ja">
       <head>
         <Gtag />
+        <Adsbygoogle />
       </head>
       <body
         className={`${inter.className} bg-cover bg-fixed bg-repeat-y portrait:bg-ant-nest_portrait landscape:bg-ant-nest_landscpe`}

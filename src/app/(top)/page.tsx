@@ -1,11 +1,12 @@
 import { SNSLogo } from "@/util/profile/SNSLogo";
 import { EntryManager } from "@/util/entry/Entry";
 import { EntryLink } from "@/util/entry/components/EntryLink";
+import { ResponsiveDisplayAdd } from "@/util/google/Adsense";
 
 export default function Home() {
   const entryManager = EntryManager.getInstance();
   return (
-    <div className="flex w-full justify-center">
+    <div className="flex w-full flex-col items-center justify-center">
       <main className="contents-base my-2 flex w-11/12 flex-col gap-4 p-4 shadow-xl backdrop-blur-lg lg:m-8 lg:w-3/5 xl:w-1/2">
         <section>
           <h2 className="flex items-center gap-4 text-2xl lg:text-3xl">
@@ -44,6 +45,9 @@ export default function Home() {
           </div>
         </section>
       </main>
+      <div className="h-24 w-11/12 lg:mb-4 lg:w-3/5 xl:w-1/2">
+        <ResponsiveDisplayAdd />
+      </div>
     </div>
   );
 }
