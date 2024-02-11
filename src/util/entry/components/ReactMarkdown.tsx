@@ -8,6 +8,7 @@ const altSchema = z.string();
 import { EntryProp } from "../Entry";
 import { ImageViewer } from "./ImageViewer";
 import { SyntaxHighlightedCodeBlock } from "./SyntaxHilightedCodeBlock";
+import { IframeYoutubePlayer } from "./IframeYoutubePlayer";
 
 export const ReactMarkdown: React.FC<EntryProp> = ({ entry }) => {
   return (
@@ -73,6 +74,9 @@ export const ReactMarkdown: React.FC<EntryProp> = ({ entry }) => {
             : "";
           const [languageInfo, filename] = codeClassName.split(":");
           const language = languageInfo.replace("language-", "");
+          if (language === "youtube") {
+            return <IframeYoutubePlayer videoId={code} />;
+          }
           return (
             <SyntaxHighlightedCodeBlock
               code={code.replace(/\n$/, "")}
