@@ -51,7 +51,16 @@ VwWhr-KX-4E
 * Cloud Storage for Firebase
 * Firebase Hosting
 
-DB部分は、RealtimeDBの他にCloud Firestoreも選択肢にありましたが、ユーザーの接続状況 (プレゼンス) がわかるらしいのでRealtimeDBを選択しています。
+基本的には、各プレイヤーでRealtimeDBを監視しておいて、「誰かの操作によってDB更新→それをトリガーに画面更新」を繰り返すことでゲームを実現しています。
+ただ、特定の誰かの操作をトリガーにできない処理、例えば「全員が絵を書き終えたときに神経衰弱の盤面を作る処理」とかがあるので、そういうところでCloud Functionを使っています。
+また、画像データを一時的に保持する必要もあるので、そのためにCloud Storageも使っています。
+
+DB部分は、RealtimeDBの他にCloud Firestoreも選択肢にありましたが、リアルタイムに各プレイヤーの接続状況 (プレゼンス) を把握したいがためにRealtimeDBを使っています。
+Firestoreには[`OnDisconnect`](https://firebase.google.com/docs/reference/js/v8/firebase.database.OnDisconnect)に相当するものがないんですよね。
+ただ、データ更新の監視はどちらでも可能、かつ、`OnDisconnect`が不発になるときがあるので、プレゼンスのみRealtimeDBで管理するというのもありなのかもしれないです (`OnDisconnect`の設定後に他の`Reference` (DBの要素) いじるとそのハンドラが消える？とかだった気がする。ともかくそんなに使いやすくはない)。
+[ドキュメント](https://firebase.google.com/docs/database/rtdb-vs-firestore?hl=ja)にある通りFirestoreのほうが新しくて、クエリや、そもそものDBとしてのパフォーマンスはいいらしいので。
+
+あとは、[フロントエンド](#フロントエンド)はSSGしているので、その配信にFirebase Hostingも使っています。
 
 ### フロントエンド
 
