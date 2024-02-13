@@ -40,9 +40,17 @@ VwWhr-KX-4E
 神経衰弱なので、全部の絵が表になるまで繰り返します。
 同じお題でも全然違う絵になったりして、神経衰弱パートで「絵は覚えてるのにわかんない」みたいになったら面白いだろ！！なあ！！！という気持ちです。
 
-## 技術スタック
+## 技術要素
 
-### バックエンド
+### 技術スタック
+
+フロントエンドの構成要素は、↓のような感じです。
+
+* Next.js (Page Router)
+  * SSG機能 (`next export`) を利用
+  * Github ActionsでビルドしてFirebase Hostingにデプロイできるようにしてある
+* Typescript
+* CSS Modules
 
 バックエンドは全部Firebaseに頼っていて、↓のサービスを利用しています。
 
@@ -51,27 +59,71 @@ VwWhr-KX-4E
 * Cloud Storage for Firebase
 * Firebase Hosting
 
-基本的には、各プレイヤーでRealtimeDBを監視しておいて、「誰かの操作によってDB更新→それをトリガーに画面更新」を繰り返すことでゲームを実現しています。
-ただ、特定の誰かの操作をトリガーにできない処理、例えば「全員が絵を書き終えたときに神経衰弱の盤面を作る処理」とかがあるので、そういうところでCloud Functionを使っています。
-また、画像データを一時的に保持する必要もあるので、そのためにCloud Storageも使っています。
-
 DB部分は、RealtimeDBの他にCloud Firestoreも選択肢にありましたが、リアルタイムに各プレイヤーの接続状況 (プレゼンス) を把握したいがためにRealtimeDBを使っています。
 Firestoreには[`OnDisconnect`](https://firebase.google.com/docs/reference/js/v8/firebase.database.OnDisconnect)に相当するものがないんですよね。
 ただ、データ更新の監視はどちらでも可能、かつ、`OnDisconnect`が不発になるときがあるので、プレゼンスのみRealtimeDBで管理するというのもありなのかもしれないです (`OnDisconnect`の設定後に他の`Reference` (DBの要素) いじるとそのハンドラが消える？とかだった気がする。ともかくそんなに使いやすくはない)。
 [ドキュメント](https://firebase.google.com/docs/database/rtdb-vs-firestore?hl=ja)にある通りFirestoreのほうが新しくて、クエリや、そもそものDBとしてのパフォーマンスはいいらしいので。
 
-あとは、[フロントエンド](#フロントエンド)はSSGしているので、その配信にFirebase Hostingも使っています。
+### 基本的な仕組み
 
-### フロントエンド
+基本的には、各プレイヤーでRealtimeDBを監視しておいて、「誰かの操作によってDB更新→それをトリガーに画面更新」を繰り返すことでゲームを実現しています。
 
-基本的な技術スタックとしては↓のような感じです。
+ただ、特定の誰かの操作をトリガーにできない処理、例えば「全員が絵を書き終えたときに神経衰弱の盤面を作る処理」とかがあるので、そういうところでCloud Functionが必要になります。
+その場合でも、Cloud Functionからクライアントが変更を監視しているRealtimeDBを操作することでバックエンド→フロントエンドで情報伝達をしており、
+フロント側でDBを監視する部分がキモになっています。
 
-* Next.js (Page Router)
-  * SSG機能 (`next export`) の出力をFirebase Hostingで配信
-* Typescript
-* CSS Modules
+`TODO: DBの監視をベースに全体が動作することがわかる画像`
 
-バックエンドからのデータは、`zod`でバリデーションして`jotai`で状態管理しています。
+「firebase SDK→`zod`でバリデーション→`jotai`で状態管理」というのを基本にしています。
+例えば、一緒に遊ぶプレイヤーたちは、ゲームの進行状況 (今が「絵を描いている」ところなのか、「神経衰弱をしている」ところなのか) を共有する必要がありますが、その情報は以下のようなカスタムフックでDBの情報を取得しています。
+
+```typescript
+import { useCallback, useEffect, useState } from "react";
+import { onValue, ref, update } from "firebase/database";
+
+import { dbPaths, RoomState, RoomStateSchema } from "@domain/RoomInfo";
+import { useDatabase } from "@hooks/atoms/useDatabase";
+import { useJoinedRoomId } from "@hooks/atoms/useRoomId";
+
+export function useRoomState() {
+  const db = useDatabase();
+  const roomId = useJoinedRoomId();
+  const [state, setState] = useState<RoomState>("loading");
+  useEffect(() => {
+    const stateRef = ref(db, `${roomId}/${dbPaths.state}`);
+    const unsubscribe = onValue(stateRef, (data) => {
+      try {
+        const fetchedState = RoomStateSchema.parse(data.val());
+        setState(fetchedState);
+      } catch (e) {
+        console.error(e);
+        setState("error");
+      }
+      return () => {
+        unsubscribe();
+      };
+    });
+  }, [roomId]);
+  return state;
+}
+
+export function useUpdateRoomState() {
+  const db = useDatabase();
+  const roomId = useJoinedRoomId();
+  return useCallback(
+    async (state: RoomState) => {
+      const roomRef = ref(db, roomId);
+      update(roomRef, { state });
+    },
+    [roomId]
+  );
+}
+```
+
+他に管理している情報としては、一緒に遊ぶプレイヤー (ルーム内のプレイヤー) の情報 (名前などもですが、神経衰弱をする中で今誰のターンか、なども) はもちろん、
+ルーム内のカードの情報や、(神経衰弱でペアが揃ったあとの) 投票状況など色々あります。
+
+ここが色々ありすぎてわけ分からなくなりつつあることも、モチベ低下に繋がっているので、うまい実装ができるといいんですが、よくわからない…。
 
 ## 現状と計画
 
