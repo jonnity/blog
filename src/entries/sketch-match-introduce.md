@@ -1,7 +1,7 @@
 ---
 createdAt: 2024/01/01
-title: "[Sketch Match] 作成中のゲームについての進捗"
-description: 作成中のお絵かき + 神経衰弱のオンラインパーティーゲームを紹介します。
+title: "Sketch Matchの紹介: 作成中のゲームの現状"
+description: 作成中の「お絵かき + 神経衰弱のオンラインパーティーゲーム」Sketch Matchを紹介します。
 tags: 
   - 個人開発
   - ゲーム
