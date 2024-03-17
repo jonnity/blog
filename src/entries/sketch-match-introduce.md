@@ -72,7 +72,8 @@ Firestoreには[`OnDisconnect`](https://firebase.google.com/docs/reference/js/v8
 その場合でも、Cloud Functionからクライアントが変更を監視しているRealtimeDBを操作することでバックエンド→フロントエンドで情報伝達をしており、
 フロント側でDBを監視する部分がキモになっています。
 
-`TODO: DBの監視をベースに全体が動作することがわかる画像`
+![Sketch Matchの構成図。下方にユーザーが利用する端末があり、その上にFirebaseで利用しているサービスが列挙されており、Firebase HostingではWebページの配信/取得、Firebase Realtime Databaseではデータベースの更新/変更監視、Cloud Storage for Firebaseでは画像のアップロード/取得を行う旨が説明されている。またFirebase Realtime DatabeseはCloud Function for Firebaseにも矢印が引かれており、データベースの変更検知でCloud Functionが実行され、そこでデータベースの更新が行われる様子も説明されている。](structure.png)
+Sketch Matchの構成図
 
 「firebase SDK→`zod`でバリデーション→`jotai`で状態管理」というのを基本にしています。
 例えば、一緒に遊ぶプレイヤーたちは、ゲームの進行状況 (今が「絵を描いている」ところなのか、「神経衰弱をしている」ところなのか) を共有する必要がありますが、その情報は以下のようなカスタムフックでDBの情報を取得しています。
