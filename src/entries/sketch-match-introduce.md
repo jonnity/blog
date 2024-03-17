@@ -1,14 +1,14 @@
 ---
-createdAt: 2024/01/01
+createdAt: 2024/03/17
 title: "Sketch Matchの紹介: 作成中のゲームの現状"
 description: 作成中の「お絵かき + 神経衰弱のオンラインパーティーゲーム」Sketch Matchを紹介します。
 tags: 
   - 個人開発
   - ゲーム
   - SketchMatch
-# thumbnail:
-#   url: thumbnail.webp
-#   alt: 左側にモーダルが開かれている画面、右側にそのモーダルが閉じた画面のスクリーンショットが配置されていて、左側の画面にはAndroidの「戻る」ジェスチャーの実行中であることを示す「＜」マークがある。「＜」マークは丸で囲んで強調されており、そこから右の画面への矢印があり、モーダルを閉じる動作が表されている。
+thumbnail:
+  url: thumbnail.webp
+  alt: Sketch Matchのロゴ
 ---
 
 このサイトを作った主目的の一つ、個人開発で作っているものの進捗報告をします。
