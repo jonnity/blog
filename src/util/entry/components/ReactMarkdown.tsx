@@ -9,6 +9,7 @@ import { EntryProp } from "../Entry";
 import { ImageViewer } from "./ImageViewer";
 import { SyntaxHighlightedCodeBlock } from "./SyntaxHilightedCodeBlock";
 import { IframeYoutubePlayer } from "./IframeYoutubePlayer";
+import { EmbeddedTweet } from "./EmbeddedTweet";
 
 export const ReactMarkdown: React.FC<EntryProp> = ({ entry }) => {
   return (
@@ -76,6 +77,9 @@ export const ReactMarkdown: React.FC<EntryProp> = ({ entry }) => {
           const language = languageInfo.replace("language-", "");
           if (language === "youtube") {
             return <IframeYoutubePlayer videoId={code} />;
+          }
+          if (language === "twitter") {
+            return <EmbeddedTweet id={code.trim()} />;
           }
           return (
             <SyntaxHighlightedCodeBlock
