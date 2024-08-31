@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 
-const logoImagePath = "/logo_keybourd.svg";
+const logoImagePath = "/logo_keyboard.svg";
 
 export default function BlogPageLayout({
   children,
