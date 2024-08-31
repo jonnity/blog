@@ -11,7 +11,7 @@ export default function Home() {
           <h2 className="flex items-center gap-4 text-2xl lg:text-3xl">
             <span>About</span>
             <img
-              src="/logo_keybourd.svg"
+              src="/logo_keyboard.svg"
               alt="jonnity (with logo)"
               className="h-10 lg:h-14"
             />
