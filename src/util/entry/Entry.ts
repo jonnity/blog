@@ -60,7 +60,7 @@ class Entry {
       };
     } else {
       return {
-        url: "/icon_keybourd.webp",
+        url: "/icon_keyboard.webp",
         alt: "デフォルトのサムネイル",
       };
     }

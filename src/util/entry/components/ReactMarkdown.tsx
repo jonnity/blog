@@ -7,7 +7,7 @@ const altSchema = z.string();
 
 import { EntryProp } from "../Entry";
 import { ImageViewer } from "./ImageViewer";
-import { SyntaxHighlightedCodeBlock } from "./SyntaxHilightedCodeBlock";
+import { SyntaxHighlightedCodeBlock } from "./SyntaxHighlightedCodeBlock";
 import { IframeYoutubePlayer } from "./IframeYoutubePlayer";
 import { EmbeddedTweet } from "./EmbeddedTweet";
 
@@ -52,7 +52,7 @@ export const ReactMarkdown: React.FC<EntryProp> = ({ entry }) => {
           if (node?.children.length === 0) {
             throw new Error(`Titleの指定のないリンクがある: ${href}`);
           }
-          const target = /^https?:/.test(prop.href || "") ? "_blant" : "_self";
+          const target = /^https?:/.test(prop.href || "") ? "_blank" : "_self";
           return <a href={href} target={target} {...rest} />;
         },
         pre({ node, children, ...rest }) {
