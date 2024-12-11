@@ -9,14 +9,20 @@ import { SideBarInfo } from "./components/SideBarInfo";
 type PageParams = { slug: string };
 
 const entryManager = EntryManager.getInstance();
-export function generateStaticParams(): PageParams[] {
-  return entryManager.getEntryList().map(({ slug }) => {
-    return { slug };
+// export async function generateStaticParams(): Promise<PageParams[]> {
+export async function generateStaticParams(): Promise<PageParams[]> {
+  const slugList = entryManager.getEntryList().map(({ slug }) => {
+    return { slug: slug };
   });
+  return slugList;
 }
 
-export default async function Page({ params }: { params: PageParams }) {
-  const { slug } = params;
+export default async function Page({
+  params,
+}: {
+  params: Promise<PageParams>;
+}) {
+  const { slug } = await params;
   const entry = entryManager.getEntry(slug);
 
   return (
@@ -34,13 +40,13 @@ export default async function Page({ params }: { params: PageParams }) {
 }
 
 type MetadataProps = {
-  params: PageParams;
-  searchParams: { [key: string]: string | string[] | undefined };
+  params: Promise<PageParams>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 export async function generateMetadata({
   params,
 }: MetadataProps): Promise<Metadata> {
-  const entry = entryManager.getEntry(params.slug);
+  const entry = entryManager.getEntry((await params).slug);
 
   const title = entry.metadata.title;
   const description = entry.metadata.description || defaultDescription;
