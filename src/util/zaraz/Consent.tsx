@@ -107,8 +107,11 @@ export const Consent: React.FC = () => {
   };
 
   useEffect(() => {
-    handleConsentAPIReady(); // If zaraz is not ready, only Cookies are read in this line.
+    // handleConsentAPIReady(); // If zaraz is not ready, only Cookies are read in this line.
     window.addEventListener("zarazConsentAPIReady", handleConsentAPIReady);
+    window.addEventListener("zarazConsentChoicesUpdated", () => {
+      setIsVisible(false);
+    });
 
     // 開発環境では自動的にイベントをシミュレート
     if (isDebugMode) {
@@ -195,6 +198,12 @@ export const Consent: React.FC = () => {
                 className="rounded bg-blue-100 px-2 py-1 text-xs"
               >
                 Simulate API Ready
+              </button>
+              <button
+                onClick={() => simulateEvent("zarazConsentChoicesUpdated")}
+                className="rounded bg-blue-100 px-2 py-1 text-xs"
+              >
+                Simulate Consent Updated
               </button>
               <button
                 onClick={setDebugCookie}
