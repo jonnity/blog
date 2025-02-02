@@ -9,7 +9,7 @@ export const EntryLink: React.FC<EntryProp> = ({ entry }) => {
   return (
     <>
       <Link href={`./blog/${entry.slug}`}>
-        <article className="h-fit w-60">
+        <article className="h-fit w-48">
           <div className="relative h-36 w-full">
             <Image
               src={entry.getThumbnail().url}
@@ -24,9 +24,7 @@ export const EntryLink: React.FC<EntryProp> = ({ entry }) => {
               createdAt={entry.metadata.createdAt}
               updatedAt={entry.metadata.updatedAt}
             />
-            <p>
-              <TagListSpan tags={entry.metadata.tags} />
-            </p>
+            <TagListSpan tags={entry.metadata.tags} />
           </div>
         </article>
       </Link>

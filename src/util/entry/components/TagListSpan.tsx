@@ -12,9 +12,13 @@ export const TagListSpan: React.FC<Prop> = (prop) => {
         <span key={index} className="bg-gray-200 text-black">
           {tag}
         </span>
-        {index === tags.length - 1 ? null : <span> </span>}
+        {index === tags.length - 1 ? null : " "}
       </>
     );
   });
-  return tagSpans;
+  return (
+    <div className="flex max-w-full break-before-all gap-x-2">
+      <p>{tagSpans}</p>
+    </div>
+  );
 };
