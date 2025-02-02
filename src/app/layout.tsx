@@ -14,7 +14,7 @@ import { Consent } from "@/util/zaraz/Consent";
 const inter = Inter({ subsets: ["latin"] });
 
 const url = new URL("https://jonnity.com");
-const logoImagePath = path.join(url.toString(), "/icon_keyboard.webp");
+const logoImagePath = "/icon_keyboard.webp";
 export const metadata: Metadata = {
   title: titleParam,
   description: defaultDescription,
