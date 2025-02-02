@@ -62,9 +62,9 @@ export const Consent: React.FC = () => {
 
     const hasConsent = checkCookieConsent();
     if (!hasConsent) {
-      setIsVisible(true);
       const zaraz = getZaraz();
       if (zaraz) {
+        setIsVisible(true);
         zaraz.consent.setAll(true);
         zaraz.consent.sendQueuedEvents();
       }
@@ -107,6 +107,7 @@ export const Consent: React.FC = () => {
   };
 
   useEffect(() => {
+    handleConsentAPIReady(); // If zaraz is not ready, only Cookies are read in this line.
     window.addEventListener("zarazConsentAPIReady", handleConsentAPIReady);
 
     // 開発環境では自動的にイベントをシミュレート
