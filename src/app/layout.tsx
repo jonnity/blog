@@ -9,6 +9,7 @@ import {
   defaultTitle,
   titleParam,
 } from "@/util/metaTagInfo";
+import { Consent } from "@/util/zaraz/Consent";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -51,9 +52,10 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body
-        className={`${inter.className} bg-cover bg-fixed bg-repeat-y portrait:bg-ant-nest_portrait landscape:bg-ant-nest_landscape`}
+        className={`${inter.className} landscape:bg-ant-nest_landscape bg-cover bg-fixed bg-repeat-y portrait:bg-ant-nest_portrait`}
       >
         {children}
+        <Consent />
       </body>
     </html>
   );
