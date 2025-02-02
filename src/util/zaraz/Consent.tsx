@@ -1,14 +1,33 @@
 "use client";
 
 import { useEffect, useState } from "react";
+const purposeIds = ["PVgO"];
 
+// デバッグ用:イベントをシミュレート
+type ZarazEvent = "zarazConsentAPIReady" | "zarazConsentChoicesUpdated";
+const simulateEvent = (eventName: ZarazEvent) => {
+  const event = new Event(eventName);
+  document.dispatchEvent(event);
+};
+
+// デバッグ用:Cookieを設定
+const setDebugCookie = () => {
+  document.cookie = `zaraz-consent={${purposeIds.map((id) => `"${id}": true`).join(",")}}; path=/`;
+};
+
+// デバッグ用:Cookieを削除
+const clearDebugCookie = () => {
+  document.cookie =
+    "zaraz-consent=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT";
+};
 // zarazのモック実装
 const mockZaraz = {
   consent: {
     modal: false,
-    setAll: (status: boolean) => console.log("setAll called with:", status),
-    setAllCheckboxes: (status: boolean) =>
-      console.log("setAllCheckboxes called with:", status),
+    setAll: (status: boolean) => {
+      console.log("setAll called with:", status);
+      simulateEvent("zarazConsentChoicesUpdated");
+    },
     sendQueuedEvents: () => console.log("sendQueuedEvents called"),
   },
 };
@@ -22,11 +41,6 @@ declare global {
 
 export const Consent: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [debugInfo, setDebugInfo] = useState({
-    consentCookie: "",
-    lastEvent: "",
-    zarazAvailable: false,
-  });
   const [isDebugMode] = useState(process.env.NODE_ENV === "development");
 
   // zarazのインスタンスを取得(開発環境ではモックを使用)
@@ -40,26 +54,19 @@ export const Consent: React.FC = () => {
       .split("; ")
       .find((row) => row.startsWith("zaraz-consent="));
 
-    // デバッグ情報を更新
-    if (isDebugMode) {
-      setDebugInfo((prev) => ({
-        ...prev,
-        consentCookie: consentCookie || "not found",
-      }));
-    }
+    if (!consentCookie) return false;
 
-    return !!consentCookie;
+    try {
+      const cookieValue = decodeURIComponent(consentCookie.split("=")[1]);
+      const consentData = JSON.parse(cookieValue);
+      return purposeIds.every((id) => Object.keys(consentData).includes(id));
+    } catch (error) {
+      console.error("Error parsing consent cookie:", error);
+      return false;
+    }
   };
 
   const handleConsentAPIReady = () => {
-    if (isDebugMode) {
-      setDebugInfo((prev) => ({
-        ...prev,
-        lastEvent: "zarazConsentAPIReady",
-        zarazAvailable: !!getZaraz(),
-      }));
-    }
-
     const hasConsent = checkCookieConsent();
     if (!hasConsent) {
       const zaraz = getZaraz();
@@ -69,6 +76,10 @@ export const Consent: React.FC = () => {
         zaraz.consent.sendQueuedEvents();
       }
     }
+    document.addEventListener(
+      "zarazConsentChoicesUpdated",
+      handleConsentUpdate,
+    );
   };
 
   const handleShowDetails = () => {
@@ -94,32 +105,9 @@ export const Consent: React.FC = () => {
     setIsVisible(false);
   };
 
-  // デバッグ用:イベントをシミュレート
-  const simulateEvent = (eventName: string) => {
-    const event = new Event(eventName);
-    document.dispatchEvent(event);
-  };
-
-  // デバッグ用:Cookieを設定
-  const setDebugCookie = () => {
-    document.cookie = "zaraz-consent=accepted; path=/";
-    checkCookieConsent();
-  };
-
-  // デバッグ用:Cookieを削除
-  const clearDebugCookie = () => {
-    document.cookie =
-      "zaraz-consent=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT";
-    checkCookieConsent();
-  };
-
   useEffect(() => {
-    // handleConsentAPIReady(); // If zaraz is not ready, only Cookies are read in this line.
+    handleConsentAPIReady(); // If zaraz is not ready, only Cookies are read in this line.
     document.addEventListener("zarazConsentAPIReady", handleConsentAPIReady);
-    document.addEventListener(
-      "zarazConsentChoicesUpdated",
-      handleConsentUpdate,
-    );
 
     return () => {
       document.removeEventListener(
@@ -192,16 +180,6 @@ export const Consent: React.FC = () => {
         <div className="fixed right-4 top-4 z-50 max-w-md rounded border bg-white p-4 shadow-lg">
           <h3 className="mb-2 font-bold">Debug Panel</h3>
           <div className="space-y-2 text-sm">
-            <div>
-              <strong>Cookie:</strong> {debugInfo.consentCookie}
-            </div>
-            <div>
-              <strong>Last Event:</strong> {debugInfo.lastEvent}
-            </div>
-            <div>
-              <strong>Zaraz Available:</strong>{" "}
-              {debugInfo.zarazAvailable.toString()}
-            </div>
             <div className="mt-2 flex gap-2">
               <button
                 onClick={() => simulateEvent("zarazConsentAPIReady")}
