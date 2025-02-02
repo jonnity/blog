@@ -90,7 +90,7 @@ export const Consent: React.FC = () => {
   // デバッグ用:イベントをシミュレート
   const simulateEvent = (eventName: string) => {
     const event = new Event(eventName);
-    window.dispatchEvent(event);
+    document.dispatchEvent(event);
   };
 
   // デバッグ用:Cookieを設定
@@ -108,8 +108,8 @@ export const Consent: React.FC = () => {
 
   useEffect(() => {
     // handleConsentAPIReady(); // If zaraz is not ready, only Cookies are read in this line.
-    window.addEventListener("zarazConsentAPIReady", handleConsentAPIReady);
-    window.addEventListener("zarazConsentChoicesUpdated", () => {
+    document.addEventListener("zarazConsentAPIReady", handleConsentAPIReady);
+    document.addEventListener("zarazConsentChoicesUpdated", () => {
       setIsVisible(false);
     });
 
