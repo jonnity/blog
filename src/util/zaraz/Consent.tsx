@@ -74,7 +74,6 @@ export const Consent: React.FC = () => {
   const handleShowDetails = () => {
     const zaraz = getZaraz();
     if (zaraz) {
-      zaraz.consent.setAllCheckboxes(true);
       zaraz.consent.modal = true;
     }
   };
@@ -84,6 +83,14 @@ export const Consent: React.FC = () => {
   };
 
   const handleReject = () => {
+    const zaraz = getZaraz();
+    if (zaraz) {
+      zaraz.consent.setAll(false);
+      setIsVisible(false);
+    }
+  };
+
+  const handleConsentUpdate = () => {
     setIsVisible(false);
   };
 
@@ -109,17 +116,20 @@ export const Consent: React.FC = () => {
   useEffect(() => {
     // handleConsentAPIReady(); // If zaraz is not ready, only Cookies are read in this line.
     document.addEventListener("zarazConsentAPIReady", handleConsentAPIReady);
-    document.addEventListener("zarazConsentChoicesUpdated", () => {
-      setIsVisible(false);
-    });
-
-    // 開発環境では自動的にイベントをシミュレート
-    if (isDebugMode) {
-      setTimeout(() => simulateEvent("zarazConsentAPIReady"), 1000);
-    }
+    document.addEventListener(
+      "zarazConsentChoicesUpdated",
+      handleConsentUpdate,
+    );
 
     return () => {
-      window.removeEventListener("zarazConsentAPIReady", handleConsentAPIReady);
+      document.removeEventListener(
+        "zarazConsentAPIReady",
+        handleConsentAPIReady,
+      );
+      document.removeEventListener(
+        "zarazConsentChoicesUpdated",
+        handleConsentUpdate,
+      );
     };
   }, []);
 
