@@ -1,7 +1,9 @@
 import "./globals.css";
 
-import path from "path";
 import type { Metadata } from "next";
+import Link from "next/link";
+import Image from "next/image";
+
 import { Inter } from "next/font/google";
 
 import {
@@ -10,11 +12,12 @@ import {
   titleParam,
 } from "@/util/metaTagInfo";
 import { Consent } from "@/util/zaraz/Consent";
+const logoImagePath = "/logo_keyboard.svg";
 
 const inter = Inter({ subsets: ["latin"] });
 
 const url = new URL("https://jonnity.com");
-const logoImagePath = "/icon_keyboard.webp";
+const iconImagePath = "/icon_keyboard.webp";
 export const metadata: Metadata = {
   title: titleParam,
   description: defaultDescription,
@@ -41,7 +44,7 @@ export const metadata: Metadata = {
     images: [{ url: logoImagePath }],
   },
   robots: { index: true },
-  icons: { icon: { url: logoImagePath } },
+  icons: { icon: { url: iconImagePath } },
 };
 
 export default function RootLayout({
@@ -54,6 +57,21 @@ export default function RootLayout({
       <body
         className={`${inter.className} landscape:bg-ant-nest_landscape bg-cover bg-fixed bg-repeat-y portrait:bg-ant-nest_portrait`}
       >
+        <header className="mb-4 flex h-16 w-full justify-center bg-orange-200 bg-opacity-80 lg:h-20">
+          <div className="mx-4 flex h-full w-full justify-between lg:mx-0 lg:w-11/12 xl:w-3/4">
+            <Link href="/" className="relative block h-full w-fit">
+              <Image
+                src={logoImagePath}
+                alt="アズマオオズアリの頭部とキーボードを模したアイコンとjonnityという文字"
+                width={0}
+                height={0}
+                className="h-full w-auto"
+              />
+            </Link>
+            {/* カテゴリ表示をする前提でスタイリングするために、不可視要素を追加 */}
+            <p className="invisible self-end">category: hoge</p>
+          </div>
+        </header>
         {children}
         <Consent />
       </body>
