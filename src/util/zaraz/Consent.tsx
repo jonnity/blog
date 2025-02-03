@@ -41,7 +41,9 @@ declare global {
 
 export const Consent: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [isDebugMode] = useState(process.env.NODE_ENV === "development");
+  const [isDebugMode, setIsDebugMode] = useState(
+    process.env.NODE_ENV === "development",
+  );
 
   // zarazのインスタンスを取得(開発環境ではモックを使用)
   const getZaraz = () => {
@@ -203,6 +205,14 @@ export const Consent: React.FC = () => {
                 className="rounded bg-red-100 px-2 py-1 text-xs"
               >
                 Clear Cookie
+              </button>
+              <button
+                onClick={() => {
+                  setIsDebugMode(false);
+                }}
+                className="rounded bg-gray-200 px-2 py-1 text-xs"
+              >
+                Close Debug Panel
               </button>
             </div>
           </div>
