@@ -3,7 +3,7 @@ type Prop = { tags: string[] };
 export const TagListSpan: React.FC<Prop> = (prop) => {
   const { tags } = prop;
   if (tags.length === 0) {
-    return <span>no tags</span>;
+    return <span className="bg-gray-200 text-black">no tags</span>;
   }
   const tagSpans = tags.map((tag, index) => {
     // tag検索画面を作るためにLinkを埋める可能性あり
