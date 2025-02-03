@@ -148,8 +148,7 @@ export const Consent: React.FC = () => {
         >
           <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 sm:flex-row">
             <p className="text-sm text-gray-700">
-              当サイトではCookieを使用してユーザー体験を向上させています。
-              Cookieの使用を許可することで、より良いサービスを提供することができます。
+              当サイトではGoogleAnalyticsを用いています、正確なアクセス解析のためにCookieを利用します。
             </p>
             <div className="flex gap-3">
               <button
