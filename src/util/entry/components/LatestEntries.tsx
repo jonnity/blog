@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { EntryManager } from "@/util/entry/Entry";
 import { EntryLink } from "@/util/entry/components/EntryLink";
 
@@ -13,7 +14,7 @@ export const LatestEntries: React.FC<LatestEntriesProps> = ({
         <EntryLink key={entry.slug} entry={entry} />
       ))}
       <p className="self-center text-3xl font-extrabold">
-        <a href="/blog">...</a>
+        <Link href="/blog">...</Link>
       </p>
     </div>
   );
