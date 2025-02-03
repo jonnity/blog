@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 import { EntryProp } from "../Entry";
-import { TagListSpan } from "./TagListSpan";
+import { TagListSpan } from "./TagList";
 import { DateInfoSpan } from "./DateInfoSpan";
 
 export const EntryLink: React.FC<EntryProp> = ({ entry }) => {
