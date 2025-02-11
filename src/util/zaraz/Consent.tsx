@@ -74,8 +74,6 @@ export const Consent: React.FC = () => {
       const zaraz = getZaraz();
       if (zaraz) {
         setIsVisible(true);
-        zaraz.consent.setAll(true);
-        zaraz.consent.sendQueuedEvents();
       }
     }
     document.addEventListener(
@@ -92,7 +90,12 @@ export const Consent: React.FC = () => {
   };
 
   const handleAccept = () => {
-    setIsVisible(false);
+    const zaraz = getZaraz();
+    if (zaraz) {
+      zaraz.consent.setAll(true);
+      zaraz.consent.sendQueuedEvents();
+      setIsVisible(false);
+    }
   };
 
   const handleReject = () => {
@@ -150,7 +153,8 @@ export const Consent: React.FC = () => {
         >
           <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 sm:flex-row">
             <p className="text-sm text-gray-700">
-              当サイトではGoogleAnalyticsを用いています、正確なアクセス解析のためにCookieを利用します。
+              当サイトはCookieを利用します。
+              Cookieの使用を許可することで、より良いサービスを提供することができます。
             </p>
             <div className="flex gap-3">
               <button
