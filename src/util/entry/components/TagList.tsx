@@ -12,7 +12,7 @@ export const TagListSpan: React.FC<Prop> = (prop) => {
         <span key={index} className="bg-gray-200 text-black">
           {tag}
         </span>
-        {index === tags.length - 1 ? null : " "}
+        {index === tags.length - 1 ? null : <span> </span>}
       </>
     );
   });
