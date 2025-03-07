@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 
 import { EntryManager } from "@/util/entry/Entry";
 import { defaultDescription } from "@/util/metaTagInfo";
@@ -9,7 +10,6 @@ import { SideBarInfo } from "./components/SideBarInfo";
 type PageParams = { slug: string };
 
 const entryManager = EntryManager.getInstance();
-// export async function generateStaticParams(): Promise<PageParams[]> {
 export async function generateStaticParams(): Promise<PageParams[]> {
   const slugList = entryManager.getEntryList().map(({ slug }) => {
     return { slug: slug };
@@ -23,8 +23,13 @@ export default async function Page({
   params: Promise<PageParams>;
 }) {
   const { slug } = await params;
-  const entry = entryManager.getEntry(slug);
 
+  if (entryManager.isMonthlyEntry(slug)) {
+    const yearMonth = slug.replace(/^monthly-(\d{4}-\d{2})$/, "$1");
+    redirect(`/monthly/${yearMonth}`);
+  }
+
+  const entry = entryManager.getEntry(slug);
   return (
     <>
       <div className="m-4 flex flex-col justify-center gap-4 lg:mx-0 lg:flex-row">

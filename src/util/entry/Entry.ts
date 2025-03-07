@@ -100,6 +100,10 @@ export class EntryManager {
     }
   }
 
+  isMonthlyEntry(slug: string): boolean {
+    return /^monthly-\d{4}-\d{2}$/.test(slug);
+  }
+
   getEntryList(sort: "asc" | "desc" = "desc"): Entry[] {
     const entryList = Object.values(this.entryRecord);
     return entryList.sort((a, b) => {
