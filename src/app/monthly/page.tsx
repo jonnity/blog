@@ -14,16 +14,9 @@ export default async function Page() {
   const latestEntry = monthlyEntries[0];
 
   // 他の月記へのリンクを生成
-  const monthlyLinks = monthlyEntries.map((entry) => {
+  const yearMonthList = monthlyEntries.map((entry) => {
     const yearMonth = entry.slug.replace(/^monthly-(\d{4}-\d{2})$/, "$1");
-    const [year, month] = yearMonth.split("-");
-    return {
-      yearMonth,
-      year,
-      month,
-      title: entry.metadata.title,
-      isLatest: entry === latestEntry,
-    };
+    return yearMonth;
   });
 
   return (
@@ -34,7 +27,10 @@ export default async function Page() {
         </article>
         <aside className="w-full lg:w-1/4 xl:w-1/5">
           <SideBarInfo entry={latestEntry} />
-          <MonthlySelector monthlyLinks={monthlyLinks} />
+          <MonthlySelector
+            yearMonthList={yearMonthList}
+            currentYearMonth={yearMonthList[0]}
+          />
         </aside>
       </div>
     </div>
