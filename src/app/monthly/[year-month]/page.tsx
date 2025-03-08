@@ -41,10 +41,12 @@ export default async function Page({
         </article>
         <aside className="w-full lg:w-1/4 xl:w-1/5">
           <SideBarInfo entry={entry} />
-          <MonthlySelector
-            yearMonthList={yearMonthList}
-            currentYearMonth={yearMonth}
-          />
+          <div className="mt-2">
+            <MonthlySelector
+              yearMonthList={yearMonthList}
+              currentYearMonth={yearMonth}
+            />
+          </div>
         </aside>
       </div>
     </>
