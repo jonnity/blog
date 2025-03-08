@@ -3,18 +3,25 @@ import { redirect } from "next/navigation";
 
 import { EntryManager } from "@/util/entry/Entry";
 import { defaultDescription } from "@/util/metaTagInfo";
+import { BlogEntry } from "../../blog/[slug]/components/BlogEntry";
+import { SideBarInfo } from "../../blog/[slug]/components/SideBarInfo";
+import { MonthlySelector } from "../components/MonthlySelector";
 
-import { BlogEntry } from "./components/BlogEntry";
-import { SideBarInfo } from "./components/SideBarInfo";
-
-type PageParams = { slug: string };
+type PageParams = { "year-month": string };
 
 const entryManager = EntryManager.getInstance();
+const monthlyEntries = entryManager
+  .getEntryList()
+  .filter((entry) => entryManager.isMonthlyEntry(entry.slug));
+const yearMonthList = monthlyEntries.map((entry) => {
+  const yearMonth = entry.slug.replace(/^monthly-(\d{4}-\d{2})$/, "$1");
+  return yearMonth;
+});
+
 export async function generateStaticParams(): Promise<PageParams[]> {
-  const slugList = entryManager.getEntryList().map(({ slug }) => {
-    return { slug: slug };
-  });
-  return slugList;
+  return yearMonthList.map((yearMonth) => ({
+    "year-month": yearMonth,
+  }));
 }
 
 export default async function Page({
@@ -22,14 +29,10 @@ export default async function Page({
 }: {
   params: Promise<PageParams>;
 }) {
-  const { slug } = await params;
-
-  if (entryManager.isMonthlyEntry(slug)) {
-    const yearMonth = slug.replace(/^monthly-(\d{4}-\d{2})$/, "$1");
-    redirect(`/monthly/${yearMonth}`);
-  }
-
+  const { "year-month": yearMonth } = await params;
+  const slug = `monthly-${yearMonth}`;
   const entry = entryManager.getEntry(slug);
+
   return (
     <>
       <div className="m-4 flex flex-col justify-center gap-4 lg:mx-0 lg:flex-row">
@@ -38,6 +41,12 @@ export default async function Page({
         </article>
         <aside className="w-full lg:w-1/4 xl:w-1/5">
           <SideBarInfo entry={entry} />
+          <div className="mt-2">
+            <MonthlySelector
+              yearMonthList={yearMonthList}
+              currentYearMonth={yearMonth}
+            />
+          </div>
         </aside>
       </div>
     </>
@@ -48,10 +57,12 @@ type MetadataProps = {
   params: Promise<PageParams>;
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
+
 export async function generateMetadata({
   params,
 }: MetadataProps): Promise<Metadata> {
-  const entry = entryManager.getEntry((await params).slug);
+  const { "year-month": yearMonth } = await params;
+  const entry = entryManager.getEntry(`monthly-${yearMonth}`);
 
   const title = entry.metadata.title;
   const description = entry.metadata.description || defaultDescription;
