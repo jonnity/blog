@@ -1,20 +1,26 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
+
 import { EntryManager } from "@/util/entry/Entry";
 import { defaultDescription } from "@/util/metaTagInfo";
 import { BlogEntry } from "../../blog/[slug]/components/BlogEntry";
 import { SideBarInfo } from "../../blog/[slug]/components/SideBarInfo";
+import { MonthlySelector } from "../components/MonthlySelector";
 
 type PageParams = { "year-month": string };
 
 const entryManager = EntryManager.getInstance();
+const monthlyEntries = entryManager
+  .getEntryList()
+  .filter((entry) => entryManager.isMonthlyEntry(entry.slug));
+const yearMonthList = monthlyEntries.map((entry) => {
+  const yearMonth = entry.slug.replace(/^monthly-(\d{4}-\d{2})$/, "$1");
+  return yearMonth;
+});
 
 export async function generateStaticParams(): Promise<PageParams[]> {
-  const monthlyEntries = entryManager.getEntryList().filter(entry => 
-    entryManager.isMonthlyEntry(entry.slug)
-  );
-  
-  return monthlyEntries.map(entry => ({
-    "year-month": entry.slug.replace(/^monthly-(\d{4}-\d{2})$/, '$1')
+  return yearMonthList.map((yearMonth) => ({
+    "year-month": yearMonth,
   }));
 }
 
@@ -35,6 +41,10 @@ export default async function Page({
         </article>
         <aside className="w-full lg:w-1/4 xl:w-1/5">
           <SideBarInfo entry={entry} />
+          <MonthlySelector
+            yearMonthList={yearMonthList}
+            currentYearMonth={yearMonth}
+          />
         </aside>
       </div>
     </>
