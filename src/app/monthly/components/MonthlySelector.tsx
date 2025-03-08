@@ -13,7 +13,7 @@ export const MonthlySelector: React.FC<MonthlySelectorProp> = ({
   const selectorId = "yearMonthSelector";
   const yearMonthHandler = () => {
     const selector = document.getElementById(selectorId) as HTMLSelectElement;
-    redirect(selector.value);
+    redirect(`/monthly/${selector.value}`);
   };
   return (
     <div className="contents-base mt-2 p-2">
