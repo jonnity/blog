@@ -8,7 +8,7 @@ import { DateInfoSpan } from "./DateInfoSpan";
 export const EntryLink: React.FC<EntryProp> = ({ entry }) => {
   return (
     <>
-      <Link href={`./blog/${entry.slug}`}>
+      <Link href={`/blog/${entry.slug}`}>
         <article className="h-fit w-36 md:w-40 lg:w-48">
           <div className="relative h-[108px] w-full md:h-[120px] lg:h-36">
             <Image
