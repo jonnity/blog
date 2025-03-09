@@ -6,7 +6,7 @@ const ProfilePage: React.FC = () => {
     <div className="flex w-full justify-center">
       <div className="contents-base m-2 w-[360px] gap-x-4 p-4 md:w-[720px] lg:w-[960px]">
         <div className="flex items-center gap-4 text-2xl">
-          <h2>About Me</h2>
+          <h2>About jonnity</h2>
           <div className="flex items-center gap-2">
             <SNSLogo serviceName="github" height={logoHeight} />
             <SNSLogo serviceName="x" height={logoHeight} />
