@@ -10,7 +10,7 @@ export const EntryLink: React.FC<EntryProp> = ({ entry }) => {
     <>
       <Link href={`./blog/${entry.slug}`}>
         <article className="h-fit w-36 md:w-40 lg:w-48">
-          <div className="relative h-28 w-full md:h-32 lg:h-36">
+          <div className="relative h-[108px] w-full md:h-[120px] lg:h-36">
             <Image
               src={entry.getThumbnail().url}
               alt={entry.getThumbnail().alt}
