@@ -4,8 +4,8 @@ import { LatestEntries } from "@/util/entry/components/LatestEntries";
 export default function Home() {
   return (
     <div className="flex w-full justify-center">
-      <main className="contents-base my-2 flex w-11/12 flex-col gap-4 p-4 shadow-xl backdrop-blur-lg lg:m-8 lg:w-3/5 xl:w-1/2">
-        <section className="entry-written-in-md">
+      <main className="contents-base my-2 flex w-11/12 flex-col gap-4 p-4 shadow-xl lg:m-8 lg:w-3/5 xl:w-1/2">
+        <section className="entry-base">
           <h2 className="flex items-center gap-4 text-2xl lg:text-3xl">
             <span>About Me</span>
             <div className="flex items-center gap-2">
@@ -23,7 +23,7 @@ export default function Home() {
           </p>
           <p>妻とアリ200匹くらい (2025/02現在) と一緒に暮らしています。</p>
         </section>
-        <section className="entry-written-in-md">
+        <section className="entry-base">
           <h2 className="text-2xl lg:text-3xl">News</h2>
           <p>
             <a href="https://sketch-match.jonnity.com" target="_blank">
@@ -34,13 +34,13 @@ export default function Home() {
           </p>
         </section>
         <section>
-          <div className="entry-written-in-md">
+          <div className="entry-base">
             <h2 className="text-2xl lg:text-3xl">Blogs</h2>
           </div>
           <LatestEntries numOfEntries={3} />
         </section>
         <section>
-          <div className="entry-written-in-md">
+          <div className="entry-base">
             <h2 className="text-2xl lg:text-3xl">Works</h2>
           </div>
         </section>
