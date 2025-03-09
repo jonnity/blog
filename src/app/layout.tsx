@@ -55,10 +55,10 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body
-        className={`${inter.className} landscape:bg-ant-nest_landscape bg-cover bg-fixed bg-repeat-y portrait:bg-ant-nest_portrait`}
+        className={`${inter.className} bg-cover bg-fixed bg-repeat-y portrait:bg-ant-nest_portrait landscape:bg-ant-nest_landscape`}
       >
-        <header className="mb-4 flex h-16 w-full justify-center bg-orange-200 bg-opacity-80 lg:h-20">
-          <div className="mx-4 flex h-full w-full justify-between lg:mx-0 lg:w-11/12 xl:w-3/4">
+        <header className="flex h-16 w-full justify-center bg-orange-200 bg-opacity-80">
+          <div className="mx-4 flex h-full w-full justify-between">
             <Link href="/" className="relative block h-full w-fit">
               <Image
                 src={logoImagePath}
