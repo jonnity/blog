@@ -16,10 +16,10 @@ export const MonthlySelector: React.FC<MonthlySelectorProp> = ({
     redirect(`/monthly/${selector.value}`);
   };
   return (
-    <div className="contents-base flex p-2 lg:block">
-      <h2 className="p-2 text-lg lg:p-0">過去の月記</h2>
-      <hr className="my-1 hidden w-full border-gray-400 lg:block" />
-      <div className="m-0 flex justify-end gap-2 lg:m-2">
+    <div className="contents-base flex flex-col p-2">
+      <h2 className="p-2 text-lg">過去の月記</h2>
+      <hr className="my-1 w-full border-gray-400" />
+      <div className="m-0 flex justify-end gap-2">
         <select
           name="yearMonth"
           className="rounded border p-2"

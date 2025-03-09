@@ -34,7 +34,7 @@ const Profile = () => (
 const EntryTOC: React.FC<EntryProp> = ({ entry }) => {
   return (
     <>
-      <div className="contents-base hidden p-2 lg:block">
+      <div className="contents-base hidden p-2 md:block">
         <h2 className="pr-1 text-lg">目次</h2>
         <SideBarDivider />
         <div className="p-2">
