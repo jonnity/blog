@@ -16,31 +16,33 @@ export const WorkLink: React.FC<WorkLinkProps> = ({
 }) => {
   return (
     <a href={`./${slug}`}>
-      <div className="flex h-36 w-full gap-4 bg-white bg-opacity-50 p-2">
-        <img src={thumbnail.url} alt={thumbnail.alt} className="h-32" />
+      <div className="flex h-fit w-full flex-col gap-2 bg-zinc-50 p-2 md:flex-row md:gap-4">
+        <img
+          src={thumbnail.url}
+          alt={thumbnail.alt}
+          className="h-24 w-fit md:h-32 lg:h-40"
+        />
         <div>
-          <h2 className="text-2xl">{title}</h2>
-          <div className="indent-4">
-            <div className="flex gap-2">
-              <span className="text-lg font-bold">ジャンル: </span>
-              {categories.map((category) => {
-                return (
-                  <>
-                    <span className="bg-gray-200 indent-0 text-base">
-                      {category}
-                    </span>
-                  </>
-                );
-              })}
-            </div>
-            <div className="flex gap-2">
-              <span className="text-lg font-bold">概要: </span>
-              <span className="indent-0 text-base">{description}</span>
-            </div>
-            <div>
-              <a href={link.url} target="_blank">
-                {link.message}
-              </a>
+          <h2 className="text-xl font-bold lg:text-2xl">{title}</h2>
+          <p className="text-base md:text-lg lg:text-xl">ジャンル:</p>
+          <div className="ml-4 flex flex-wrap gap-2 whitespace-normal break-words">
+            {categories.map((category, index) => {
+              return (
+                <>
+                  <span
+                    key={index}
+                    className={`inline-block whitespace-normal bg-gray-200 text-base lg:text-lg`}
+                  >
+                    {category}
+                  </span>
+                </>
+              );
+            })}
+          </div>
+          <div className="gap-2">
+            <p className="text-base md:text-lg lg:text-xl">概要: </p>
+            <div className="ml-4 flex flex-wrap gap-2 whitespace-normal break-words">
+              <span className="text-base lg:text-lg">{description}</span>
             </div>
           </div>
         </div>
