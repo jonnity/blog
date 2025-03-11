@@ -4,7 +4,8 @@ type WorkLinkProps = {
   description: string;
   slug: string;
   categories: string[];
-  link: { url: string; message: string };
+  createdAt: Date;
+  updatedAt?: Date;
 };
 export const WorkLink: React.FC<WorkLinkProps> = ({
   thumbnail,
@@ -12,7 +13,8 @@ export const WorkLink: React.FC<WorkLinkProps> = ({
   description,
   slug,
   categories,
-  link,
+  createdAt,
+  updatedAt,
 }) => {
   return (
     <a href={`./${slug}`}>
@@ -20,7 +22,7 @@ export const WorkLink: React.FC<WorkLinkProps> = ({
         <img
           src={thumbnail.url}
           alt={thumbnail.alt}
-          className="h-24 w-fit md:h-32 lg:h-40"
+          className="h-[96px] w-[128px] object-fill md:h-[144px] md:w-[192px] lg:h-[192px] lg:w-[256px]"
         />
         <div>
           <h2 className="text-xl font-bold lg:text-2xl">{title}</h2>
