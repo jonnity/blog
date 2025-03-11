@@ -47,6 +47,12 @@ export const WorkLink: React.FC<WorkLinkProps> = ({
               <span className="text-base lg:text-lg">{description}</span>
             </div>
           </div>
+          <p>
+            <span className="text-base lg:text-lg">
+              {createdAt.toLocaleDateString()} 作成
+              {updatedAt ? ` (${updatedAt.toLocaleDateString()} 更新)` : ""}
+            </span>
+          </p>
         </div>
       </div>
     </a>
