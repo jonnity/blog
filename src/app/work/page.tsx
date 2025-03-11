@@ -13,6 +13,7 @@ const WorkPage: React.FC = () => {
           const { url, alt } = work.getThumbnail();
           return (
             <WorkLink
+              key={work.slug}
               title={work.metadata.title}
               thumbnail={{ url, alt }}
               description={work.metadata.description}
