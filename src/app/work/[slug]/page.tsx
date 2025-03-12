@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 
 import { WorkManager } from "@/util/work/Work";
 import { defaultDescription } from "@/util/metaTagInfo";
-import { DateInfoSpan } from "@/util/entry/components/DateInfoSpan";
 import { ReactMarkdown } from "@/util/entry/components/ReactMarkdown";
 
 type PageParams = { slug: string };
@@ -76,7 +75,7 @@ export default async function Page({
             </a>
           </div>
           <hr className="my-4 w-full border-gray-400" />
-          {/* <ReactMarkdown entry={work} /> */}
+          <ReactMarkdown mdBody={work.body} />
         </article>
       </div>
     </>
