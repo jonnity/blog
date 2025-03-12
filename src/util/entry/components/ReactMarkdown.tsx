@@ -5,20 +5,20 @@ import { z } from "zod";
 const srcSchema = z.string();
 const altSchema = z.string();
 
-import { EntryProp } from "../Entry";
 import { ImageViewer } from "./ImageViewer";
 import { SyntaxHighlightedCodeBlock } from "./SyntaxHighlightedCodeBlock";
 import { IframeYoutubePlayer } from "./IframeYoutubePlayer";
 import { EmbeddedTweet } from "./EmbeddedTweet";
+type ReactMarkdownProps = { mdBody: string };
 
-export const ReactMarkdown: React.FC<EntryProp> = ({ entry }) => {
+export const ReactMarkdown: React.FC<ReactMarkdownProps> = ({ mdBody }) => {
   return (
     <Markdown
       remarkPlugins={[remarkGfm]}
       className={"entry-base"}
       urlTransform={(url, _key, { tagName }) => {
         if (tagName === "img") {
-          return /^https?:/.test(url) ? url : `/entry/${entry.slug}/${url}`;
+          return /^https?:/.test(url) ? url : `/entry/${url}`;
         }
         return url;
       }}
@@ -111,7 +111,7 @@ export const ReactMarkdown: React.FC<EntryProp> = ({ entry }) => {
         },
       }}
     >
-      {entry.body}
+      {mdBody}
     </Markdown>
   );
 };

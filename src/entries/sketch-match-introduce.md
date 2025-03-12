@@ -7,7 +7,7 @@ tags:
   - ゲーム
   - SketchMatch
 thumbnail:
-  url: thumbnail.webp
+  url: sketch-match-introduce-thumbnail.webp
   alt: Sketch Matchのロゴ
 ---
 
