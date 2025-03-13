@@ -55,7 +55,7 @@ class Entry {
   getThumbnail() {
     if (this.metadata.thumbnail?.url && this.metadata.thumbnail?.alt) {
       return {
-        url: `/entry/${this.slug}/${this.metadata.thumbnail.url}`,
+        url: `/entry/${this.metadata.thumbnail}`,
         alt: this.metadata.thumbnail.alt,
       };
     } else {

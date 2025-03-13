@@ -18,7 +18,7 @@ export const BlogEntry: React.FC<EntryProp> = ({ entry }) => {
           </p>
         </div>
         <hr className="my-4 w-full border-gray-400" />
-        <ReactMarkdown entry={entry} />
+        <ReactMarkdown mdBody={entry.body} />
       </div>
     </>
   );
