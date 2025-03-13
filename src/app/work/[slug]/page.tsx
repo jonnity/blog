@@ -54,14 +54,12 @@ export default async function Page({
               <div className="ml-4 flex flex-wrap gap-2 whitespace-normal break-words">
                 {work.metadata.categories.map((category, index) => {
                   return (
-                    <>
-                      <span
-                        key={index}
-                        className={`inline-block whitespace-normal bg-gray-200 text-base lg:text-lg`}
-                      >
-                        {category}
-                      </span>
-                    </>
+                    <span
+                      key={index}
+                      className={`inline-block whitespace-normal bg-gray-200 text-base lg:text-lg`}
+                    >
+                      {category}
+                    </span>
                   );
                 })}
               </div>
