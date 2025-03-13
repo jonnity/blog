@@ -51,6 +51,9 @@ const ProfilePage: React.FC = () => {
           <p>
             オモコロとかDPZとかを読むのも好きなので、そういうものも出していきたい気持ちはあります。つまりは「おもしろ文章を書きます」という宣言ですが、果たして…
           </p>
+          <p>
+            本サイトに関する問い合わせは、本ページ上部に記載しているSNSのリンクから、jonnityまで連絡をお願いします。
+          </p>
         </div>
         <h2 className="mt-4 text-2xl">Policies</h2>
         <hr className="my-1 w-full border-gray-400" />
@@ -70,9 +73,6 @@ const ProfilePage: React.FC = () => {
               Google社のポリシーと規約
             </a>
             をご覧ください。
-          </p>
-          <p>
-            問い合わせは、本ページ上部に記載しているSNSのリンクから、jonnityまで連絡をお願いします。
           </p>
         </div>
       </div>
