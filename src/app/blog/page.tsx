@@ -3,7 +3,7 @@ import { EntryLink } from "@/util/entry/components/EntryLink";
 
 export default async function BlogPage() {
   const entryManager = EntryManager.getInstance();
-  const entries = entryManager.getEntryList();
+  const entries = entryManager.getEntryList(undefined, "blog");
   const notMonthlyEntries = entries.filter(
     (entry) => !entryManager.isMonthlyEntry(entry.slug),
   );
