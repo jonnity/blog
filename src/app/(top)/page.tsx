@@ -44,6 +44,24 @@ export default function Home() {
           </div>
         </RouteBlock>
         <RouteBlock>
+          <HeadSubject>Monthly ({monthlyTitle})</HeadSubject>
+          <Divider />
+          <ul>
+            {!latestMonthly.metadata.summary ? (
+              <li>特になし…</li>
+            ) : (
+              latestMonthly.metadata.summary.map((item, index) => (
+                <li key={index} className="ml-6 list-disc">
+                  {item}
+                </li>
+              ))
+            )}
+          </ul>
+          <div className="entry-base flex w-full justify-end">
+            <Link href="/blog">Read more...</Link>
+          </div>
+        </RouteBlock>
+        <RouteBlock>
           <HeadSubject>Work</HeadSubject>
           <Divider />
           <div className="flex justify-between">
@@ -79,24 +97,6 @@ export default function Home() {
           </div>
           <div className="entry-base flex w-full justify-end">
             <Link href="/blog">See more...</Link>
-          </div>
-        </RouteBlock>
-        <RouteBlock>
-          <HeadSubject>Monthly ({monthlyTitle})</HeadSubject>
-          <Divider />
-          <ul>
-            {!latestMonthly.metadata.summary ? (
-              <li>特になし…</li>
-            ) : (
-              latestMonthly.metadata.summary.map((item, index) => (
-                <li key={index} className="ml-6 list-disc">
-                  {item}
-                </li>
-              ))
-            )}
-          </ul>
-          <div className="entry-base flex w-full justify-end">
-            <Link href="/blog">Read more...</Link>
           </div>
         </RouteBlock>
       </main>
