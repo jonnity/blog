@@ -1,58 +1,141 @@
+import { EntryManager } from "@/util/entry/Entry";
 import { SNSLogo } from "@/util/profile/SNSLogo";
-import { LatestEntries } from "@/util/entry/components/LatestEntries";
+import { WorkManager } from "@/util/work/Work";
+import Link from "next/link";
+
+const workManager = WorkManager.getInstance();
+const allWorks = workManager.getWorkList();
+const twoWorks = allWorks.slice(0, 2);
+
+const entryManager = EntryManager.getInstance();
+const allBlogs = entryManager.getEntryList(undefined, "blog");
+const twoBlogs = allBlogs.slice(0, 2);
+
+const latestMonthly = entryManager.getEntryList(undefined, "monthly")[0];
+const monthlyTitle = latestMonthly.slug.replace(
+  /^monthly-(\d{4}-\d{2})$/,
+  "$1",
+);
 
 export default function Home() {
   return (
     <div className="flex w-full justify-center">
-      <main className="contents-base my-2 flex w-11/12 flex-col gap-4 p-4 shadow-xl lg:m-8 lg:w-3/5 xl:w-1/2">
-        <section className="entry-base">
-          <h2 className="flex items-center gap-4 text-2xl lg:text-3xl">
-            <span>About Me</span>
+      <main className="contents-base m-2 grid w-[360px] grid-cols-1 flex-col gap-2 p-4 md:w-[720px] md:grid-cols-2 md:border-t lg:w-[960px]">
+        <RouteBlock>
+          <div className="flex gap-4">
+            <HeadSubject>Profile</HeadSubject>
             <div className="flex items-center gap-2">
               <SNSLogo serviceName="github" />
               <SNSLogo serviceName="x" />
               <SNSLogo serviceName="threads" />
             </div>
-          </h2>
-          <p>
-            個人開発やアリ飼育などをしながら、エンジニアとして働いてます。ゆゆ式が好きです。
-            このサイトは、主にエンジニアとしての活動のアプトプットの場として作りました。オモコロとかDPZとかのおもしろ文章を読むのも好きなので、そういうのも出していきたい気持ちはあります。
-          </p>
-          <p>
-            仕事ではほとんどコーディングしないので大変。OSSのソースとかをちゃんと読めばなんとかなる気はしてきてはいます。
-          </p>
-          <p>妻とアリ200匹くらい (2025/02現在) と一緒に暮らしています。</p>
-        </section>
-        <section className="entry-base">
-          <h2 className="text-2xl lg:text-3xl">News</h2>
-          <p>
-            <a href="https://sketch-match.jonnity.com" target="_blank">
-              Sketch Match
-            </a>
-            というお絵かき + 神経衰弱のパーティゲームを作りました。
-            ペアになっているお題が各プレイヤーに出され、その絵を使って神経衰弱をするゲームをブラウザで遊べるので↑のリンクからぜひ。
-          </p>
-        </section>
-        <section>
-          <div className="entry-base">
-            <h2 className="text-2xl lg:text-3xl">Blogs</h2>
           </div>
-          <LatestEntries numOfEntries={3} />
-        </section>
-        <section>
-          <div className="entry-base">
-            <h2 className="text-2xl lg:text-3xl">Works</h2>
+          <Divider />
+          <div className="ml-2 lg:text-lg">
+            <p>
+              個人開発やアリ飼育などをしながら、エンジニアとして働いてます。ゆゆ式が好きです。
+            </p>
+            <p>
+              このサイトは、主にエンジニアとしての活動のアプトプットの場として作りました。
+            </p>
           </div>
-        </section>
-        {/* <section>
-          <h2 className="text-2xl lg:text-3xl">記事一覧</h2>
-          <div className="flex flex-wrap gap-4 p-4">
-            {entryManager.getEntryList().map((entry) => (
-              <EntryLink key={entry.slug} entry={entry} />
-            ))}
+          <MoreLink path="profile" message="Read more..." />
+        </RouteBlock>
+        <RouteBlock>
+          <HeadSubject>Monthly ({monthlyTitle})</HeadSubject>
+          <Divider />
+          <ul className="lg:text-lg">
+            {!latestMonthly.metadata.summary ? (
+              <li>特になし…</li>
+            ) : (
+              latestMonthly.metadata.summary.map((item, index) => (
+                <li key={index} className="ml-6 list-disc">
+                  {item}
+                </li>
+              ))
+            )}
+          </ul>
+          <MoreLink path="monthly" message="Read more..." />
+        </RouteBlock>
+        <RouteBlock>
+          <HeadSubject>Work</HeadSubject>
+          <Divider />
+          <div className="flex justify-between">
+            {twoWorks.map((work) => {
+              return (
+                <EntryLink
+                  key={work.slug}
+                  slug={work.slug}
+                  title={work.metadata.title}
+                  thumbnail={work.getThumbnail()}
+                />
+              );
+            })}
           </div>
-        </section> */}
+          <MoreLink path="work" message="See more..." />
+        </RouteBlock>
+        <RouteBlock>
+          <HeadSubject>Blog</HeadSubject>
+          <Divider />
+          <div className="flex justify-between">
+            {twoBlogs.map((blog) => {
+              return (
+                <EntryLink
+                  key={blog.slug}
+                  slug={blog.slug}
+                  title={blog.metadata.title}
+                  thumbnail={blog.getThumbnail()}
+                />
+              );
+            })}
+          </div>
+          <MoreLink path="blog" message="See more..." />
+        </RouteBlock>
       </main>
     </div>
   );
 }
+
+const HeadSubject: React.FC<{ children?: React.ReactNode }> = ({
+  children,
+}) => {
+  return (
+    <h3 className="flex items-center gap-4 text-xl md:text-2xl lg:text-3xl">
+      {children}
+    </h3>
+  );
+};
+
+const EntryLink: React.FC<{
+  slug: string;
+  thumbnail: { url: string; alt: string };
+  title: string;
+}> = ({ slug, thumbnail, title }) => {
+  return (
+    <a href={`/work/${slug}`}>
+      <article className="flex h-fit w-[160px] flex-col items-center lg:w-[224px]">
+        <img
+          src={thumbnail.url}
+          alt={thumbnail.alt}
+          className="h-[120px] w-[160px] object-cover lg:h-[168px] lg:w-[224px]"
+        />
+        <h3 className="text-sm font-bold lg:text-base">{title}</h3>
+      </article>
+    </a>
+  );
+};
+
+const RouteBlock: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  return <div className="relative mb-2 h-full pb-5">{children}</div>;
+};
+
+const Divider: React.FC = () => <hr className="mb-1 w-full border-gray-400" />;
+
+const MoreLink: React.FC<{ path: string; message: string }> = ({
+  path,
+  message,
+}) => (
+  <div className="entry-base absolute bottom-0 right-0">
+    <Link href={`/${path}`}>{message}</Link>
+  </div>
+);

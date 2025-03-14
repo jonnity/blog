@@ -8,12 +8,12 @@ export const TagListSpan: React.FC<Prop> = (prop) => {
   const tagSpans = tags.map((tag, index) => {
     // tag検索画面を作るためにLinkを埋める可能性あり
     return (
-      <>
-        <span key={index} className="bg-gray-200 text-black">
-          {tag}
-        </span>
-        {index === tags.length - 1 ? null : <span> </span>}
-      </>
+      <span
+        key={index}
+        className={`bg-gray-200 text-black ${index !== 0 && "ml-1"}`}
+      >
+        {tag}
+      </span>
     );
   });
   return (

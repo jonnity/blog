@@ -28,6 +28,7 @@ const thumbnailSchema = z
     alt: z.string(),
   })
   .optional();
+const summarySchema = z.string().array().optional();
 
 const metadataSchema = z.object({
   title: titleSchema,
@@ -36,6 +37,7 @@ const metadataSchema = z.object({
   createdAt: createdAtSchema,
   updatedAt: updatedAtSchema,
   thumbnail: thumbnailSchema,
+  summary: summarySchema,
 });
 type Metadata = z.infer<typeof metadataSchema>;
 
@@ -53,9 +55,9 @@ class Entry {
     this.body = parsedData.body;
   }
   getThumbnail() {
-    if (this.metadata.thumbnail?.url && this.metadata.thumbnail?.alt) {
+    if (this.metadata.thumbnail) {
       return {
-        url: `/entry/${this.metadata.thumbnail}`,
+        url: `/entry/${this.metadata.thumbnail.url}`,
         alt: this.metadata.thumbnail.alt,
       };
     } else {
@@ -104,9 +106,20 @@ export class EntryManager {
     return /^monthly-\d{4}-\d{2}$/.test(slug);
   }
 
-  getEntryList(sort: "asc" | "desc" = "desc"): Entry[] {
-    const entryList = Object.values(this.entryRecord);
-    return entryList.sort((a, b) => {
+  getEntryList(
+    sort: "asc" | "desc" = "desc",
+    category?: "blog" | "monthly",
+  ): Entry[] {
+    const allEntries = Object.values(this.entryRecord);
+    const entryFilter: (entry: Entry) => boolean = !category
+      ? (_entry) => true
+      : category == "blog"
+        ? (entry) => !this.isMonthlyEntry(entry.slug)
+        : category == "monthly"
+          ? (entry) => this.isMonthlyEntry(entry.slug)
+          : (_entry) => false;
+    const entries = allEntries.filter(entryFilter);
+    return entries.sort((a, b) => {
       if (sort === "asc") {
         return a.metadata.createdAt > b.metadata.createdAt ? 1 : -1;
       } else if (sort === "desc") {
