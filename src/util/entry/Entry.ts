@@ -28,6 +28,7 @@ const thumbnailSchema = z
     alt: z.string(),
   })
   .optional();
+const summarySchema = z.string().array().optional();
 
 const metadataSchema = z.object({
   title: titleSchema,
@@ -36,6 +37,7 @@ const metadataSchema = z.object({
   createdAt: createdAtSchema,
   updatedAt: updatedAtSchema,
   thumbnail: thumbnailSchema,
+  summary: summarySchema,
 });
 type Metadata = z.infer<typeof metadataSchema>;
 

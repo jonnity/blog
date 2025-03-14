@@ -11,6 +11,12 @@ const entryManager = EntryManager.getInstance();
 const allBlogs = entryManager.getEntryList(undefined, "blog");
 const twoBlogs = allBlogs.slice(0, 2);
 
+const latestMonthly = entryManager.getEntryList(undefined, "monthly")[0];
+const monthlyTitle = latestMonthly.slug.replace(
+  /^monthly-(\d{4}-\d{2})$/,
+  "$1",
+);
+
 export default function Home() {
   return (
     <div className="flex w-full justify-center">
@@ -70,6 +76,24 @@ export default function Home() {
           </div>
           <div className="entry-base flex w-full justify-end">
             <Link href="/blog">See more...</Link>
+          </div>
+        </RouteBlock>
+        <RouteBlock>
+          <HeadSubject>Monthly</HeadSubject>
+          <h4>{monthlyTitle}の活動:</h4>
+          <ul>
+            {!latestMonthly.metadata.summary ? (
+              <li>特になし…</li>
+            ) : (
+              latestMonthly.metadata.summary.map((item, index) => (
+                <li key={index} className="ml-6 list-disc">
+                  {item}
+                </li>
+              ))
+            )}
+          </ul>
+          <div className="entry-base flex w-full justify-end">
+            <Link href="/blog">Read more...</Link>
           </div>
         </RouteBlock>
 
