@@ -79,7 +79,7 @@ export default function Home() {
           </div>
         </RouteBlock>
         <RouteBlock>
-          <HeadSubject>Monthly ({monthlyTitle}の活動)</HeadSubject>
+          <HeadSubject>Monthly ({monthlyTitle})</HeadSubject>
           <ul>
             {!latestMonthly.metadata.summary ? (
               <li>特になし…</li>
