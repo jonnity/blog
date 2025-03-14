@@ -1,11 +1,15 @@
+import { EntryManager } from "@/util/entry/Entry";
 import { SNSLogo } from "@/util/profile/SNSLogo";
-import { LatestEntries } from "@/util/entry/components/LatestEntries";
 import { WorkManager } from "@/util/work/Work";
 import Link from "next/link";
 
 const workManager = WorkManager.getInstance();
 const allWorks = workManager.getWorkList();
 const twoWorks = allWorks.slice(0, 2);
+
+const entryManager = EntryManager.getInstance();
+const allBlogs = entryManager.getEntryList(undefined, "blog");
+const twoBlogs = allBlogs.slice(0, 2);
 
 export default function Home() {
   return (
@@ -34,10 +38,10 @@ export default function Home() {
         </RouteBlock>
         <RouteBlock>
           <HeadSubject>Work</HeadSubject>
-          <div className="flex justify-between px-2">
+          <div className="flex justify-between">
             {twoWorks.map((work) => {
               return (
-                <WorkLink
+                <EntryLink
                   key={work.slug}
                   slug={work.slug}
                   title={work.metadata.title}
@@ -48,6 +52,24 @@ export default function Home() {
           </div>
           <div className="entry-base flex w-full justify-end">
             <Link href="/work">See more...</Link>
+          </div>
+        </RouteBlock>
+        <RouteBlock>
+          <HeadSubject>Blog</HeadSubject>
+          <div className="flex justify-between">
+            {twoBlogs.map((blog) => {
+              return (
+                <EntryLink
+                  key={blog.slug}
+                  slug={blog.slug}
+                  title={blog.metadata.title}
+                  thumbnail={blog.getThumbnail()}
+                />
+              );
+            })}
+          </div>
+          <div className="entry-base flex w-full justify-end">
+            <Link href="/blog">See more...</Link>
           </div>
         </RouteBlock>
 
@@ -95,25 +117,25 @@ const HeadSubject: React.FC<{ children?: React.ReactNode }> = ({
   );
 };
 
-const WorkLink: React.FC<{
+const EntryLink: React.FC<{
   slug: string;
   thumbnail: { url: string; alt: string };
   title: string;
 }> = ({ slug, thumbnail, title }) => {
   return (
     <a href={`/work/${slug}`}>
-      <article className="flex h-fit w-[148px] flex-col items-center">
+      <article className="flex h-fit w-[160px] flex-col items-center">
         <img
           src={thumbnail.url}
           alt={thumbnail.alt}
-          className="h-[111px] w-[148px] object-cover"
+          className="h-[120px] w-[160px] object-cover"
         />
-        <h3 className="text-base font-bold lg:text-xl">{title}</h3>
+        <h3 className="text-sm font-bold lg:text-xl">{title}</h3>
       </article>
     </a>
   );
 };
 
 const RouteBlock: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  return <div className="h-52">{children}</div>;
+  return <div className="h-fit">{children}</div>;
 };
