@@ -1,6 +1,7 @@
 import { SNSLogo } from "@/util/profile/SNSLogo";
 import { LatestEntries } from "@/util/entry/components/LatestEntries";
 import { WorkManager } from "@/util/work/Work";
+import Link from "next/link";
 
 const workManager = WorkManager.getInstance();
 const allWorks = workManager.getWorkList();
@@ -28,7 +29,7 @@ export default function Home() {
             </p>
           </div>
           <div className="entry-base flex w-full justify-end">
-            <a href="/profile">Read more...</a>
+            <Link href="/profile">Read more...</Link>
           </div>
         </RouteBlock>
         <RouteBlock>
@@ -46,7 +47,7 @@ export default function Home() {
             })}
           </div>
           <div className="entry-base flex w-full justify-end">
-            <a href="/work">See more...</a>
+            <Link href="/work">See more...</Link>
           </div>
         </RouteBlock>
 
