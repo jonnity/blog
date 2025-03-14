@@ -119,7 +119,7 @@ const EntryLink: React.FC<{
           alt={thumbnail.alt}
           className="h-[120px] w-[160px] object-cover lg:h-[168px] lg:w-[224px]"
         />
-        <h3 className="text-sm font-bold lg:text-xl">{title}</h3>
+        <h3 className="text-sm font-bold lg:text-base">{title}</h3>
       </article>
     </a>
   );
