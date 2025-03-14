@@ -17,7 +17,7 @@ export default function Home() {
       <main className="contents-base m-2 w-[360px] gap-x-4 p-4 md:w-[720px] lg:w-[960px]">
         <RouteBlock>
           <div className="flex gap-4">
-            <HeadSubject>About Me</HeadSubject>
+            <HeadSubject>Profile</HeadSubject>
             <div className="flex items-center gap-2">
               <SNSLogo serviceName="github" />
               <SNSLogo serviceName="x" />
