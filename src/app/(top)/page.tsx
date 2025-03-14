@@ -20,7 +20,7 @@ const monthlyTitle = latestMonthly.slug.replace(
 export default function Home() {
   return (
     <div className="flex w-full justify-center">
-      <main className="contents-base m-2 w-[360px] gap-x-4 p-4 md:w-[720px] lg:w-[960px]">
+      <main className="contents-base m-2 w-[360px] gap-x-4 p-4 md:grid md:w-[720px] md:grid-cols-2 lg:w-[960px]">
         <RouteBlock>
           <div className="flex gap-4">
             <HeadSubject>Profile</HeadSubject>
@@ -30,6 +30,7 @@ export default function Home() {
               <SNSLogo serviceName="threads" />
             </div>
           </div>
+          <Divider />
           <div className="ml-2">
             <p>
               個人開発やアリ飼育などをしながら、エンジニアとして働いてます。ゆゆ式が好きです。
@@ -44,6 +45,7 @@ export default function Home() {
         </RouteBlock>
         <RouteBlock>
           <HeadSubject>Work</HeadSubject>
+          <Divider />
           <div className="flex justify-between">
             {twoWorks.map((work) => {
               return (
@@ -62,6 +64,7 @@ export default function Home() {
         </RouteBlock>
         <RouteBlock>
           <HeadSubject>Blog</HeadSubject>
+          <Divider />
           <div className="flex justify-between">
             {twoBlogs.map((blog) => {
               return (
@@ -80,6 +83,7 @@ export default function Home() {
         </RouteBlock>
         <RouteBlock>
           <HeadSubject>Monthly ({monthlyTitle})</HeadSubject>
+          <Divider />
           <ul>
             {!latestMonthly.metadata.summary ? (
               <li>特になし…</li>
@@ -130,5 +134,7 @@ const EntryLink: React.FC<{
 };
 
 const RouteBlock: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  return <div className="h-fit">{children}</div>;
+  return <div className="mb-2 h-fit">{children}</div>;
 };
+
+const Divider: React.FC = () => <hr className="mb-1 w-full border-gray-400" />;
