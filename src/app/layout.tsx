@@ -3,7 +3,6 @@ import "./globals.css";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-
 import { Inter } from "next/font/google";
 
 import {
@@ -12,6 +11,11 @@ import {
   titleParam,
 } from "@/util/metaTagInfo";
 import { Consent } from "@/util/zaraz/Consent";
+import ProfileIcon from "@/assets/icons/profile.svg";
+import MonthDisplay from "@/assets/icons/MonthDisplay";
+import WorkIcon from "@/assets/icons/work.svg";
+import BlogIcon from "@/assets/icons/blog.svg";
+
 const logoImagePath = "/logo_keyboard.svg";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -47,6 +51,7 @@ export const metadata: Metadata = {
   icons: { icon: { url: iconImagePath } },
 };
 
+const iconSize = 45;
 export default function RootLayout({
   children,
 }: {
@@ -68,8 +73,45 @@ export default function RootLayout({
                 className="h-full w-auto"
               />
             </Link>
-            {/* カテゴリ表示をする前提でスタイリングするために、不可視要素を追加 */}
-            <p className="invisible self-end">category: hoge</p>
+            <div className="hidden h-full items-center gap-2 md:flex">
+              <IconLink
+                href="/profile"
+                icon={{
+                  type: "img",
+                  resource: {
+                    src: ProfileIcon,
+                    alt: "profileページのアイコン",
+                  },
+                }}
+              />
+              <IconLink
+                href="/monthly"
+                icon={{
+                  type: "component",
+                  resource: <MonthDisplay height={iconSize} width={iconSize} />,
+                }}
+              />
+              <IconLink
+                href="/work"
+                icon={{
+                  type: "img",
+                  resource: {
+                    src: WorkIcon,
+                    alt: "workページのアイコン",
+                  },
+                }}
+              />
+              <IconLink
+                href="/blog"
+                icon={{
+                  type: "img",
+                  resource: {
+                    src: BlogIcon,
+                    alt: "blogページのアイコン",
+                  },
+                }}
+              />
+            </div>
           </div>
         </header>
         {children}
@@ -78,3 +120,26 @@ export default function RootLayout({
     </html>
   );
 }
+
+const IconLink: React.FC<{
+  href: string;
+  icon:
+    | { type: "img"; resource: { src: string; alt: string } }
+    | { type: "component"; resource: React.ReactNode };
+}> = ({ href, icon }) => {
+  switch (icon.type) {
+    case "img":
+      return (
+        <Link href={href}>
+          <Image
+            src={icon.resource.src}
+            alt={icon.resource.alt}
+            height={iconSize}
+            width={iconSize}
+          />
+        </Link>
+      );
+    case "component":
+      return <Link href={href}>{icon.resource}</Link>;
+  }
+};
