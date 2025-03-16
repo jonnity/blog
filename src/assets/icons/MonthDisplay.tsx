@@ -1,9 +1,17 @@
 import Image from "next/image";
 import CalendarBase from "@/assets/icons/calenderBase.svg";
+import { CSSProperties } from "react";
 
-const MonthDisplay: React.FC<{ width: number; height: number }> = ({
+interface MonthDisplayProps {
+  width?: number;
+  height?: number;
+  className?: string;
+}
+
+const MonthDisplay: React.FC<MonthDisplayProps> = ({
   width,
   height,
+  className = "",
 }) => {
   const now = new Date();
   const months = [
@@ -23,27 +31,43 @@ const MonthDisplay: React.FC<{ width: number; height: number }> = ({
   const monthIndex = now.getMonth();
   const monthAbbreviation = months[monthIndex];
 
+  // Set container style based on whether width/height are provided
+  const containerStyle: CSSProperties = {};
+  if (width !== undefined) containerStyle.width = `${width}px`;
+  if (height !== undefined) containerStyle.height = `${height}px`;
+
+  // Original SVG viewBox
+  const viewBox = "0 0 267 267";
+
   return (
-    <div className={`relative w-[${width}px] h-[${height}px]`}>
-      <svg viewBox={`0 0 ${width} ${height}`} className="absolute">
+    <div className={`relative ${className}`} style={containerStyle}>
+      {/* Calendar base image */}
+      <Image
+        src={CalendarBase}
+        alt="monthlyページのアイコン"
+        className="h-full w-full"
+        width={267}
+        height={267}
+        style={{ objectFit: "contain" }}
+      />
+
+      {/* Month text overlay using SVG for better scaling */}
+      <svg
+        viewBox={viewBox}
+        className="pointer-events-none absolute inset-0 h-full w-full"
+        preserveAspectRatio="xMidYMid meet"
+      >
         <text
-          width={width}
-          height={height}
-          x={width / 2}
-          y={height / 1.8}
+          x="133.5"
+          y="165"
           textAnchor="middle"
           dominantBaseline="central"
-          fontSize={width / 2.8}
+          fontSize="95"
+          fontWeight="500"
         >
           {monthAbbreviation}
         </text>
       </svg>
-      <Image
-        src={CalendarBase}
-        alt="monthlyページのアイコン"
-        width={width}
-        height={height}
-      />
     </div>
   );
 };
