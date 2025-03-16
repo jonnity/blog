@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { WorkManager } from "@/util/work/Work";
 import { defaultDescription } from "@/util/metaTagInfo";
 import { ReactMarkdown } from "@/util/entry/components/ReactMarkdown";
+import { Hamburger } from "@/util/hamburger/Hamburger";
 
 type PageParams = { slug: string };
 
