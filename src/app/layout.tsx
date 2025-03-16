@@ -62,8 +62,8 @@ export default function RootLayout({
       <body
         className={`${inter.className} bg-cover bg-fixed bg-repeat-y portrait:bg-ant-nest_portrait landscape:bg-ant-nest_landscape`}
       >
-        <header className="flex h-16 w-full justify-center bg-orange-200 bg-opacity-80">
-          <div className="mx-4 flex h-full w-full justify-between">
+        <header className="sticky top-0 z-50 flex h-12 w-full justify-center bg-orange-200 px-4 md:h-16">
+          <div className="flex h-full w-full justify-between">
             <Link href="/" className="relative block h-full w-fit">
               <Image
                 src={logoImagePath}
@@ -114,7 +114,7 @@ export default function RootLayout({
             </div>
           </div>
         </header>
-        {children}
+        <div className="relative z-10">{children}</div>
         <Consent />
       </body>
     </html>
