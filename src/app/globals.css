@@ -8,104 +8,104 @@
   padding-bottom: 0.125rem;
 }
 
-.entry-written-in-md {
+.entry-base {
   @apply break-words leading-normal text-gray-900;
 }
 
-.entry-written-in-md > p {
+.entry-base > p {
   @apply mb-2 mt-0 indent-4;
 }
 
-.entry-written-in-md > * + * {
+.entry-base > * + * {
   @apply mb-2 mt-0;
 }
 
-.entry-written-in-md li + li {
+.entry-base li + li {
   @apply mt-1;
 }
 
-.entry-written-in-md li > p + p {
+.entry-base li > p + p {
   @apply mt-6;
 }
 
-.entry-written-in-md strong {
+.entry-base strong {
   @apply font-semibold;
 }
 
-.entry-written-in-md a {
+.entry-base a {
   @apply font-semibold text-blue-600;
 }
 
-.entry-written-in-md strong a {
+.entry-base strong a {
   @apply font-bold;
 }
 
-.entry-written-in-md h1 {
+.entry-base h1 {
   @apply mb-4 mt-6 border-b pb-2 text-4xl font-semibold leading-tight;
 }
 
-.entry-written-in-md h2 {
+.entry-base h2 {
   @apply mb-4 mt-6 border-b pb-2 text-2xl font-semibold leading-tight;
 }
 
-.entry-written-in-md h3 {
+.entry-base h3 {
   @apply mb-4 mt-6 text-lg font-semibold leading-snug;
 }
 
-.entry-written-in-md h4 {
+.entry-base h4 {
   @apply mb-4 mt-6 text-base font-semibold leading-none;
 }
 
-.entry-written-in-md h5 {
+.entry-base h5 {
   @apply mb-4 mt-6 text-sm font-semibold leading-tight;
 }
 
-.entry-written-in-md h6 {
+.entry-base h6 {
   @apply mb-4 mt-6 text-sm font-semibold leading-tight text-gray-600;
 }
 
-.entry-written-in-md blockquote {
+.entry-base blockquote {
   @apply border-l-4 border-gray-300 pl-4 pr-4 text-base text-gray-600;
 }
 
-.entry-written-in-md code {
+.entry-base code {
   @apply py-05 inline rounded bg-gray-200 px-1 font-mono text-sm;
 }
 
-.entry-written-in-md pre {
+.entry-base pre {
   @apply rounded bg-gray-100 p-4;
 }
 
-.entry-written-in-md pre code {
+.entry-base pre code {
   @apply block overflow-visible rounded-none bg-transparent p-0;
 }
 
-.entry-written-in-md ul {
+.entry-base ul {
   @apply list-disc pl-8 text-base;
 }
 
-.entry-written-in-md ol {
+.entry-base ol {
   @apply list-decimal pl-8 text-base;
 }
 
-.entry-written-in-md kbd {
+.entry-base kbd {
   @apply py-05 inline-block rounded border px-1 align-middle font-mono text-xs font-normal shadow;
 }
 
-.entry-written-in-md table {
+.entry-base table {
   @apply border-gray-600 text-base;
 }
 
-.entry-written-in-md th {
+.entry-base th {
   @apply border px-3 py-1;
 }
 
-.entry-written-in-md td {
+.entry-base td {
   @apply border px-3 py-1;
 }
 
 /* Override pygments style background color. */
-.entry-written-in-md .highlight pre {
+.entry-base .highlight pre {
   @apply bg-gray-100 !important;
 }
 

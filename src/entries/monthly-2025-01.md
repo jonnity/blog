@@ -5,6 +5,10 @@ description: 2025年1月の活動の振り返り
 tags: 
   - 月記
   - トラブルシュート
+summary:
+  - あけおめ
+  - 大体Sketch Matchができた
+  - Synfig StudioでインポートしたSVGがずれちゃうのは、transformが使われていたことが使われてたことが原因っぽい
 ---
 
 ## 開発関連

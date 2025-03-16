@@ -41,7 +41,9 @@ declare global {
 
 export const Consent: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [isDebugMode] = useState(process.env.NODE_ENV === "development");
+  const [isDebugMode, setIsDebugMode] = useState(
+    process.env.NODE_ENV === "development",
+  );
 
   // zarazのインスタンスを取得(開発環境ではモックを使用)
   const getZaraz = () => {
@@ -72,8 +74,6 @@ export const Consent: React.FC = () => {
       const zaraz = getZaraz();
       if (zaraz) {
         setIsVisible(true);
-        zaraz.consent.setAll(true);
-        zaraz.consent.sendQueuedEvents();
       }
     }
     document.addEventListener(
@@ -90,7 +90,12 @@ export const Consent: React.FC = () => {
   };
 
   const handleAccept = () => {
-    setIsVisible(false);
+    const zaraz = getZaraz();
+    if (zaraz) {
+      zaraz.consent.setAll(true);
+      zaraz.consent.sendQueuedEvents();
+      setIsVisible(false);
+    }
   };
 
   const handleReject = () => {
@@ -148,7 +153,7 @@ export const Consent: React.FC = () => {
         >
           <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 sm:flex-row">
             <p className="text-sm text-gray-700">
-              当サイトではCookieを使用してユーザー体験を向上させています。
+              当サイトはCookieを利用します。
               Cookieの使用を許可することで、より良いサービスを提供することができます。
             </p>
             <div className="flex gap-3">
@@ -204,6 +209,14 @@ export const Consent: React.FC = () => {
                 className="rounded bg-red-100 px-2 py-1 text-xs"
               >
                 Clear Cookie
+              </button>
+              <button
+                onClick={() => {
+                  setIsDebugMode(false);
+                }}
+                className="rounded bg-gray-200 px-2 py-1 text-xs"
+              >
+                Close Debug Panel
               </button>
             </div>
           </div>

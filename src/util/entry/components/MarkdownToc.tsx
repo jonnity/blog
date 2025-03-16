@@ -2,9 +2,7 @@ import Link from "next/link";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
-import { EntryProp } from "../Entry";
-
-export const MarkdownToc: React.FC<EntryProp> = ({ entry }) => {
+export const MarkdownToc: React.FC<{ mdBody: string }> = ({ mdBody }) => {
   return (
     <Markdown
       remarkPlugins={[remarkGfm]}
@@ -28,7 +26,7 @@ export const MarkdownToc: React.FC<EntryProp> = ({ entry }) => {
         },
       }}
     >
-      {entry.body}
+      {mdBody}
     </Markdown>
   );
 };
