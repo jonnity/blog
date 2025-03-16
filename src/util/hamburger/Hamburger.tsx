@@ -15,7 +15,7 @@ export const Hamburger: React.FC<HamburgerProps> = ({ children }) => {
       {/* Hamburger Icon Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="h-fit w-fit rounded bg-orange-200 bg-opacity-80 p-2"
+        className={`h-fit w-fit rounded bg-orange-200 bg-opacity-80 p-2 ${isOpen ? "hidden" : ""}`}
         aria-label="Toggle menu"
       >
         {/* Hamburger icon bars with animation */}
@@ -27,15 +27,24 @@ export const Hamburger: React.FC<HamburgerProps> = ({ children }) => {
         />
       </button>
 
-      {/* Menu Content */}
+      {/* Full-screen Menu Content */}
       <div
-        className={`absolute right-0 top-12 w-64 rounded bg-white bg-opacity-90 p-4 shadow-lg transition-all duration-300 ${
-          isOpen
-            ? "translate-y-0 opacity-100"
-            : "pointer-events-none -translate-y-2 opacity-0"
+        className={`fixed inset-0 z-40 bg-white bg-opacity-95 px-6 py-4 transition-transform duration-300 ${
+          isOpen ? "translate-x-0" : "pointer-events-none translate-x-full"
         }`}
       >
-        {children}
+        <div className="flex h-full flex-col">
+          <div className="flex justify-end">
+            <button
+              onClick={() => setIsOpen(false)}
+              className="text-3xl"
+              aria-label="Close menu"
+            >
+              ✕
+            </button>
+          </div>
+          <div className="overflow-y-auto">{children}</div>
+        </div>
       </div>
     </div>
   );
