@@ -11,7 +11,7 @@ import Link from "next/link";
 const iconSize = 35;
 
 type HamburgerProps = {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 };
 
 export const Hamburger: React.FC<HamburgerProps> = ({ children }) => {
