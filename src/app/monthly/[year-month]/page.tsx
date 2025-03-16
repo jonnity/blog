@@ -37,7 +37,7 @@ export default async function Page({
 
   return (
     <>
-      <div className="m-4 flex flex-col gap-4 justify-self-center md:w-[736px] md:flex-row lg:w-[1000px]">
+      <div className="m-4 flex w-[97%] flex-col gap-4 justify-self-center md:w-[736px] md:flex-row lg:w-[1000px]">
         <article className="w-full md:w-[440px] lg:w-[664px]">
           <BlogEntry entry={entry} />
         </article>
