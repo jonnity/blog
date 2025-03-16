@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { WorkManager } from "@/util/work/Work";
 import { defaultDescription } from "@/util/metaTagInfo";
 import { ReactMarkdown } from "@/util/entry/components/ReactMarkdown";
-import { Hamburger } from "@/util/hamburger/Hamburger";
 
 type PageParams = { slug: string };
 
@@ -27,7 +26,7 @@ export default async function Page({
   return (
     <>
       <div className="flex w-full justify-center">
-        <article className="contents-base m-2 w-[368px] gap-x-4 p-4 md:w-[720px] lg:w-[960px]">
+        <article className="contents-base my-2 w-[368px] gap-x-4 p-4 text-gray-900 md:w-[720px] lg:w-[960px]">
           <div className="flex items-center gap-2">
             <img
               src={thumbnail.url}
