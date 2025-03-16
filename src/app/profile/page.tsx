@@ -77,9 +77,7 @@ const ProfilePage: React.FC = () => {
           </p>
         </div>
       </div>
-      <Hamburger>
-        <></>
-      </Hamburger>
+      <Hamburger />
     </div>
   );
 };

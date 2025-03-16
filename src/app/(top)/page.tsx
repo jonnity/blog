@@ -126,9 +126,7 @@ export default function Home() {
           <MoreLink path="blog" message="See more..." />
         </RouteBlock>
       </main>
-      <Hamburger>
-        <></>
-      </Hamburger>
+      <Hamburger />
     </div>
   );
 }
