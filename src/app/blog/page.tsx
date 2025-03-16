@@ -20,7 +20,7 @@ export default async function BlogPage() {
           ))}
         </div>
       </div>
-      <Hamburger />;
+      <Hamburger />
     </div>
   );
 }

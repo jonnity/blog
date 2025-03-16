@@ -5,7 +5,7 @@ const ProfilePage: React.FC = () => {
   const logoHeight = 28;
   return (
     <div className="flex w-full justify-center">
-      <div className="contents-base m-2 w-[360px] gap-x-4 p-4 md:w-[720px] lg:w-[960px]">
+      <div className="contents-base my-2 w-[368px] gap-x-4 p-4 text-gray-900 md:w-[720px] lg:w-[960px]">
         <div className="flex items-center gap-4 text-2xl">
           <h2>About jonnity</h2>
           <div className="flex items-center gap-2">
