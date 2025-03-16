@@ -4,6 +4,7 @@ import Image from "next/image";
 import { EntryManager } from "@/util/entry/Entry";
 import { SNSLogo } from "@/util/profile/SNSLogo";
 import { WorkManager } from "@/util/work/Work";
+import { Hamburger } from "@/util/hamburger/Hamburger";
 
 import ProfileIcon from "@/assets/icons/profile.svg";
 import MonthDisplay from "@/assets/icons/MonthDisplay";
@@ -125,6 +126,9 @@ export default function Home() {
           <MoreLink path="blog" message="See more..." />
         </RouteBlock>
       </main>
+      <Hamburger>
+        <></>
+      </Hamburger>
     </div>
   );
 }
