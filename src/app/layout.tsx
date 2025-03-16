@@ -63,7 +63,7 @@ export default function RootLayout({
       <body
         className={`${inter.className} bg-cover bg-fixed bg-repeat-y portrait:bg-ant-nest_portrait landscape:bg-ant-nest_landscape`}
       >
-        <header className="sticky top-0 z-50 flex h-12 w-full justify-center bg-orange-200 px-4 md:h-16">
+        <header className="sticky top-0 z-30 flex h-12 w-full justify-center bg-orange-200 px-4 md:h-16">
           <div className="flex h-full w-full justify-between">
             <Link href="/" className="relative block h-full w-fit">
               <Image
@@ -118,7 +118,7 @@ export default function RootLayout({
             </div>
           </div>
         </header>
-        <div className="relative z-10">{children}</div>
+        <div className="relative">{children}</div>
         <Consent />
       </body>
     </html>
