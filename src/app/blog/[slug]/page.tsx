@@ -37,7 +37,7 @@ export default async function Page({
           <BlogEntry entry={entry} />
         </article>
         <aside className="w-full lg:w-1/4 xl:w-1/5">
-          <SideBarInfo entry={entry} />
+          <SideBarInfo mdBody={entry.body} />
         </aside>
       </div>
     </>
