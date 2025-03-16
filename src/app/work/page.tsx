@@ -1,5 +1,6 @@
 import { WorkManager } from "@/util/work/Work";
 import { WorkLink } from "../../util/work/components/WorkLink";
+import { Hamburger } from "@/util/hamburger/Hamburger";
 
 const WorkPage: React.FC = () => {
   const workManager = WorkManager.getInstance();
@@ -25,6 +26,7 @@ const WorkPage: React.FC = () => {
           );
         })}
       </div>
+      <Hamburger />
     </div>
   );
 };
