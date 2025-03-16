@@ -34,7 +34,7 @@ export default function Home() {
               <Image
                 src={ProfileIcon}
                 alt="Profileページのアイコン"
-                className="h-[26px] w-[26px] p-px text-xl md:h-[30px] md:w-[30px] md:text-2xl lg:h-[34px] lg:w-[34px] lg:text-3xl"
+                className="h-[26px] w-[26px] p-px md:h-[30px] md:w-[30px] lg:h-[34px] lg:w-[34px]"
               />
               <HeadSubject>Profile</HeadSubject>
             </div>
@@ -56,7 +56,12 @@ export default function Home() {
           <MoreLink path="profile" message="Read more..." />
         </RouteBlock>
         <RouteBlock>
-          <HeadSubject>Monthly ({monthlyTitle})</HeadSubject>
+          <div className="flex h-fit gap-1">
+            <div className="h-[26px] w-[26px] p-px md:h-[30px] md:w-[30px] lg:h-[34px] lg:w-[34px]">
+              <MonthDisplay />
+            </div>
+            <HeadSubject>Monthly ({monthlyTitle})</HeadSubject>
+          </div>
           <Divider />
           <ul className="lg:text-lg">
             {!latestMonthly.metadata.summary ? (
@@ -72,7 +77,14 @@ export default function Home() {
           <MoreLink path="monthly" message="Read more..." />
         </RouteBlock>
         <RouteBlock>
-          <HeadSubject>Work</HeadSubject>
+          <div className="flex h-fit gap-1">
+            <Image
+              src={WorkIcon}
+              alt="Workページのアイコン"
+              className="h-[26px] w-[26px] p-px md:h-[30px] md:w-[30px] lg:h-[34px] lg:w-[34px]"
+            />
+            <HeadSubject>Work</HeadSubject>
+          </div>
           <Divider />
           <div className="flex justify-between">
             {twoWorks.map((work) => {
@@ -89,7 +101,14 @@ export default function Home() {
           <MoreLink path="work" message="See more..." />
         </RouteBlock>
         <RouteBlock>
-          <HeadSubject>Blog</HeadSubject>
+          <div className="flex h-fit gap-1">
+            <Image
+              src={BlogIcon}
+              alt="Blogページのアイコン"
+              className="h-[26px] w-[26px] p-px md:h-[30px] md:w-[30px] lg:h-[34px] lg:w-[34px]"
+            />
+            <HeadSubject>Blog</HeadSubject>
+          </div>
           <Divider />
           <div className="flex justify-between">
             {twoBlogs.map((blog) => {
