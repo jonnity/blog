@@ -92,7 +92,7 @@ export default function Home() {
               return (
                 <EntryLink
                   key={work.slug}
-                  slug={work.slug}
+                  slug={`/work/${work.slug}`}
                   title={work.metadata.title}
                   thumbnail={work.getThumbnail()}
                 />
@@ -116,7 +116,7 @@ export default function Home() {
               return (
                 <EntryLink
                   key={blog.slug}
-                  slug={blog.slug}
+                  slug={`/blog/${blog.slug}`}
                   title={blog.metadata.title}
                   thumbnail={blog.getThumbnail()}
                 />
@@ -147,7 +147,7 @@ const EntryLink: React.FC<{
   title: string;
 }> = ({ slug, thumbnail, title }) => {
   return (
-    <a href={`/work/${slug}`}>
+    <a href={`${slug}`}>
       <article className="flex h-fit w-[160px] flex-col items-center lg:w-[224px]">
         <img
           src={thumbnail.url}
