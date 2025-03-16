@@ -7,7 +7,7 @@ export default function WorkPageLayout({
   return (
     <>
       {children}
-      <Hamburger />;
+      <Hamburger />
     </>
   );
 }
