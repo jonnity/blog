@@ -103,7 +103,7 @@ const ProfilePage: React.FC = () => {
           </p>
           <p>
             なお、Googleを含む第三者配信事業者によるユーザー識別のためのCookieを無効にする手続きは、
-            <a href="https://www.aboutads.info" target="_blank">
+            <a href="http://www.aboutads.info/choices/" target="_blank">
               www.aboutads.info
             </a>
             からも行うことができます。
