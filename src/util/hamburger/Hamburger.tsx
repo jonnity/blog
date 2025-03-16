@@ -115,7 +115,7 @@ const LinkWithLabel: React.FC<{
 }> = ({ children, label }) => (
   <div className="flex items-center">
     {children}
-    <Link href={label.href}>
+    <Link href={label.href} className="w-full">
       <span className="p-2 text-2xl">{label.message}</span>
     </Link>
   </div>
