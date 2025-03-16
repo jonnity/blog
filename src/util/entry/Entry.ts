@@ -154,4 +154,4 @@ export class EntryManager {
   }
 }
 
-export type EntryProp = { entry: Entry };
+export type EntryType = InstanceType<typeof Entry>;
