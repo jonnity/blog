@@ -102,7 +102,8 @@ export const Hamburger: React.FC<HamburgerProps> = ({ children }) => {
               />
             </LinkWithLabel>
           </nav>
-          <div className="">{children}</div>
+          <hr className="my-4 w-full border-gray-400" />
+          <div>{children}</div>
         </div>
       </div>
     </div>
