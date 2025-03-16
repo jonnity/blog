@@ -15,7 +15,7 @@ export const ReactMarkdown: React.FC<ReactMarkdownProps> = ({ mdBody }) => {
   return (
     <Markdown
       remarkPlugins={[remarkGfm]}
-      className={"entry-base"}
+      className="entry-base"
       urlTransform={(url, _key, { tagName }) => {
         if (tagName === "img") {
           return /^https?:/.test(url) ? url : `/entry/${url}`;
