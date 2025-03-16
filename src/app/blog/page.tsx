@@ -1,5 +1,6 @@
 import { EntryManager } from "@/util/entry/Entry";
 import { EntryLink } from "@/util/entry/components/EntryLink";
+import { Hamburger } from "@/util/hamburger/Hamburger";
 
 export default async function BlogPage() {
   const entryManager = EntryManager.getInstance();
@@ -19,6 +20,7 @@ export default async function BlogPage() {
           ))}
         </div>
       </div>
+      <Hamburger />;
     </div>
   );
 }

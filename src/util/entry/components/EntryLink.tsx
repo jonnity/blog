@@ -1,11 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import { EntryProp } from "../Entry";
+import { EntryType } from "../Entry";
 import { TagListSpan } from "./TagList";
 import { DateInfoSpan } from "./DateInfoSpan";
 
-export const EntryLink: React.FC<EntryProp> = ({ entry }) => {
+export const EntryLink: React.FC<{ entry: EntryType }> = ({ entry }) => {
   const { url, alt } = entry.getThumbnail();
   return (
     <>

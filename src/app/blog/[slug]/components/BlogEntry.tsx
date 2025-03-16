@@ -1,9 +1,9 @@
-import { EntryProp } from "@/util/entry/Entry";
+import { EntryType } from "@/util/entry/Entry";
 import { DateInfoSpan } from "@/util/entry/components/DateInfoSpan";
 import { ReactMarkdown } from "@/util/entry/components/ReactMarkdown";
 import { TagListSpan } from "@/util/entry/components/TagList";
 
-export const BlogEntry: React.FC<EntryProp> = ({ entry }) => {
+export const BlogEntry: React.FC<{ entry: EntryType }> = ({ entry }) => {
   return (
     <>
       <div className="contents-base p-4">

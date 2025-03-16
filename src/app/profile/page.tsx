@@ -1,3 +1,4 @@
+import { Hamburger } from "@/util/hamburger/Hamburger";
 import { SNSLogo } from "@/util/profile/SNSLogo";
 
 const ProfilePage: React.FC = () => {
@@ -76,6 +77,7 @@ const ProfilePage: React.FC = () => {
           </p>
         </div>
       </div>
+      <Hamburger />
     </div>
   );
 };

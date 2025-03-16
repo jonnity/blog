@@ -1,13 +1,12 @@
 import { SNSLogo } from "@/util/profile/SNSLogo";
-import { EntryProp } from "@/util/entry/Entry";
 import { MarkdownToc } from "@/util/entry/components/MarkdownToc";
 
-export const SideBarInfo: React.FC<EntryProp> = ({ entry }) => {
+export const SideBarInfo: React.FC<{ mdBody: string }> = ({ mdBody }) => {
   return (
     <>
       <div className="flex flex-col gap-2">
         <Profile />
-        <EntryTOC entry={entry} />
+        <EntryTOC mdBody={mdBody} />
       </div>
     </>
   );
@@ -31,14 +30,14 @@ const Profile = () => (
   </div>
 );
 
-const EntryTOC: React.FC<EntryProp> = ({ entry }) => {
+const EntryTOC: React.FC<{ mdBody: string }> = ({ mdBody }) => {
   return (
     <>
       <div className="contents-base hidden p-2 md:block">
         <h2 className="pr-1 text-lg">目次</h2>
         <SideBarDivider />
         <div className="p-2">
-          <MarkdownToc entry={entry} />
+          <MarkdownToc mdBody={mdBody} />
         </div>
       </div>
     </>

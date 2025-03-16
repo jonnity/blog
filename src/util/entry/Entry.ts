@@ -140,9 +140,10 @@ export class EntryManager {
     const entryFiles = fs
       .readdirSync(entriesDir)
       .filter((filename) => filename.match(/.+\.md$/));
-    console.info(`entryFiles: ${entryFiles}`);
 
+    console.info(`entryFiles:`);
     entryFiles.forEach((filename) => {
+      console.info(` ${filename}`);
       const slug = filename.split(/\.md$/)[0];
       const fileContents = fs.readFileSync(
         path.join(entriesDir, filename),
@@ -153,4 +154,4 @@ export class EntryManager {
   }
 }
 
-export type EntryProp = { entry: Entry };
+export type EntryType = InstanceType<typeof Entry>;

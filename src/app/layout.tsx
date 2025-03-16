@@ -3,7 +3,6 @@ import "./globals.css";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-
 import { Inter } from "next/font/google";
 
 import {
@@ -12,6 +11,12 @@ import {
   titleParam,
 } from "@/util/metaTagInfo";
 import { Consent } from "@/util/zaraz/Consent";
+import { IconLink } from "@/util/components/IconLink";
+import ProfileIcon from "@/assets/icons/profile.svg";
+import MonthDisplay from "@/assets/icons/MonthDisplay";
+import WorkIcon from "@/assets/icons/work.svg";
+import BlogIcon from "@/assets/icons/blog.svg";
+
 const logoImagePath = "/logo_keyboard.svg";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -47,6 +52,7 @@ export const metadata: Metadata = {
   icons: { icon: { url: iconImagePath } },
 };
 
+const iconSize = 45;
 export default function RootLayout({
   children,
 }: {
@@ -57,8 +63,8 @@ export default function RootLayout({
       <body
         className={`${inter.className} bg-cover bg-fixed bg-repeat-y portrait:bg-ant-nest_portrait landscape:bg-ant-nest_landscape`}
       >
-        <header className="flex h-16 w-full justify-center bg-orange-200 bg-opacity-80">
-          <div className="mx-4 flex h-full w-full justify-between">
+        <header className="sticky top-0 z-30 flex h-12 w-full justify-center bg-orange-200 px-4 md:h-16">
+          <div className="flex h-full w-full justify-between">
             <Link href="/" className="relative block h-full w-fit">
               <Image
                 src={logoImagePath}
@@ -68,11 +74,51 @@ export default function RootLayout({
                 className="h-full w-auto"
               />
             </Link>
-            {/* カテゴリ表示をする前提でスタイリングするために、不可視要素を追加 */}
-            <p className="invisible self-end">category: hoge</p>
+            <div className="hidden h-full items-center gap-2 md:flex">
+              <IconLink
+                href="/profile"
+                icon={{
+                  type: "img",
+                  resource: {
+                    src: ProfileIcon,
+                    alt: "profileページのアイコン",
+                  },
+                  size: iconSize,
+                }}
+              />
+              <IconLink
+                href="/monthly"
+                icon={{
+                  type: "component",
+                  resource: <MonthDisplay height={iconSize} width={iconSize} />,
+                }}
+              />
+              <IconLink
+                href="/work"
+                icon={{
+                  type: "img",
+                  resource: {
+                    src: WorkIcon,
+                    alt: "workページのアイコン",
+                  },
+                  size: iconSize,
+                }}
+              />
+              <IconLink
+                href="/blog"
+                icon={{
+                  type: "img",
+                  resource: {
+                    src: BlogIcon,
+                    alt: "blogページのアイコン",
+                  },
+                  size: iconSize,
+                }}
+              />
+            </div>
           </div>
         </header>
-        {children}
+        <div className="relative">{children}</div>
         <Consent />
       </body>
     </html>

@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 
 import { EntryManager } from "@/util/entry/Entry";
 import { defaultDescription } from "@/util/metaTagInfo";
+import { Hamburger } from "@/util/hamburger/Hamburger";
+import { MarkdownToc } from "@/util/entry/components/MarkdownToc";
 
 import { BlogEntry } from "./components/BlogEntry";
 import { SideBarInfo } from "./components/SideBarInfo";
@@ -32,13 +34,22 @@ export default async function Page({
   const entry = entryManager.getEntry(slug);
   return (
     <>
-      <div className="m-4 flex flex-col justify-center gap-4 lg:mx-0 lg:flex-row">
-        <article className="w-full lg:w-3/5 xl:w-1/2">
+      <div className="m-4 flex w-[97%] flex-col gap-4 justify-self-center md:w-[736px] md:flex-row lg:w-[1000px]">
+        <article className="w-full md:w-[440px] lg:w-[664px]">
           <BlogEntry entry={entry} />
         </article>
-        <aside className="w-full lg:w-1/4 xl:w-1/5">
-          <SideBarInfo entry={entry} />
+        <aside className="w-full md:w-[280px] lg:w-[320px]">
+          <SideBarInfo mdBody={entry.body} />
         </aside>
+        <Hamburger>
+          <hr className="mb-6 mt-1 w-full border-gray-900" />
+          <div>
+            <h2 className="text-xl font-bold">目次</h2>
+            <div className="ml-2">
+              <MarkdownToc mdBody={entry.body} />
+            </div>
+          </div>
+        </Hamburger>
       </div>
     </>
   );
