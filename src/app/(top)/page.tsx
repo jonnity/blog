@@ -1,7 +1,14 @@
+import Link from "next/link";
+import Image from "next/image";
+
 import { EntryManager } from "@/util/entry/Entry";
 import { SNSLogo } from "@/util/profile/SNSLogo";
 import { WorkManager } from "@/util/work/Work";
-import Link from "next/link";
+
+import ProfileIcon from "@/assets/icons/profile.svg";
+import MonthDisplay from "@/assets/icons/MonthDisplay";
+import WorkIcon from "@/assets/icons/work.svg";
+import BlogIcon from "@/assets/icons/blog.svg";
 
 const workManager = WorkManager.getInstance();
 const allWorks = workManager.getWorkList();
@@ -23,11 +30,18 @@ export default function Home() {
       <main className="contents-base m-2 grid w-[360px] grid-cols-1 flex-col gap-2 p-4 md:w-[720px] md:grid-cols-2 md:border-t lg:w-[960px]">
         <RouteBlock>
           <div className="flex gap-4">
-            <HeadSubject>Profile</HeadSubject>
-            <div className="flex items-center gap-2">
-              <SNSLogo serviceName="github" />
-              <SNSLogo serviceName="x" />
-              <SNSLogo serviceName="threads" />
+            <div className="flex h-fit gap-1">
+              <Image
+                src={ProfileIcon}
+                alt="Profileページのアイコン"
+                className="h-[26px] w-[26px] p-px text-xl md:h-[30px] md:w-[30px] md:text-2xl lg:h-[34px] lg:w-[34px] lg:text-3xl"
+              />
+              <HeadSubject>Profile</HeadSubject>
+            </div>
+            <div className="box-border flex items-center gap-2 py-px">
+              <SNSLogo serviceName="github" height={24} />
+              <SNSLogo serviceName="x" height={24} />
+              <SNSLogo serviceName="threads" height={24} />
             </div>
           </div>
           <Divider />
