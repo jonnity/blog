@@ -1,0 +1,50 @@
+# Project Technical Stack
+- Next.js (14.x)
+- Tailwind CSS (v3.x)
+- Prettier (2.10+)
+- TypeScript (5.x)
+- Markdown Rendering
+- React Components Architecture
+
+# Key Patterns
+## Component Structure
+- Atomic Design Pattern
+- Contextual Components
+- Reusable UI Elements
+
+## Build System
+```mermaid
+flowchart TD
+    A[Markdown] --> B[Entry]
+    B --> C[BlogLayout]
+    C --> D[Page]
+```
+
+## Configuration Flow
+1. Markdown → Entry.ts
+2. Entry.ts → BlogLayout
+3. BlogLayout → Page Component
+4. Page Component → Next.js Route
+
+# Best Practices
+- CSS-in-JS: Tailwind + Custom CSS Variables
+- Code Quality:
+  - Prettier (format)
+  - ESLint (airbnb preset)
+  - TypeScript (strict mode)
+
+# Known Constraints
+- Markdown Parsing Rules:
+  - YAML Frontmatter
+  - CommonMark Spec Compliance
+  - Image Optimization
+
+# Performance Metrics
+- Critical Path Analysis
+- LCP Target: <2.5s
+- CLS Target: <0.1
+
+# How to Proceed with the Task
+- DO NOT repeat modifying the same file over 2 times
+- When starting a task, check the complete conditions of the task
+- For the lint, format, and test, follow the npm script

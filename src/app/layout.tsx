@@ -1,7 +1,8 @@
 import "./globals.css";
 
-import path from "path";
 import type { Metadata } from "next";
+import Link from "next/link";
+import Image from "next/image";
 import { Inter } from "next/font/google";
 
 import {
@@ -10,11 +11,18 @@ import {
   titleParam,
 } from "@/util/metaTagInfo";
 import { Consent } from "@/util/zaraz/Consent";
+import { IconLink } from "@/util/components/IconLink";
+import ProfileIcon from "@/assets/icons/profile.svg";
+import MonthDisplay from "@/assets/icons/MonthDisplay";
+import WorkIcon from "@/assets/icons/work.svg";
+import BlogIcon from "@/assets/icons/blog.svg";
+
+const logoImagePath = "/logo_keyboard.svg";
 
 const inter = Inter({ subsets: ["latin"] });
 
 const url = new URL("https://jonnity.com");
-const logoImagePath = "/icon_keyboard.webp";
+const iconImagePath = "/icon_keyboard.webp";
 export const metadata: Metadata = {
   title: titleParam,
   description: defaultDescription,
@@ -41,9 +49,10 @@ export const metadata: Metadata = {
     images: [{ url: logoImagePath }],
   },
   robots: { index: true },
-  icons: { icon: { url: logoImagePath } },
+  icons: { icon: { url: iconImagePath } },
 };
 
+const iconSize = 45;
 export default function RootLayout({
   children,
 }: {
@@ -52,9 +61,64 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body
-        className={`${inter.className} landscape:bg-ant-nest_landscape bg-cover bg-fixed bg-repeat-y portrait:bg-ant-nest_portrait`}
+        className={`${inter.className} bg-cover bg-fixed bg-repeat-y portrait:bg-ant-nest_portrait landscape:bg-ant-nest_landscape`}
       >
-        {children}
+        <header className="sticky top-0 z-30 flex h-12 w-full justify-center bg-orange-200 px-4 md:h-16">
+          <div className="flex h-full w-full justify-between">
+            <Link href="/" className="relative block h-full w-fit">
+              <Image
+                src={logoImagePath}
+                alt="アズマオオズアリの頭部とキーボードを模したアイコンとjonnityという文字"
+                width={0}
+                height={0}
+                className="h-full w-auto"
+              />
+            </Link>
+            <div className="hidden h-full items-center gap-2 md:flex">
+              <IconLink
+                href="/profile"
+                icon={{
+                  type: "img",
+                  resource: {
+                    src: ProfileIcon,
+                    alt: "profileページのアイコン",
+                  },
+                  size: iconSize,
+                }}
+              />
+              <IconLink
+                href="/monthly"
+                icon={{
+                  type: "component",
+                  resource: <MonthDisplay height={iconSize} width={iconSize} />,
+                }}
+              />
+              <IconLink
+                href="/work"
+                icon={{
+                  type: "img",
+                  resource: {
+                    src: WorkIcon,
+                    alt: "workページのアイコン",
+                  },
+                  size: iconSize,
+                }}
+              />
+              <IconLink
+                href="/blog"
+                icon={{
+                  type: "img",
+                  resource: {
+                    src: BlogIcon,
+                    alt: "blogページのアイコン",
+                  },
+                  size: iconSize,
+                }}
+              />
+            </div>
+          </div>
+        </header>
+        <div className="relative">{children}</div>
         <Consent />
       </body>
     </html>

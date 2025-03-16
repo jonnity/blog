@@ -1,22 +1,29 @@
 import type { Metadata } from "next";
-import { redirect } from "next/navigation";
 
 import { EntryManager } from "@/util/entry/Entry";
 import { defaultDescription } from "@/util/metaTagInfo";
 import { Hamburger } from "@/util/hamburger/Hamburger";
+import { BlogEntry } from "../../blog/[slug]/components/BlogEntry";
+import { SideBarInfo } from "../../blog/[slug]/components/SideBarInfo";
+import { MonthlySelector } from "../components/MonthlySelector";
 import { MarkdownToc } from "@/util/entry/components/MarkdownToc";
+import { MonthlyParts } from "../components/MonthlyParts";
 
-import { BlogEntry } from "./components/BlogEntry";
-import { SideBarInfo } from "./components/SideBarInfo";
-
-type PageParams = { slug: string };
+type PageParams = { "year-month": string };
 
 const entryManager = EntryManager.getInstance();
+const monthlyEntries = entryManager
+  .getEntryList()
+  .filter((entry) => entryManager.isMonthlyEntry(entry.slug));
+const yearMonthList = monthlyEntries.map((entry) => {
+  const yearMonth = entry.slug.replace(/^monthly-(\d{4}-\d{2})$/, "$1");
+  return yearMonth;
+});
+
 export async function generateStaticParams(): Promise<PageParams[]> {
-  const slugList = entryManager.getEntryList().map(({ slug }) => {
-    return { slug: slug };
-  });
-  return slugList;
+  return yearMonthList.map((yearMonth) => ({
+    "year-month": yearMonth,
+  }));
 }
 
 export default async function Page({
@@ -24,14 +31,10 @@ export default async function Page({
 }: {
   params: Promise<PageParams>;
 }) {
-  const { slug } = await params;
-
-  if (entryManager.isMonthlyEntry(slug)) {
-    const yearMonth = slug.replace(/^monthly-(\d{4}-\d{2})$/, "$1");
-    redirect(`/monthly/${yearMonth}`);
-  }
-
+  const { "year-month": yearMonth } = await params;
+  const slug = `monthly-${yearMonth}`;
   const entry = entryManager.getEntry(slug);
+
   return (
     <>
       <div className="mt-2 flex w-[368px] flex-col gap-4 justify-self-center md:w-[752px] md:flex-row lg:w-[1000px]">
@@ -40,6 +43,12 @@ export default async function Page({
         </article>
         <aside className="w-full md:w-[288px] lg:w-[320px]">
           <SideBarInfo mdBody={entry.body} />
+          <div className="mt-2 hidden md:block">
+            <MonthlySelector
+              yearMonthList={yearMonthList}
+              currentYearMonth={yearMonth}
+            />
+          </div>
         </aside>
         <Hamburger>
           <hr className="mb-6 mt-1 w-full border-gray-900" />
@@ -48,6 +57,12 @@ export default async function Page({
             <div className="ml-2">
               <MarkdownToc mdBody={entry.body} />
             </div>
+            <hr className="my-3 border-2 border-dashed border-gray-300" />
+            <h2 className="text-xl font-bold">過去の月記</h2>
+            <MonthlyParts
+              yearMonthList={yearMonthList}
+              currentYearMonth={yearMonth}
+            />
           </div>
         </Hamburger>
       </div>
@@ -59,10 +74,12 @@ type MetadataProps = {
   params: Promise<PageParams>;
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
+
 export async function generateMetadata({
   params,
 }: MetadataProps): Promise<Metadata> {
-  const entry = entryManager.getEntry((await params).slug);
+  const { "year-month": yearMonth } = await params;
+  const entry = entryManager.getEntry(`monthly-${yearMonth}`);
 
   const title = entry.metadata.title;
   const description = entry.metadata.description || defaultDescription;
