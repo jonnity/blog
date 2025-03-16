@@ -11,6 +11,7 @@ import {
   titleParam,
 } from "@/util/metaTagInfo";
 import { Consent } from "@/util/zaraz/Consent";
+import { IconLink } from "@/util/components/IconLink";
 import ProfileIcon from "@/assets/icons/profile.svg";
 import MonthDisplay from "@/assets/icons/MonthDisplay";
 import WorkIcon from "@/assets/icons/work.svg";
@@ -82,6 +83,7 @@ export default function RootLayout({
                     src: ProfileIcon,
                     alt: "profileページのアイコン",
                   },
+                  size: iconSize,
                 }}
               />
               <IconLink
@@ -99,6 +101,7 @@ export default function RootLayout({
                     src: WorkIcon,
                     alt: "workページのアイコン",
                   },
+                  size: iconSize,
                 }}
               />
               <IconLink
@@ -109,6 +112,7 @@ export default function RootLayout({
                     src: BlogIcon,
                     alt: "blogページのアイコン",
                   },
+                  size: iconSize,
                 }}
               />
             </div>
@@ -120,26 +124,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-const IconLink: React.FC<{
-  href: string;
-  icon:
-    | { type: "img"; resource: { src: string; alt: string } }
-    | { type: "component"; resource: React.ReactNode };
-}> = ({ href, icon }) => {
-  switch (icon.type) {
-    case "img":
-      return (
-        <Link href={href}>
-          <Image
-            src={icon.resource.src}
-            alt={icon.resource.alt}
-            height={iconSize}
-            width={iconSize}
-          />
-        </Link>
-      );
-    case "component":
-      return <Link href={href}>{icon.resource}</Link>;
-  }
-};
