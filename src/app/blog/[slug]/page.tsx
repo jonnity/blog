@@ -48,7 +48,6 @@ export default async function Page({
             <div className="ml-2">
               <MarkdownToc mdBody={entry.body} />
             </div>
-            <hr className="my-3 border-2 border-dashed border-gray-300" />
           </div>
         </Hamburger>
       </div>
