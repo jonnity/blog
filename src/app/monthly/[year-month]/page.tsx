@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
-import { redirect } from "next/navigation";
 
 import { EntryManager } from "@/util/entry/Entry";
 import { defaultDescription } from "@/util/metaTagInfo";
+import { Hamburger } from "@/util/hamburger/Hamburger";
 import { BlogEntry } from "../../blog/[slug]/components/BlogEntry";
 import { SideBarInfo } from "../../blog/[slug]/components/SideBarInfo";
 import { MonthlySelector } from "../components/MonthlySelector";
+import { MarkdownToc } from "@/util/entry/components/MarkdownToc";
+import { MonthlyParts } from "../components/MonthlyParts";
 
 type PageParams = { "year-month": string };
 
@@ -40,14 +42,29 @@ export default async function Page({
           <BlogEntry entry={entry} />
         </article>
         <aside className="w-full md:w-[280px] lg:w-[320px]">
-          <SideBarInfo entry={entry} />
-          <div className="mt-2">
+          <SideBarInfo mdBody={entry.body} />
+          <div className="mt-2 hidden md:block">
             <MonthlySelector
               yearMonthList={yearMonthList}
               currentYearMonth={yearMonth}
             />
           </div>
         </aside>
+        <Hamburger>
+          <hr className="mb-6 mt-1 w-full border-gray-900" />
+          <div>
+            <h2 className="text-xl font-bold">目次</h2>
+            <div className="ml-2">
+              <MarkdownToc mdBody={entry.body} />
+            </div>
+            <hr className="my-3 border-2 border-dashed border-gray-300" />
+            <h2 className="text-xl font-bold">過去の月記</h2>
+            <MonthlyParts
+              yearMonthList={yearMonthList}
+              currentYearMonth={yearMonth}
+            />
+          </div>
+        </Hamburger>
       </div>
     </>
   );
