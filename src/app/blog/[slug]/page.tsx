@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 
 import { EntryManager } from "@/util/entry/Entry";
 import { defaultDescription } from "@/util/metaTagInfo";
+import { Hamburger } from "@/util/hamburger/Hamburger";
+import { MarkdownToc } from "@/util/entry/components/MarkdownToc";
 
 import { BlogEntry } from "./components/BlogEntry";
 import { SideBarInfo } from "./components/SideBarInfo";
@@ -39,6 +41,16 @@ export default async function Page({
         <aside className="w-full lg:w-1/4 xl:w-1/5">
           <SideBarInfo mdBody={entry.body} />
         </aside>
+        <Hamburger>
+          <hr className="mb-6 mt-1 w-full border-gray-900" />
+          <div>
+            <h2 className="text-xl font-bold">目次</h2>
+            <div className="ml-2">
+              <MarkdownToc mdBody={entry.body} />
+            </div>
+            <hr className="my-3 border-2 border-dashed border-gray-300" />
+          </div>
+        </Hamburger>
       </div>
     </>
   );
