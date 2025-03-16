@@ -58,10 +58,10 @@ const ProfilePage: React.FC = () => {
         </div>
         <h2 className="mt-4 text-2xl">Policies</h2>
         <hr className="my-1 w-full border-gray-400" />
-        <h3 className="mt-2 text-xl">Privacy Policy</h3>
+        <h3 className="mb-1 mt-3 text-xl">アクセス解析ツールについて</h3>
         <div className="entry-base">
           <p>
-            当サイトでは、Googleアナリティクスを使用しています。Googleアナリティクスはデータの収集のためにCookieを使用しています。このデータは匿名で収集されており、個人を特定するものではありません。
+            当サイトでは、Googleアナリティクスを使用しています。Googleアナリティクスはデータの収集のためにCookieを使用します。このデータは匿名で収集されており、個人を特定するものではありません。
             Cookieを無効にすることで収集を拒否することが出来ますので、未設定の場合に下部に表示されるダイアログか、ブラウザ自体の設定をご確認ください。この規約に関しての詳細は
             <a
               href="https://marketingplatform.google.com/about/analytics/terms/jp/"
@@ -74,6 +74,39 @@ const ProfilePage: React.FC = () => {
               Google社のポリシーと規約
             </a>
             をご覧ください。
+          </p>
+        </div>
+        <h3 className="mb-1 mt-3 text-xl">広告について</h3>
+        <div className="entry-base">
+          <p>
+            当サイトでは、 Google
+            AdSenseを使用しています。その中で、ユーザーの興味に応じた商品やサービスの広告を表示するためCookieを使用します。
+            これによりユーザーを識別しますが、個人を特定できるものではありません。
+            また、このような挙動は、Googleが提供する
+            <a
+              href="https://myadcenter.google.com/personalizationoff"
+              target="_blank"
+            >
+              広告設定ページ
+            </a>
+            からカスタマイズ/無効化することが可能です。
+          </p>
+          <p>
+            Cookieを無効にする方法やGoogle AdSenseに関する詳細は
+            <a
+              href="https://policies.google.com/technologies/ads"
+              target="_blank"
+            >
+              広告 - ポリシーと規約 - Google
+            </a>
+            をご確認ください。
+          </p>
+          <p>
+            なお、Googleを含む第三者配信事業者によるユーザー識別のためのCookieを無効にする手続きは、
+            <a href="https://www.aboutads.info" target="_blank">
+              www.aboutads.info
+            </a>
+            からも行うことができます。
           </p>
         </div>
       </div>
