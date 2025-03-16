@@ -25,16 +25,25 @@ const MonthDisplay: React.FC<{ width: number; height: number }> = ({
 
   return (
     <div className={`relative w-[${width}px] h-[${height}px]`}>
+      <svg viewBox={`0 0 ${width} ${height}`} className="absolute">
+        <text
+          width={width}
+          height={height}
+          x={width / 2}
+          y={height / 1.8}
+          textAnchor="middle"
+          dominantBaseline="central"
+          fontSize={width / 2.8}
+        >
+          {monthAbbreviation}
+        </text>
+      </svg>
       <Image
         src={CalendarBase}
         alt="monthlyページのアイコン"
         width={width}
         height={height}
       />
-
-      <span className="absolute bottom-0 left-0 right-0 top-[10px] m-auto h-fit w-full text-center">
-        {monthAbbreviation}
-      </span>
     </div>
   );
 };
