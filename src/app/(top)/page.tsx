@@ -28,7 +28,7 @@ const monthlyTitle = latestMonthly.slug.replace(
 export default function Home() {
   return (
     <div className="flex w-full justify-center">
-      <main className="contents-base my-2 grid w-[368px] grid-cols-1 flex-col gap-2 p-4 md:w-[720px] md:grid-cols-2 md:border-t lg:w-[960px]">
+      <main className="contents-base my-2 grid w-[368px] grid-cols-1 flex-col gap-2 p-4 md:w-[752px] md:grid-cols-2 md:border-t lg:w-[960px]">
         <RouteBlock>
           <div className="flex gap-4">
             <div className="flex h-fit gap-1">

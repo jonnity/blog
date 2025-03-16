@@ -34,11 +34,11 @@ export default async function Page({
   const entry = entryManager.getEntry(slug);
   return (
     <>
-      <div className="mt-2 flex w-[368px] flex-col gap-4 justify-self-center md:w-[736px] md:flex-row lg:w-[1000px]">
-        <article className="w-full md:w-[440px] lg:w-[664px]">
+      <div className="mt-2 flex w-[368px] flex-col gap-4 justify-self-center md:w-[752px] md:flex-row lg:w-[1000px]">
+        <article className="w-full md:w-[448px] lg:w-[664px]">
           <BlogEntry entry={entry} />
         </article>
-        <aside className="w-full md:w-[280px] lg:w-[320px]">
+        <aside className="w-full md:w-[288px] lg:w-[320px]">
           <SideBarInfo mdBody={entry.body} />
         </aside>
         <Hamburger>
