@@ -26,7 +26,7 @@ export default async function Page({
   return (
     <>
       <div className="flex w-full justify-center">
-        <article className="contents-base my-2 w-[368px] gap-x-4 p-4 text-gray-900 md:w-[752px] lg:w-[1000px]">
+        <article className="contents-base my-2 w-[368px] gap-x-4 p-4 text-gray-900 md:w-[752px] lg:w-[880px]">
           <div className="flex items-center gap-2">
             <img
               src={thumbnail.url}
