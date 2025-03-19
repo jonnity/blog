@@ -18,6 +18,7 @@ const Profile = () => (
       <h2 className="text-lg">About jonnity</h2>
       <SNSLogo serviceName="github" />
       <SNSLogo serviceName="x" />
+      <SNSLogo serviceName="mixi2" />
       <SNSLogo serviceName="threads" />
     </div>
     <SideBarDivider />
