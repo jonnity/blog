@@ -42,6 +42,7 @@ export default function Home() {
             <div className="box-border flex items-center gap-2 py-px">
               <SNSLogo serviceName="github" height={24} />
               <SNSLogo serviceName="x" height={24} />
+              <SNSLogo serviceName="mixi2" height={24} />
               <SNSLogo serviceName="threads" height={24} />
             </div>
           </div>

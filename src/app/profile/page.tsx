@@ -11,6 +11,7 @@ const ProfilePage: React.FC = () => {
           <div className="flex items-center gap-2">
             <SNSLogo serviceName="github" height={logoHeight} />
             <SNSLogo serviceName="x" height={logoHeight} />
+            <SNSLogo serviceName="mixi2" height={logoHeight} />
             <SNSLogo serviceName="threads" height={logoHeight} />
           </div>
         </div>
