@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# jonnityのブログ/ポートフォリオ
 
-## Getting Started
+![jonnity's logo](logo_keybourd.png)
 
-First, run the development server:
+## プロジェクト概要
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+jonnity ([Github](https://github.com/jonnity), [X](https://x.com/jonnied_man), [mixi2](https://mixi.social/invitations/@jonnity/HkhMHZVUyjy5Hk4McKij5Z), [Threads](https://www.threads.net/@jonnied_man)) のブログ/ポートフォリオサイトのプロジェクトです。
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+<https://jonnity.com>で公開しています。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 技術スタック
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+* Next.js (SSG)
+  * Typescript
+  * tailwindcss
+  * react-markdown
+* Github Actions (自動デプロイ/プッシュ時のlint)
+* Cloudflare Pages
 
-## Learn More
+### 主な機能
 
-To learn more about Next.js, take a look at the following resources:
+* Markdownベースのコンテンツ管理システム
+  * `/src/entries`以下にあるmdファイルから`generateStaticParams`で動的にページ生成
+* レスポンシブデザイン (Tailwind CSS)
+* react-markdownを使った各種拡張
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### 開発環境
 
-## Deploy on Vercel
+#### dev実行手順
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. `npm ci`
+2. `npm run dev`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+#### buildスクリプト
+
+1. `npm ci`
+2. `npm run build`
+
+## Contribute
+
+誤字脱字等、内容についてのご指摘は、上記jonnityのアカウントか、本リポジトリのissueにお願いします。
