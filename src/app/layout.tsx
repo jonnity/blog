@@ -11,7 +11,7 @@ import {
   titleParam,
 } from "@/util/metaTagInfo";
 import { Consent } from "@/util/zaraz/Consent";
-import { IconLink } from "@/util/components/IconLink";
+import { IconLink } from "@/util/profile/IconLink";
 import ProfileIcon from "@/assets/icons/profile.svg";
 import MonthDisplay from "@/assets/icons/MonthDisplay";
 import WorkIcon from "@/assets/icons/work.svg";

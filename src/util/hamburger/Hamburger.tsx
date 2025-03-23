@@ -5,7 +5,7 @@ import ProfileIcon from "@/assets/icons/profile.svg";
 import MonthDisplay from "@/assets/icons/MonthDisplay";
 import WorkIcon from "@/assets/icons/work.svg";
 import BlogIcon from "@/assets/icons/blog.svg";
-import { IconLink } from "../components/IconLink";
+import { IconLink } from "@/util/profile/IconLink";
 import Link from "next/link";
 
 const iconSize = 35;
