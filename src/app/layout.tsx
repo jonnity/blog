@@ -119,6 +119,14 @@ export default function RootLayout({
           </div>
         </header>
         <div className="relative">{children}</div>
+        <footer className="flex place-content-center">
+          <div className="flex w-fit flex-col items-center self-center rounded-lg bg-gray-100 bg-opacity-75 px-2 text-sm text-gray-800">
+            <a href="/profile" className="hover:underline">
+              Privacy Policy
+            </a>
+            <p>© jonnity 2023 - {new Date().getFullYear()}</p>
+          </div>
+        </footer>
         <Consent />
       </body>
     </html>
