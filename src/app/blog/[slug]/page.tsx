@@ -5,9 +5,8 @@ import { EntryManager } from "@/util/entry/Entry";
 import { defaultDescription } from "@/util/metaTagInfo";
 import { Hamburger } from "@/util/hamburger/Hamburger";
 import { MarkdownToc } from "@/util/entry/components/MarkdownToc";
-
-import { BlogEntry } from "./components/BlogEntry";
-import { SideBarInfo } from "./components/SideBarInfo";
+import { BlogEntry } from "@/util/entry/components/BlogEntry";
+import { SideBarInfo } from "@/util/entry/components/SideBarInfo";
 
 type PageParams = { slug: string };
 
