@@ -49,8 +49,18 @@ export const defaultMetadata: Metadata = {
   icons: { icon: { url: iconImagePath } },
 };
 
-type EditableMetadata = Pick<Metadata, "title" | "description" | "keywords"> & {
-  path?: string;
+type EditableMetadata = Required<
+  Pick<Metadata, "title" | "description" | "keywords">
+> & {
+  path: string;
+  ogParam:
+    | { type: "profile" }
+    | {
+        type: "article";
+        publishedTime: string;
+        modifiedTime?: string;
+        tags: string[];
+      };
 };
 
 export const getUpdatedMetadata: (metadata: EditableMetadata) => Metadata = (
@@ -64,20 +74,36 @@ export const getUpdatedMetadata: (metadata: EditableMetadata) => Metadata = (
       : [...defaultKeywords, ...metadata.keywords];
   const url = metadata.path ? new URL(metadata.path, baseUrl) : baseUrl;
 
+  const commonOgParam = {
+    title: metadata.title || { absolute: defaultTitle.default },
+    description: metadata.description || defaultDescription,
+    url,
+    siteName: defaultTitle.default,
+    locale: "ja_JP",
+    images: [{ url: logoImagePath }],
+  };
+  const openGraph =
+    metadata.ogParam.type == "profile"
+      ? {
+          type: metadata.ogParam.type,
+          username: "jonnity",
+          ...commonOgParam,
+        }
+      : {
+          type: metadata.ogParam.type,
+          publishedTime: metadata.ogParam.publishedTime,
+          modifiedTime: metadata.ogParam.modifiedTime,
+          tags: metadata.ogParam.tags,
+          authors: "jonnity",
+          ...commonOgParam,
+        };
+
   return {
-    title: metadata.title || defaultTitle,
+    title: metadata.title || { absolute: defaultTitle.default },
     description: metadata.description || defaultDescription,
     keywords,
 
     metadataBase: baseUrl,
-    openGraph: {
-      title: metadata.title || { absolute: defaultTitle.default },
-      description: defaultDescription,
-      url,
-      siteName: defaultTitle.default,
-      locale: "ja_JP",
-      type: "profile",
-      images: [{ url: logoImagePath }],
-    },
+    openGraph,
   };
 };
