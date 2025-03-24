@@ -1,7 +1,8 @@
 import { Hamburger } from "@/util/hamburger/Hamburger";
+import { getUpdatedMetadata } from "@/util/metaTagInfo";
 import { SNSLogo } from "@/util/profile/SNSLogo";
 
-const ProfilePage: React.FC = () => {
+export default async function ProfilePage() {
   const logoHeight = 28;
   return (
     <div className="flex w-full justify-center">
@@ -11,6 +12,7 @@ const ProfilePage: React.FC = () => {
           <div className="flex items-center gap-2">
             <SNSLogo serviceName="github" height={logoHeight} />
             <SNSLogo serviceName="x" height={logoHeight} />
+            <SNSLogo serviceName="mixi2" height={logoHeight} />
             <SNSLogo serviceName="threads" height={logoHeight} />
           </div>
         </div>
@@ -113,5 +115,13 @@ const ProfilePage: React.FC = () => {
       <Hamburger />
     </div>
   );
-};
-export default ProfilePage;
+}
+
+export const metadata = getUpdatedMetadata({
+  path: "/profile",
+  title: "プロフィール / サイト情報ページ",
+  description:
+    "jonnityのプロフィールおよび、プライバシーリンクなどのサイトに関する情報をまとめたページ",
+  keywords: null,
+  ogParam: { type: "profile" },
+});

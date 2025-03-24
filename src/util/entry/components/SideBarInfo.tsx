@@ -1,5 +1,6 @@
 import { SNSLogo } from "@/util/profile/SNSLogo";
 import { MarkdownToc } from "@/util/entry/components/MarkdownToc";
+import { RandomSelfIntroduction } from "@/util/profile/RandomSelfIntroduction";
 
 export const SideBarInfo: React.FC<{ mdBody: string }> = ({ mdBody }) => {
   return (
@@ -18,14 +19,12 @@ const Profile = () => (
       <h2 className="text-lg">About jonnity</h2>
       <SNSLogo serviceName="github" />
       <SNSLogo serviceName="x" />
+      <SNSLogo serviceName="mixi2" />
       <SNSLogo serviceName="threads" />
     </div>
     <SideBarDivider />
     <div className="p-2">
-      <p>個人開発やアリ飼育などをして生きています。ゆゆ式が好きです。</p>
-      <p>
-        このサイトは、エンジニア的なアウトプットを中心とした雑多な文章を自由に書ける場所として作りました。
-      </p>
+      <RandomSelfIntroduction />
     </div>
   </div>
 );

@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 
 import { EntryManager } from "@/util/entry/Entry";
-import { defaultDescription } from "@/util/metaTagInfo";
+import { getUpdatedMetadata } from "@/util/metaTagInfo";
 import { Hamburger } from "@/util/hamburger/Hamburger";
-import { BlogEntry } from "../../blog/[slug]/components/BlogEntry";
-import { SideBarInfo } from "../../blog/[slug]/components/SideBarInfo";
-import { MonthlySelector } from "../components/MonthlySelector";
+import { BlogEntry } from "@/util/entry/components/BlogEntry";
+import { SideBarInfo } from "@/util/entry/components/SideBarInfo";
 import { MarkdownToc } from "@/util/entry/components/MarkdownToc";
-import { MonthlyParts } from "../components/MonthlyParts";
+import { MonthlySelector } from "@/util/entry/components/monthly/MonthlySelector";
+import { MonthlyParts } from "@/util/entry/components/monthly/MonthlyParts";
 
 type PageParams = { "year-month": string };
 
@@ -78,16 +78,27 @@ type MetadataProps = {
 export async function generateMetadata({
   params,
 }: MetadataProps): Promise<Metadata> {
-  const { "year-month": yearMonth } = await params;
-  const entry = entryManager.getEntry(`monthly-${yearMonth}`);
+  const { "year-month": slug } = await params;
+  const entry = entryManager.getEntry(`monthly-${slug}`);
 
   const title = entry.metadata.title;
-  const description = entry.metadata.description || defaultDescription;
-  const openGraph = entry.getOGPMetadata();
+  const description = entry.metadata.description || null;
+  const keywords = entry.metadata.tags;
+  const publishedTime = entry.metadata.createdAt.toISOString();
+  const modifiedTime = entry.metadata.updatedAt?.toISOString();
+  const { url: thumbnailPath } = entry.getThumbnail();
 
-  return {
+  return getUpdatedMetadata({
+    path: `monthly/${slug}`,
     title,
     description,
-    openGraph,
-  };
+    keywords,
+    ogParam: {
+      type: "article",
+      publishedTime,
+      modifiedTime,
+      tags: keywords,
+      thumbnailPath,
+    },
+  });
 }
