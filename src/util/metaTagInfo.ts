@@ -54,6 +54,7 @@ type EditableMetadata = Required<
 > & {
   path: string;
   ogParam:
+    | { type: "website" }
     | { type: "profile" }
     | {
         type: "article";
@@ -83,20 +84,25 @@ export const getUpdatedMetadata: (metadata: EditableMetadata) => Metadata = (
     images: [{ url: logoImagePath }],
   };
   const openGraph =
-    metadata.ogParam.type == "profile"
+    metadata.ogParam.type == "website"
       ? {
           type: metadata.ogParam.type,
-          username: "jonnity",
           ...commonOgParam,
         }
-      : {
-          type: metadata.ogParam.type,
-          publishedTime: metadata.ogParam.publishedTime,
-          modifiedTime: metadata.ogParam.modifiedTime,
-          tags: metadata.ogParam.tags,
-          authors: "jonnity",
-          ...commonOgParam,
-        };
+      : metadata.ogParam.type == "profile"
+        ? {
+            type: metadata.ogParam.type,
+            username: "jonnity",
+            ...commonOgParam,
+          }
+        : {
+            type: metadata.ogParam.type,
+            publishedTime: metadata.ogParam.publishedTime,
+            modifiedTime: metadata.ogParam.modifiedTime,
+            tags: metadata.ogParam.tags,
+            authors: "jonnity",
+            ...commonOgParam,
+          };
 
   return {
     title: metadata.title || { absolute: defaultTitle.default },
