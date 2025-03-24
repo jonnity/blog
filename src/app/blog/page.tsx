@@ -1,6 +1,7 @@
 import { EntryManager } from "@/util/entry/Entry";
 import { EntryLink } from "@/util/entry/components/EntryLink";
 import { Hamburger } from "@/util/hamburger/Hamburger";
+import { getUpdatedMetadata } from "@/util/metaTagInfo";
 
 export default async function BlogPage() {
   const entryManager = EntryManager.getInstance();
@@ -24,3 +25,11 @@ export default async function BlogPage() {
     </div>
   );
 }
+
+export const metadata = getUpdatedMetadata({
+  path: "/blog",
+  title: "ブログエントリ一覧",
+  description: "ブログエントリの一覧ページ",
+  keywords: null,
+  ogParam: { type: "website" },
+});

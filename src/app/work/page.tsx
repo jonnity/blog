@@ -1,7 +1,8 @@
 import { WorkManager } from "@/util/work/Work";
-import { WorkLink } from "../../util/work/components/WorkLink";
+import { WorkLink } from "@/util/work/components/WorkLink";
+import { getUpdatedMetadata } from "@/util/metaTagInfo";
 
-const WorkPage: React.FC = () => {
+export async function WorkPage() {
   const workManager = WorkManager.getInstance();
   const workList = workManager.getWorkList();
   return (
@@ -27,6 +28,12 @@ const WorkPage: React.FC = () => {
       </div>
     </div>
   );
-};
+}
 
-export default WorkPage;
+export const metadata = getUpdatedMetadata({
+  path: "/work",
+  title: "作品一覧",
+  description: "jonnityの制作物紹介をまとめたページ",
+  keywords: null,
+  ogParam: { type: "website" },
+});

@@ -61,6 +61,7 @@ type EditableMetadata = Required<
         publishedTime: string;
         modifiedTime?: string;
         tags: string[];
+        thumbnailPath: string;
       };
 };
 
@@ -81,17 +82,18 @@ export const getUpdatedMetadata: (metadata: EditableMetadata) => Metadata = (
     url,
     siteName: defaultTitle.default,
     locale: "ja_JP",
-    images: [{ url: logoImagePath }],
   };
   const openGraph =
     metadata.ogParam.type == "website"
       ? {
           type: metadata.ogParam.type,
+          images: [{ url: logoImagePath }],
           ...commonOgParam,
         }
       : metadata.ogParam.type == "profile"
         ? {
             type: metadata.ogParam.type,
+            images: [{ url: logoImagePath }],
             username: "jonnity",
             ...commonOgParam,
           }
@@ -101,6 +103,13 @@ export const getUpdatedMetadata: (metadata: EditableMetadata) => Metadata = (
             modifiedTime: metadata.ogParam.modifiedTime,
             tags: metadata.ogParam.tags,
             authors: "jonnity",
+            images: [
+              {
+                url: `https://jonnity.com/${metadata.ogParam.thumbnailPath}`,
+                width: 480,
+                height: 288,
+              },
+            ],
             ...commonOgParam,
           };
 
