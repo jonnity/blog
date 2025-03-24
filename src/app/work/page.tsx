@@ -2,7 +2,7 @@ import { WorkManager } from "@/util/work/Work";
 import { WorkLink } from "@/util/work/components/WorkLink";
 import { getUpdatedMetadata } from "@/util/metaTagInfo";
 
-export async function WorkPage() {
+export default function WorkPage() {
   const workManager = WorkManager.getInstance();
   const workList = workManager.getWorkList();
   return (
