@@ -1,15 +1,10 @@
 import "./globals.css";
 
-import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { Inter } from "next/font/google";
 
-import {
-  defaultDescription,
-  defaultTitle,
-  titleParam,
-} from "@/util/metaTagInfo";
+import { defaultMetadata } from "@/util/metaTagInfo";
 import { Consent } from "@/util/zaraz/Consent";
 import { IconLink } from "@/util/profile/IconLink";
 import ProfileIcon from "@/assets/icons/profile.svg";
@@ -21,36 +16,7 @@ const logoImagePath = "/logo_keyboard.svg";
 
 const inter = Inter({ subsets: ["latin"] });
 
-const url = new URL("https://jonnity.com");
-const iconImagePath = "/icon_keyboard.webp";
-export const metadata: Metadata = {
-  title: titleParam,
-  description: defaultDescription,
-
-  generator: "Next.js",
-  referrer: "origin-when-cross-origin",
-  keywords: ["個人開発", "エンジニア", "アリ飼育", "ブログ", "ポートフォリオ"],
-  creator: "jonnity",
-  publisher: "jonnity",
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
-
-  metadataBase: url,
-  openGraph: {
-    title: titleParam,
-    description: defaultDescription,
-    url: url.toString(),
-    siteName: defaultTitle,
-    locale: "ja_JP",
-    type: "profile",
-    images: [{ url: logoImagePath }],
-  },
-  robots: { index: true },
-  icons: { icon: { url: iconImagePath } },
-};
+export const metadata = defaultMetadata;
 
 const iconSize = 45;
 export default function RootLayout({
@@ -119,6 +85,14 @@ export default function RootLayout({
           </div>
         </header>
         <div className="relative">{children}</div>
+        <footer className="flex place-content-center">
+          <div className="flex w-fit flex-col items-center self-center rounded-lg bg-gray-100 bg-opacity-75 px-2 text-sm text-gray-800">
+            <a href="/profile" className="hover:underline">
+              Privacy Policy
+            </a>
+            <p>© jonnity 2023 - {new Date().getFullYear()}</p>
+          </div>
+        </footer>
         <Consent />
       </body>
     </html>

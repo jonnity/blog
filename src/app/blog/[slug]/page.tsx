@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 
 import { EntryManager } from "@/util/entry/Entry";
-import { defaultDescription } from "@/util/metaTagInfo";
+import { getUpdatedMetadata } from "@/util/metaTagInfo";
 import { Hamburger } from "@/util/hamburger/Hamburger";
 import { MarkdownToc } from "@/util/entry/components/MarkdownToc";
 import { BlogEntry } from "@/util/entry/components/BlogEntry";
@@ -64,12 +64,23 @@ export async function generateMetadata({
   const entry = entryManager.getEntry((await params).slug);
 
   const title = entry.metadata.title;
-  const description = entry.metadata.description || defaultDescription;
-  const openGraph = entry.getOGPMetadata();
+  const description = entry.metadata.description || null;
+  const keywords = entry.metadata.tags;
+  const publishedTime = entry.metadata.createdAt.toISOString();
+  const modifiedTime = entry.metadata.updatedAt?.toISOString();
+  const { url: thumbnailPath } = entry.getThumbnail();
 
-  return {
+  return getUpdatedMetadata({
+    path: `blog/${entry.slug}`,
     title,
     description,
-    openGraph,
-  };
+    keywords,
+    ogParam: {
+      type: "article",
+      publishedTime,
+      modifiedTime,
+      tags: keywords,
+      thumbnailPath,
+    },
+  });
 }

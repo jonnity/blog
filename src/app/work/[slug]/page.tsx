@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { WorkManager } from "@/util/work/Work";
-import { defaultDescription } from "@/util/metaTagInfo";
+import { getUpdatedMetadata } from "@/util/metaTagInfo";
 import { ReactMarkdown } from "@/util/entry/components/ReactMarkdown";
 
 type PageParams = { slug: string };
@@ -90,12 +90,23 @@ export async function generateMetadata({
   const entry = workManager.getEntry((await params).slug);
 
   const title = entry.metadata.title;
-  const description = entry.metadata.description || defaultDescription;
-  const openGraph = entry.getOGPMetadata();
+  const description = entry.metadata.description || null;
+  const keywords = entry.metadata.categories;
+  const publishedTime = entry.metadata.createdAt.toISOString();
+  const modifiedTime = entry.metadata.updatedAt?.toISOString();
+  const { url: thumbnailPath } = entry.getThumbnail();
 
-  return {
+  return getUpdatedMetadata({
+    path: `work/${entry.slug}`,
     title,
     description,
-    openGraph,
-  };
+    keywords,
+    ogParam: {
+      type: "article",
+      publishedTime,
+      modifiedTime,
+      tags: keywords,
+      thumbnailPath,
+    },
+  });
 }

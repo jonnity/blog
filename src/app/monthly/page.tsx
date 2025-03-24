@@ -1,4 +1,5 @@
 import { EntryManager } from "@/util/entry/Entry";
+import { getUpdatedMetadata } from "@/util/metaTagInfo";
 import { redirect } from "next/navigation";
 
 const entryManager = EntryManager.getInstance();
@@ -14,3 +15,11 @@ export default async function Page() {
     `/monthly/${latestEntry.slug.replace(/^monthly-(\d{4}-\d{2})$/, "$1")}`,
   );
 }
+
+export const metadata = getUpdatedMetadata({
+  path: "/monthly",
+  title: "月記ページ",
+  description: "月記のトップページ (最新の月記へリダイレクトします)",
+  keywords: null,
+  ogParam: { type: "website" },
+});
