@@ -1,11 +1,25 @@
 ---
-createdAt: 2025/04/20
+createdAt: 2025/04/23
 title: Rust演習の記録
 description: The Rust Programming Languageに沿ってRustの演習を行い、その内容を記録する
 tags: 
   - Rust
   - 備忘録
+thumbnail:
+  url: rust-exercises-thumbnail.webp
+  alt: ferrisと仲よさげなjonnityの可愛らしい絵
 ---
+
+* JavaScript/TypeScriptしかまともに書けない状況の打破
+* 学部授業レベルでCは書いてたけど、低レイヤーのことを学ぶきっかけがほしい
+* WebAssemblyにもつながる
+
+あたりをモチベにRustの勉強をしてます。
+
+2025/04/23現在、[The Rust Programming Language 日本語版](https://doc.rust-jp.rs/book-ja/title-page.html)を12章まで読んだり写経したりそれを改造したりしたところ。
+ここまでで区切りにして、アウトプットとしてなにかツールを作ろうとしているので、一旦ここまでで公開します。
+
+やってて色々わかんなくなったら、また立ち返って追記/修正していく予定。
 
 ## アウトプット
 
