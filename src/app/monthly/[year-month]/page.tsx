@@ -37,11 +37,11 @@ export default async function Page({
 
   return (
     <>
-      <div className="mt-2 flex w-[368px] flex-col gap-4 justify-self-center md:w-[752px] md:flex-row lg:w-[1000px]">
-        <article className="w-full md:w-[448px] lg:w-[664px]">
+      <div className="entry-with-side-bar-container">
+        <article className="main-contents">
           <BlogEntry entry={entry} />
         </article>
-        <aside className="w-full md:w-[288px] lg:w-[320px]">
+        <aside className="side-bar">
           <SideBarInfo mdBody={entry.body} />
           <div className="mt-2 hidden md:block">
             <MonthlySelector
