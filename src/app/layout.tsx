@@ -84,7 +84,7 @@ export default function RootLayout({
             </div>
           </div>
         </header>
-        <div className="relative">{children}</div>
+        {children}
         <footer className="flex place-content-center">
           <div className="flex w-fit flex-col items-center self-center rounded-lg bg-gray-100 bg-opacity-75 px-2 text-sm text-gray-800">
             <a href="/profile" className="hover:underline">
