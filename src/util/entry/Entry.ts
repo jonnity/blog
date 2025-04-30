@@ -4,15 +4,15 @@ import * as fs from "node:fs";
 import frontMatter from "front-matter";
 import { z } from "zod";
 
-const pastDateStringSchema = z.string().transform((dateStr, ctx) => {
+const dateStringSchema = z.string().transform((dateStr, ctx) => {
   const inputtedDate = new Date(dateStr);
   inputtedDate.setHours(0, 0, 0, 0);
   if (inputtedDate > new Date()) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.invalid_date,
-      message: "Input must be past date.",
-    });
-    return z.NEVER;
+    console.info(`
+  -------------
+    Need to check before publish the article: ${dateStr} is future date.
+  -------------
+`);
   }
   return inputtedDate;
 });
@@ -20,8 +20,8 @@ const pastDateStringSchema = z.string().transform((dateStr, ctx) => {
 const titleSchema = z.string().min(1);
 const tagsSchema = z.string().array().optional().default([]);
 const descriptionSchema = z.string().optional();
-const createdAtSchema = pastDateStringSchema;
-const updatedAtSchema = pastDateStringSchema.optional();
+const createdAtSchema = dateStringSchema;
+const updatedAtSchema = dateStringSchema.optional();
 const thumbnailSchema = z
   .object({
     url: z.string(),
@@ -123,9 +123,7 @@ export class EntryManager {
       .readdirSync(entriesDir)
       .filter((filename) => filename.match(/.+\.md$/));
 
-    console.info(`entryFiles:`);
     entryFiles.forEach((filename) => {
-      console.info(` ${filename}`);
       const slug = filename.split(/\.md$/)[0];
       const fileContents = fs.readFileSync(
         path.join(entriesDir, filename),
