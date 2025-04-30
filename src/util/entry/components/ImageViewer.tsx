@@ -89,7 +89,7 @@ export const ImageViewer: React.FC<Prop> = ({ src, alt, caption }) => {
           alt={alt}
           onClick={openModal}
         />
-        <div>{caption}</div>
+        <span>{caption}</span>
       </p>
       {hasShowModalParam && isModalTarget && <ImageModal src={src} alt={alt} />}
     </>
