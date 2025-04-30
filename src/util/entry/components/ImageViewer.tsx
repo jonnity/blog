@@ -6,6 +6,10 @@ const hiddenScrollbarClassName = "hidden-scrollbar";
 const showModalParamKey = "sm";
 const showModalValue = "1";
 
+// Header heights from layout.tsx
+const HEADER_HEIGHT_MOBILE = 48; // h-12 (3rem)
+const HEADER_HEIGHT_DESKTOP = 64; // md:h-16 (4rem)
+
 const ImageModal: React.FC<{
   src: string;
   alt: string;
@@ -25,10 +29,28 @@ const ImageModal: React.FC<{
     };
   }, [router]);
 
+  const [headerHeight, setHeaderHeight] = useState(HEADER_HEIGHT_MOBILE);
+
+  useEffect(() => {
+    const updateHeaderHeight = () => {
+      setHeaderHeight(
+        window.innerWidth >= 768 ? HEADER_HEIGHT_DESKTOP : HEADER_HEIGHT_MOBILE,
+      );
+    };
+
+    updateHeaderHeight();
+    window.addEventListener("resize", updateHeaderHeight);
+    return () => window.removeEventListener("resize", updateHeaderHeight);
+  }, []);
+
   return (
     <div
-      className="absolute left-0 top-0 flex h-dvh w-dvw justify-center bg-black bg-opacity-70 p-2 hover:cursor-zoom-out lg:p-8"
-      style={{ top: window.scrollY }}
+      className="absolute left-0 flex w-dvw justify-center bg-black bg-opacity-70 p-2 hover:cursor-zoom-out lg:p-8"
+      style={{
+        top: window.scrollY,
+        height: `calc(100dvh - ${headerHeight}px)`,
+        marginTop: `${headerHeight}px`,
+      }}
       onClick={() => router.back()}
     >
       <img src={src} alt={alt} className="object-scale-down" />
@@ -36,7 +58,7 @@ const ImageModal: React.FC<{
   );
 };
 
-type Prop = { src: string; alt: string; caption: string };
+type Prop = { src: string; alt: string; caption: React.ReactNode };
 export const ImageViewer: React.FC<Prop> = ({ src, alt, caption }) => {
   const router = useRouter();
   const pathname = usePathname();

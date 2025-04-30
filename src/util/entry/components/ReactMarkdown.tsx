@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import React, { Suspense } from "react";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { z } from "zod";
@@ -23,27 +23,30 @@ export const ReactMarkdown: React.FC<ReactMarkdownProps> = ({ mdBody }) => {
           return url;
         }}
         components={{
-          p({ node, ...rest }) {
-            const defaultParagraph = <p>{rest.children}</p>;
+          p({ node, children }) {
+            const defaultParagraph = <p>{children}</p>;
             const firstChild = node?.children[0];
-            const secondChild = node?.children[1];
             const firstChildIsImage =
               firstChild?.type === "element" && firstChild.tagName === "img";
-            const secondChildIsText = secondChild?.type === "text";
+
             if (
               typeof node?.children?.length !== "number" ||
-              node.children.length !== 2 ||
-              !firstChildIsImage ||
-              !secondChildIsText
+              node.children.length < 2 ||
+              !firstChildIsImage
             ) {
               return defaultParagraph;
             }
 
             const src = srcSchema.parse(firstChild.properties.src);
             const alt = altSchema.parse(firstChild.properties.alt);
+
+            // Get the caption content - all children except the first image
+            // This preserves any formatting, links, or inline code in the caption
+            const captionContent = React.Children.toArray(children).slice(1);
+
             return (
               <Suspense>
-                <ImageViewer src={src} alt={alt} caption={secondChild.value} />
+                <ImageViewer src={src} alt={alt} caption={captionContent} />
               </Suspense>
             );
           },
