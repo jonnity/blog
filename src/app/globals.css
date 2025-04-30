@@ -113,6 +113,17 @@
   @apply rounded bg-white bg-opacity-90;
 }
 
+.entry-with-side-bar-container {
+  @apply my-2 flex w-[368px] flex-col gap-4 justify-self-center md:w-[752px] md:flex-row lg:w-[1000px];
+
+  .main-contents {
+    @apply w-full md:w-[448px] lg:w-[664px];
+  }
+  .side-bar {
+    @apply w-full md:w-[288px] lg:w-[320px];
+  }
+}
+
 @layer utilities {
   .hidden-scrollbar {
     overflow: hidden;
