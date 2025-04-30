@@ -58,7 +58,7 @@ const ImageModal: React.FC<{
   );
 };
 
-type Prop = { src: string; alt: string; caption: string };
+type Prop = { src: string; alt: string; caption: React.ReactNode };
 export const ImageViewer: React.FC<Prop> = ({ src, alt, caption }) => {
   const router = useRouter();
   const pathname = usePathname();
@@ -89,7 +89,7 @@ export const ImageViewer: React.FC<Prop> = ({ src, alt, caption }) => {
           alt={alt}
           onClick={openModal}
         />
-        <span>{caption}</span>
+        <div>{caption}</div>
       </p>
       {hasShowModalParam && isModalTarget && <ImageModal src={src} alt={alt} />}
     </>
