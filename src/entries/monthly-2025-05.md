@@ -73,7 +73,7 @@ summary:
 
 今月はいっぱい肉じゃがを作った。
 
-[mixi2に肉じゃがのコミュニティ](https://mixi.social/communities/4f0b258a-1e95-4f65-9c96-e5499d1ea02d?r=vrralcywrpie)も作ってます。みんなも「肉じゃが」へアンコンシャス・バイアスに気づき、社会を動かしていこう。
+[mixi2に肉じゃがのコミュニティ](https://mixi.social/communities/4f0b258a-1e95-4f65-9c96-e5499d1ea02d?r=vrralcywrpie)も作ってます。みんなも「肉じゃが」へのアンコンシャス・バイアスに気付こう。私たち一人ひとりの小さな意識の変化が、大きな社会の変化に繋がるのです。
 
 ### なんか炒め物
 
