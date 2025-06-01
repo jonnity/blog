@@ -45,7 +45,7 @@ const ImageModal: React.FC<{
 
   return (
     <div
-      className="absolute left-0 flex w-dvw justify-center bg-black bg-opacity-70 p-2 hover:cursor-zoom-out lg:p-8"
+      className="absolute left-0 flex w-dvw justify-center bg-black/70 p-2 hover:cursor-zoom-out lg:p-8"
       style={{
         top: window.scrollY,
         height: `calc(100dvh - ${headerHeight}px)`,
