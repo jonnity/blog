@@ -149,7 +149,7 @@ export const Consent: React.FC = () => {
       {isVisible && (
         <div
           data-consent-banner
-          className="fixed bottom-0 left-0 right-0 z-50 border-t border-gray-200 bg-white p-4 shadow-lg"
+          className="fixed right-0 bottom-0 left-0 z-50 border-t border-gray-200 bg-white p-4 shadow-lg"
         >
           <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 sm:flex-row">
             <p className="text-sm text-gray-700">
@@ -159,19 +159,19 @@ export const Consent: React.FC = () => {
             <div className="flex gap-3">
               <button
                 onClick={handleReject}
-                className="rounded border border-gray-300 px-4 py-2 text-sm text-gray-600 transition-colors hover:bg-gray-50"
+                className="rounded-sm border border-gray-300 px-4 py-2 text-sm text-gray-600 transition-colors hover:bg-gray-50"
               >
                 拒否
               </button>
               <button
                 onClick={handleShowDetails}
-                className="rounded border border-gray-300 px-4 py-2 text-sm text-gray-600 transition-colors hover:bg-gray-50"
+                className="rounded-sm border border-gray-300 px-4 py-2 text-sm text-gray-600 transition-colors hover:bg-gray-50"
               >
                 詳細
               </button>
               <button
                 onClick={handleAccept}
-                className="rounded bg-blue-600 px-4 py-2 text-sm text-white transition-colors hover:bg-blue-700"
+                className="rounded-sm bg-blue-600 px-4 py-2 text-sm text-white transition-colors hover:bg-blue-700"
               >
                 同意
               </button>
@@ -182,31 +182,31 @@ export const Consent: React.FC = () => {
 
       {/* デバッグパネル */}
       {isDebugMode && (
-        <div className="fixed right-4 top-4 z-50 max-w-md rounded border bg-white p-4 shadow-lg">
+        <div className="fixed top-4 right-4 z-50 max-w-md rounded-sm border bg-white p-4 shadow-lg">
           <h3 className="mb-2 font-bold">Debug Panel</h3>
           <div className="space-y-2 text-sm">
             <div className="mt-2 flex gap-2">
               <button
                 onClick={() => simulateEvent("zarazConsentAPIReady")}
-                className="rounded bg-blue-100 px-2 py-1 text-xs"
+                className="rounded-sm bg-blue-100 px-2 py-1 text-xs"
               >
                 Simulate API Ready
               </button>
               <button
                 onClick={() => simulateEvent("zarazConsentChoicesUpdated")}
-                className="rounded bg-blue-100 px-2 py-1 text-xs"
+                className="rounded-sm bg-blue-100 px-2 py-1 text-xs"
               >
                 Simulate Consent Updated
               </button>
               <button
                 onClick={setDebugCookie}
-                className="rounded bg-green-100 px-2 py-1 text-xs"
+                className="rounded-sm bg-green-100 px-2 py-1 text-xs"
               >
                 Set Cookie
               </button>
               <button
                 onClick={clearDebugCookie}
-                className="rounded bg-red-100 px-2 py-1 text-xs"
+                className="rounded-sm bg-red-100 px-2 py-1 text-xs"
               >
                 Clear Cookie
               </button>
@@ -214,7 +214,7 @@ export const Consent: React.FC = () => {
                 onClick={() => {
                   setIsDebugMode(false);
                 }}
-                className="rounded bg-gray-200 px-2 py-1 text-xs"
+                className="rounded-sm bg-gray-200 px-2 py-1 text-xs"
               >
                 Close Debug Panel
               </button>

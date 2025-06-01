@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body
-        className={`${inter.className} bg-cover bg-fixed bg-repeat-y portrait:bg-ant-nest_portrait landscape:bg-ant-nest_landscape`}
+        className={`${inter.className} bg-cover bg-fixed bg-repeat-y portrait:bg-[url('/bg-ant-nest_portrait.webp')] landscape:bg-['url(/bg-ant-nest_landscape.webp)']`}
       >
         <header className="sticky top-0 z-30 flex h-12 w-full justify-center bg-orange-200 px-4 md:h-16">
           <div className="flex h-full w-full justify-between">
@@ -86,7 +86,7 @@ export default function RootLayout({
         </header>
         {children}
         <footer className="flex place-content-center">
-          <div className="flex w-fit flex-col items-center self-center rounded-lg bg-gray-100 bg-opacity-75 px-2 text-sm text-gray-800">
+          <div className="flex w-fit flex-col items-center self-center rounded-lg bg-gray-100/75 px-2 text-sm text-gray-800">
             <a href="/profile" className="hover:underline">
               Privacy Policy
             </a>

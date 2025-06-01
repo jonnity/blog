@@ -1,130 +1,13 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* Additional vertical padding used by kbd tag. */
-.py-05 {
-  padding-top: 0.125rem;
-  padding-bottom: 0.125rem;
-}
-
-.entry-base {
-  @apply break-words leading-normal text-gray-900;
-}
-
-.entry-base > p {
-  @apply mb-2 mt-0 indent-4;
-}
-
-.entry-base > * + * {
-  @apply mb-2 mt-0;
-}
-
-.entry-base li + li {
-  @apply mt-1;
-}
-
-.entry-base li > p + p {
-  @apply mt-6;
-}
-
-.entry-base strong {
-  @apply font-semibold;
-}
-
-.entry-base a {
-  @apply font-semibold text-blue-600;
-}
-
-.entry-base strong a {
-  @apply font-bold;
-}
-
-.entry-base h1 {
-  @apply mb-4 mt-6 border-b pb-2 text-4xl font-semibold leading-tight;
-}
-
-.entry-base h2 {
-  @apply mb-4 mt-6 border-b pb-2 text-2xl font-semibold leading-tight;
-}
-
-.entry-base h3 {
-  @apply mb-4 mt-6 text-lg font-semibold leading-snug;
-}
-
-.entry-base h4 {
-  @apply mb-4 mt-6 text-base font-semibold leading-none;
-}
-
-.entry-base h5 {
-  @apply mb-4 mt-6 text-sm font-semibold leading-tight;
-}
-
-.entry-base h6 {
-  @apply mb-4 mt-6 text-sm font-semibold leading-tight text-gray-600;
-}
-
-.entry-base blockquote {
-  @apply border-l-4 border-gray-300 pl-4 pr-4 text-base text-gray-600;
-}
-
-.entry-base code {
-  @apply py-05 inline rounded bg-gray-200 px-1 font-mono text-sm;
-}
-
-.entry-base pre {
-  @apply rounded bg-gray-100 p-4;
-}
-
-.entry-base pre code {
-  @apply block overflow-visible rounded-none bg-transparent p-0;
-}
-
-.entry-base ul {
-  @apply list-disc pl-8 text-base;
-}
-
-.entry-base ol {
-  @apply list-decimal pl-8 text-base;
-}
-
-.entry-base kbd {
-  @apply py-05 inline-block rounded border px-1 align-middle font-mono text-xs font-normal shadow;
-}
-
-.entry-base table {
-  @apply border-gray-600 text-base;
-}
-
-.entry-base th {
-  @apply border px-3 py-1;
-}
-
-.entry-base td {
-  @apply border px-3 py-1;
-}
-
-/* Override pygments style background color. */
-.entry-base .highlight pre {
-  @apply bg-gray-100 !important;
-}
-
-.contents-base {
-  @apply rounded bg-white bg-opacity-90;
-}
-
-.entry-with-side-bar-container {
-  @apply my-2 flex w-[368px] flex-col gap-4 justify-self-center md:w-[752px] md:flex-row lg:w-[1000px];
-
-  .main-contents {
-    @apply w-full md:w-[448px] lg:w-[664px];
-  }
-  .side-bar {
-    @apply w-full md:w-[288px] lg:w-[320px];
-  }
-}
+@import "tailwindcss";
+@config '../../tailwind.config.ts';
 
 @layer utilities {
+  /* Additional vertical padding used by kbd tag. */
+  .py-05 {
+    padding-top: 0.125rem;
+    padding-bottom: 0.125rem;
+  }
+
   .hidden-scrollbar {
     overflow: hidden;
     -ms-overflow-style: none; /* IE, Edge 対応 */
@@ -133,5 +16,123 @@
   .hidden-scrollbar::-webkit-scrollbar {
     /* Chrome, Safari 対応 */
     display: none;
+  }
+}
+
+@layer base {
+  .entry-base {
+    @apply leading-normal break-words text-gray-900;
+  }
+
+  .entry-base > p {
+    @apply mt-0 mb-2 indent-4;
+  }
+
+  .entry-base > * + * {
+    @apply mt-0 mb-2;
+  }
+
+  .entry-base li + li {
+    @apply mt-1;
+  }
+
+  .entry-base li > p + p {
+    @apply mt-6;
+  }
+
+  .entry-base strong {
+    @apply font-semibold;
+  }
+
+  .entry-base a {
+    @apply font-semibold text-blue-600;
+  }
+
+  .entry-base strong a {
+    @apply font-bold;
+  }
+
+  .entry-base h1 {
+    @apply mt-6 mb-4 border-b pb-2 text-4xl leading-tight font-semibold;
+  }
+
+  .entry-base h2 {
+    @apply mt-6 mb-4 border-b pb-2 text-2xl leading-tight font-semibold;
+  }
+
+  .entry-base h3 {
+    @apply mt-6 mb-4 text-lg leading-snug font-semibold;
+  }
+
+  .entry-base h4 {
+    @apply mt-6 mb-4 text-base leading-none font-semibold;
+  }
+
+  .entry-base h5 {
+    @apply mt-6 mb-4 text-sm leading-tight font-semibold;
+  }
+
+  .entry-base h6 {
+    @apply mt-6 mb-4 text-sm leading-tight font-semibold text-gray-600;
+  }
+
+  .entry-base blockquote {
+    @apply border-l-4 border-gray-300 pr-4 pl-4 text-base text-gray-600;
+  }
+
+  .entry-base code {
+    @apply py-05 inline rounded-sm bg-gray-200 px-1 font-mono text-sm;
+  }
+
+  .entry-base pre {
+    @apply rounded-sm bg-gray-100 p-4;
+  }
+
+  .entry-base pre code {
+    @apply block overflow-visible rounded-none bg-transparent p-0;
+  }
+
+  .entry-base ul {
+    @apply list-disc pl-8 text-base;
+  }
+
+  .entry-base ol {
+    @apply list-decimal pl-8 text-base;
+  }
+
+  .entry-base kbd {
+    @apply py-05 inline-block rounded-sm border px-1 align-middle font-mono text-xs font-normal shadow-sm;
+  }
+
+  .entry-base table {
+    @apply border-gray-600 text-base;
+  }
+
+  .entry-base th {
+    @apply border px-3 py-1;
+  }
+
+  .entry-base td {
+    @apply border px-3 py-1;
+  }
+
+  /* Override pygments style background color. */
+  .entry-base .highlight pre {
+    @apply bg-gray-100 !important;
+  }
+
+  .contents-base {
+    @apply rounded-sm bg-white/90;
+  }
+
+  .entry-with-side-bar-container {
+    @apply my-2 flex w-[368px] flex-col gap-4 justify-self-center md:w-[752px] md:flex-row lg:w-[1000px];
+
+    .main-contents {
+      @apply w-full md:w-[448px] lg:w-[664px];
+    }
+    .side-bar {
+      @apply w-full md:w-[288px] lg:w-[320px];
+    }
   }
 }

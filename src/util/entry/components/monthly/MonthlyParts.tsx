@@ -19,7 +19,7 @@ export const MonthlyParts: React.FC<MonthlyPartsProp> = ({
     <div className="m-0 flex justify-end gap-2">
       <select
         name="yearMonth"
-        className="rounded border p-2"
+        className="rounded-sm border p-2"
         defaultValue={currentYearMonth}
         id={selectorId}
       >
@@ -33,7 +33,7 @@ export const MonthlyParts: React.FC<MonthlyPartsProp> = ({
         })}
       </select>
       <button
-        className="rounded border bg-gray-200 p-1"
+        className="rounded-sm border bg-gray-200 p-1"
         onClick={yearMonthHandler}
       >
         表示
