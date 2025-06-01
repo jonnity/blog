@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body
-        className={`${inter.className} bg-cover bg-fixed bg-repeat-y portrait:bg-[url(/bg-ant-nest_portrait.webp)] landscape:bg-[url(/bg-ant-nest_landscape.webp)]`}
+        className={`${inter.className} grid w-full bg-cover bg-fixed bg-repeat-y portrait:bg-[url(/bg-ant-nest_portrait.webp)] landscape:bg-[url(/bg-ant-nest_landscape.webp)]`}
       >
         <header className="sticky top-0 z-30 flex h-12 w-full justify-center bg-orange-200 px-4 md:h-16">
           <div className="flex h-full w-full justify-between">
