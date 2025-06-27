@@ -25,7 +25,7 @@ Rust製のNotion DB用CLIツールです。主に、大量のデータを追加�
 ## 使い方
 
 1. [release](https://github.com/jonnity/notion-db-cli/releases)から使用する環境に合わせてバイナリを取得する。
-2. ["Integrations" page of Notion](https://www.notion.so/profile/integrations)のページから、対象とするワークスペースに、Internal Integrationを作成し、トークンを取得する。
+2. [Notionの"Integrations"ページ](https://www.notion.so/profile/integrations)から、対象とするワークスペースに、Internal Integrationを作成し、トークンを取得する。
 3. CLIから操作したいDBのページを開き、"Connections"メニューから、作成したIntegrationに接続を許可する。
 4. 環境変数`NOTION_CLI_RS_TOKEN`を取得したトークンの値に設定する (もしくはバイナリ実行時に`--token`で同じくトークンの値を指定する)。
 5. 取得したバイナリを、上記のコマンドで実行する (`help`表示も参照してください)
