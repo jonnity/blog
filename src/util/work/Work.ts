@@ -18,7 +18,7 @@ const pastDateStringSchema = z.string().transform((dateStr, ctx) => {
 });
 
 const titleSchema = z.string();
-const thumbnailPathSchema = z.string();
+const thumbnailPathSchema = z.string().optional();
 const categoriesSchema = z.string().array();
 const descriptionSchema = z.string();
 const createdAtSchema = pastDateStringSchema;
@@ -54,7 +54,9 @@ class Work {
   }
   getThumbnail() {
     return {
-      url: `/work/${this.metadata.thumbnailPath}`,
+      url: this.metadata.thumbnailPath
+        ? `/work/${this.metadata.thumbnailPath}`
+        : "/icon_keyboard.webp",
       alt: `${this.metadata.title}のアイコン`,
     };
   }
