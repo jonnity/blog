@@ -1,5 +1,5 @@
 ---
-createdAt: 2025/6/30
+createdAt: 2025/7/1
 title: "月記 (2025年6月)"
 description: 2025年6月の活動の振り返り
 tags: 
