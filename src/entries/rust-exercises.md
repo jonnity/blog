@@ -1,5 +1,6 @@
 ---
 createdAt: 2025/04/23
+updatedAt: 2025/07/14
 title: Rust演習の記録
 description: The Rust Programming Languageに沿ってRustの演習を行い、その内容を記録する
 tags: 
@@ -131,3 +132,11 @@ fn largest<T: PartialOrd>(list: &[T]) -> &T {
   * 確かにエラーメッセージがリダイレクトされても困るのか
   * そうなってるツールは使ったことあるかもしれんけど、全然意識できてなかった
 * CLIツール周りの話は、`main.rs`/`lib.rs`の組み合わせが実際どうなるのかがイメージついて、だいぶ雰囲気掴めてきた感じする
+
+### 13. 関数型言語の機能：イテレータとクロージャ
+
+* イテレータは[notion-db-cli](/work/notion-db-cli)でも使ってるからまあだいたい理解できてる
+  * [CSVのレコード読むとこ](https://github.com/jonnity/notion-db-cli/blob/cbd4b1a2db0132a4c254f174a1bce24e239656b0/src/csv_reader.rs#L51)で、自前で`Iterator`を実装したりもしてるし
+* クロージャは、イテレータの関数 (`map`とか) の引数としては使ってる
+* notion-db-cliでも結構`clone`してるから、もっとうまいことイテレータを使えるのかもしれない
+* ちゃんとイテレータも速く動くってんならいいよね
