@@ -1,0 +1,42 @@
+{
+  "name": "jonnity blog",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:22-bookworm",
+  "postCreateCommand": "npm i && npm install -g @anthropic-ai/claude-code",
+  "forwardPorts": [3000],
+  "portsAttributes": {
+    "3000": {
+      "label": "Next.js Dev Server",
+      "onAutoForward": "openPreview"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.vscode-typescript-next",
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss",
+        "ms-vscode.vscode-eslint",
+        "yzhang.markdown-all-in-one",
+        "bierner.markdown-mermaid",
+        "github.copilot",
+        "anthropic.claude-dev"
+      ],
+      "settings": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+          "source.fixAll.eslint": "explicit"
+        },
+        "typescript.preferences.preferTypeOnlyAutoImports": true,
+        "emmet.includeLanguages": {
+          "javascript": "javascriptreact",
+          "typescript": "typescriptreact"
+        },
+        "files.eol": "\n"
+      }
+    }
+  },
+  "mounts": [
+    "source=${localWorkspaceFolder}/.git,target=/workspaces/${localWorkspaceFolderBasename}/.git,type=bind,consistency=cached"
+  ]
+}
