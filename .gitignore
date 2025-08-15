@@ -36,3 +36,5 @@ next-env.d.ts
 
 .test*.md
 public/entry/.test*/*
+
+.serena/cache/**/*

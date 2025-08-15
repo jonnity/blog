@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh issue view:*)",
+      "Bash(npm run build)",
+      "Bash(npm run lint)",
+      "Bash(git add:*)",
+      "Write(src/**/*.ts)",
+      "Write(src/**/*.tsx)",
+      "Write(convex/**/*.ts)"
+    ],
+    "deny": [
+      "Bash(rm -rf:*)",
+      "Bash(curl:*)",
+      "Write(/etc/*)",
+      "Read(~/.zshrc)",
+      "Read(node_modules/*)",
+      "Read(.env*)"
+    ]
+  }
+}

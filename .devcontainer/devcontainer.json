@@ -1,7 +1,10 @@
 {
   "name": "jonnity blog",
   "image": "mcr.microsoft.com/devcontainers/typescript-node:22-bookworm",
-  "postCreateCommand": "npm i && npm install -g @anthropic-ai/claude-code",
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  "postCreateCommand": "npm i && npm install -g @anthropic-ai/claude-code && curl -LsSf https://astral.sh/uv/install.sh | sh",
   "forwardPorts": [3000],
   "portsAttributes": {
     "3000": {
@@ -37,6 +40,7 @@
     }
   },
   "mounts": [
-    "source=${localWorkspaceFolder}/.git,target=/workspaces/${localWorkspaceFolderBasename}/.git,type=bind,consistency=cached"
+    "source=${localWorkspaceFolder}/.git,target=/workspaces/${localWorkspaceFolderBasename}/.git,type=bind,consistency=cached",
+    "source=${localEnv:USERPROFILE}/.claude,target=/home/node/.claude,type=bind,consistency=cached"
   ]
 }
