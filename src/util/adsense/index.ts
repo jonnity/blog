@@ -1,2 +1,2 @@
-export { GoogleAdSense, InFeedAdSense } from "./GoogleAdSense";
+export { GoogleAdSense } from "./GoogleAdSense";
 export type { GoogleAdSenseProps } from "./GoogleAdSense";
