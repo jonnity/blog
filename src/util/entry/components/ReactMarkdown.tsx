@@ -9,6 +9,7 @@ import { ImageViewer } from "./ImageViewer";
 import { SyntaxHighlightedCodeBlock } from "./SyntaxHighlightedCodeBlock";
 import { IframeYoutubePlayer } from "./IframeYoutubePlayer";
 import { EmbeddedTweet } from "./EmbeddedTweet";
+import { GoogleAdSense } from "@/util/adsense";
 type ReactMarkdownProps = { mdBody: string };
 
 export const ReactMarkdown: React.FC<ReactMarkdownProps> = ({ mdBody }) => {
@@ -85,6 +86,17 @@ export const ReactMarkdown: React.FC<ReactMarkdownProps> = ({ mdBody }) => {
             }
             if (language === "twitter") {
               return <EmbeddedTweet id={code.trim()} />;
+            }
+            if (language === "adsense") {
+              return (
+                <div className="my-3">
+                  <GoogleAdSense
+                    adClient="ca-pub-7514123900838543"
+                    adSlot="8119491494"
+                    inArticle={true}
+                  />
+                </div>
+              );
             }
             return (
               <SyntaxHighlightedCodeBlock
