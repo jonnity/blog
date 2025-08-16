@@ -1,0 +1,73 @@
+"use client";
+
+import { useEffect } from "react";
+
+export interface GoogleAdSenseProps {
+  adSlot: string;
+  adClient: string;
+  width?: number | string;
+  height?: number | string;
+  adFormat?: "auto" | "rectangle" | "vertical" | "horizontal";
+  fullWidthResponsive?: boolean;
+  className?: string;
+  style?: React.CSSProperties;
+  testMode?: boolean;
+}
+
+declare global {
+  interface Window {
+    adsbygoogle: any[];
+  }
+}
+
+export const GoogleAdSense: React.FC<GoogleAdSenseProps> = ({
+  adSlot,
+  adClient,
+  width = "auto",
+  height = "auto",
+  adFormat = "auto",
+  fullWidthResponsive = true,
+  className = "",
+  style = {},
+  testMode = false,
+}) => {
+  useEffect(() => {
+    try {
+      if (typeof window !== "undefined") {
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      }
+    } catch (error) {
+      console.error("AdSense error:", error);
+    }
+  }, []);
+
+const adStyle: React.CSSProperties = {
+    display: "block",
+    width: typeof width === "number" ? `${width}px` : width,
+    height: typeof height === "number" ? `${height}px` : height,
+    ...style,
+  };
+
+  // 開発環境またはテストモードの場合はダミーIDを使用
+  const isDevelopment = process.env.NODE_ENV === "development";
+  const isTestMode = testMode || isDevelopment;
+  
+  const finalAdClient = isTestMode ? "ca-pub-0000000000000000" : adClient;
+  const finalAdSlot = isTestMode ? "0000000000" : adSlot;
+
+  const adProps: Record<string, string> = {
+    "data-ad-client": finalAdClient,
+    "data-ad-slot": finalAdSlot,
+    "data-ad-format": adFormat,
+    "data-full-width-responsive": fullWidthResponsive.toString(),
+  };
+
+  // テストモードまたは開発環境の場合はテストパラメータを追加
+  if (isTestMode) {
+    adProps["data-adtest"] = "on";
+  }
+
+  return (
+    <ins className={`adsbygoogle ${className}`} style={adStyle} {...adProps} />
+  );
+};
