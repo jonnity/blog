@@ -41,7 +41,7 @@ export const GoogleAdSense: React.FC<GoogleAdSenseProps> = ({
     }
   }, []);
 
-const adStyle: React.CSSProperties = {
+  const adStyle: React.CSSProperties = {
     display: "block",
     width: typeof width === "number" ? `${width}px` : width,
     height: typeof height === "number" ? `${height}px` : height,
@@ -51,7 +51,7 @@ const adStyle: React.CSSProperties = {
   // 開発環境またはテストモードの場合はダミーIDを使用
   const isDevelopment = process.env.NODE_ENV === "development";
   const isTestMode = testMode || isDevelopment;
-  
+
   const finalAdClient = isTestMode ? "ca-pub-0000000000000000" : adClient;
   const finalAdSlot = isTestMode ? "0000000000" : adSlot;
 
@@ -61,6 +61,12 @@ const adStyle: React.CSSProperties = {
     "data-ad-format": adFormat,
     "data-full-width-responsive": fullWidthResponsive.toString(),
   };
+
+  // 固定サイズが指定されている場合は、width/heightを明示的に設定
+  if (!fullWidthResponsive && typeof height === 'number' && typeof width !== 'undefined') {
+    // data-ad-formatを削除してデフォルトの動作に任せる
+    delete adProps["data-ad-format"];
+  }
 
   // テストモードまたは開発環境の場合はテストパラメータを追加
   if (isTestMode) {
