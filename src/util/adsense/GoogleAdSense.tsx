@@ -72,7 +72,11 @@ export const GoogleAdSense: React.FC<GoogleAdSenseProps> = ({
   }
 
   // 固定サイズが指定されている場合は、width/heightを明示的に設定
-  if (!fullWidthResponsive && typeof height === 'number' && typeof width !== 'undefined') {
+  if (
+    !fullWidthResponsive &&
+    typeof height === "number" &&
+    typeof width !== "undefined"
+  ) {
     // data-ad-formatを削除してデフォルトの動作に任せる
     delete adProps["data-ad-format"];
   }
