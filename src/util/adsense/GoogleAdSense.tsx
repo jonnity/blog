@@ -7,11 +7,12 @@ export interface GoogleAdSenseProps {
   adClient: string;
   width?: number | string;
   height?: number | string;
-  adFormat?: "auto" | "rectangle" | "vertical" | "horizontal";
+  adFormat?: "auto" | "rectangle" | "vertical" | "horizontal" | "fluid";
   fullWidthResponsive?: boolean;
   className?: string;
   style?: React.CSSProperties;
   testMode?: boolean;
+  inArticle?: boolean;
 }
 
 declare global {
@@ -30,6 +31,7 @@ export const GoogleAdSense: React.FC<GoogleAdSenseProps> = ({
   className = "",
   style = {},
   testMode = false,
+  inArticle = false,
 }) => {
   useEffect(() => {
     try {
@@ -45,6 +47,7 @@ export const GoogleAdSense: React.FC<GoogleAdSenseProps> = ({
     display: "block",
     width: typeof width === "number" ? `${width}px` : width,
     height: typeof height === "number" ? `${height}px` : height,
+    textAlign: inArticle ? "center" : undefined,
     ...style,
   };
 
@@ -62,8 +65,18 @@ export const GoogleAdSense: React.FC<GoogleAdSenseProps> = ({
     "data-full-width-responsive": fullWidthResponsive.toString(),
   };
 
+  // 記事内広告の場合
+  if (inArticle) {
+    adProps["data-ad-layout"] = "in-article";
+    adProps["data-ad-format"] = "fluid";
+  }
+
   // 固定サイズが指定されている場合は、width/heightを明示的に設定
-  if (!fullWidthResponsive && typeof height === 'number' && typeof width !== 'undefined') {
+  if (
+    !fullWidthResponsive &&
+    typeof height === "number" &&
+    typeof width !== "undefined"
+  ) {
     // data-ad-formatを削除してデフォルトの動作に任せる
     delete adProps["data-ad-format"];
   }

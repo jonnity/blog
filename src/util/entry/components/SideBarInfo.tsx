@@ -1,6 +1,7 @@
 import { SNSLogo } from "@/util/profile/SNSLogo";
 import { MarkdownToc } from "@/util/entry/components/MarkdownToc";
 import { RandomSelfIntroduction } from "@/util/profile/RandomSelfIntroduction";
+import { GoogleAdSense } from "@/util/adsense";
 
 export const SideBarInfo: React.FC<{ mdBody: string }> = ({ mdBody }) => {
   return (
@@ -8,6 +9,7 @@ export const SideBarInfo: React.FC<{ mdBody: string }> = ({ mdBody }) => {
       <div className="flex flex-col gap-2">
         <Profile />
         <EntryTOC mdBody={mdBody} />
+        <SideBarAd />
       </div>
     </>
   );
@@ -42,6 +44,14 @@ const EntryTOC: React.FC<{ mdBody: string }> = ({ mdBody }) => {
     </>
   );
 };
+
+const SideBarAd = () => (
+  <div className="hidden md:block">
+    <div className="w-full">
+      <GoogleAdSense adClient="ca-pub-7514123900838543" adSlot="8144135865" />
+    </div>
+  </div>
+);
 
 const SideBarDivider = () => {
   return <hr className="my-1 w-full border-gray-400" />;
