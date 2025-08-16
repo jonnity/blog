@@ -11,6 +11,7 @@ import ProfileIcon from "@/assets/icons/profile.svg";
 import MonthDisplay from "@/assets/icons/MonthDisplay";
 import WorkIcon from "@/assets/icons/work.svg";
 import BlogIcon from "@/assets/icons/blog.svg";
+import { GoogleAdSense } from "@/util/adsense";
 
 const logoImagePath = "/logo_keyboard.svg";
 
@@ -26,6 +27,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja">
+      <head>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7514123900838543"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body
         className={`${inter.className} grid w-full bg-cover bg-fixed bg-repeat-y portrait:bg-[url(/bg-ant-nest_portrait.webp)] landscape:bg-[url(/bg-ant-nest_landscape.webp)]`}
       >
@@ -85,6 +93,17 @@ export default function RootLayout({
           </div>
         </header>
         {children}
+        <div className="flex w-full justify-center">
+          <div className="my-4 w-[368px] md:w-[752px] lg:w-[960px]">
+            <GoogleAdSense
+              adClient="ca-pub-7514123900838543"
+              adSlot="8144135865"
+              fullWidthResponsive={false}
+              width="100%"
+              height={75}
+            />
+          </div>
+        </div>
         <footer className="flex place-content-center">
           <div className="flex w-fit flex-col items-center self-center rounded-lg bg-gray-100 bg-opacity-75 px-2 text-sm text-gray-800">
             <a href="/profile" className="hover:underline">
