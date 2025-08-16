@@ -21,7 +21,7 @@ export default async function BlogPage() {
             <>
               <EntryLink key={entry.slug} entry={entry} />
               {/* Insert in-feed ad after every 6 entries */}
-              {(index + 1) % 6 === 0 && (
+              {(index + 4) % 6 === 0 && (
                 <div
                   key={`ad-${index}`}
                   className="my-4 h-fit w-36 md:w-40 lg:w-48"
