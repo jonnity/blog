@@ -7,7 +7,7 @@ categories:
 description: 使用するポケモンをドラフトで決定してバトル！ドラフト対象ポケモンもカスタマイズ可能！
 createdAt: 2025/08/17
 # updatedAt
-thumbnailPath: poke-draft.webp
+thumbnailPath: pokedra-thumbnail.webp
 externalLink:
   url: https://pokedra.jonnity.com
   message: リーグ開幕
