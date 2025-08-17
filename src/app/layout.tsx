@@ -12,6 +12,7 @@ import MonthDisplay from "@/assets/icons/MonthDisplay";
 import WorkIcon from "@/assets/icons/work.svg";
 import BlogIcon from "@/assets/icons/blog.svg";
 import { GoogleAdSense } from "@/util/adsense";
+import { ShareFAB } from "@/util/share";
 
 const logoImagePath = "/logo_keyboard.svg";
 
@@ -113,6 +114,7 @@ export default function RootLayout({
           </div>
         </footer>
         <Consent />
+        <ShareFAB />
       </body>
     </html>
   );
