@@ -19,11 +19,13 @@ export const WorkLink: React.FC<WorkLinkProps> = ({
   return (
     <a href={`./${slug}`}>
       <div className="flex h-fit w-full flex-col gap-2 bg-zinc-50 p-2 md:flex-row md:gap-4">
-        <img
-          src={thumbnail.url}
-          alt={thumbnail.alt}
-          className="h-[96px] w-[128px] object-fill md:h-[144px] md:w-[192px] lg:h-[192px] lg:w-[256px]"
-        />
+        <div className="h-[96px] w-[128px] flex-shrink-0 bg-gray-100 md:h-[144px] md:w-[192px] lg:h-[192px] lg:w-[256px]">
+          <img
+            src={thumbnail.url}
+            alt={thumbnail.alt}
+            className="h-full w-full object-contain"
+          />
+        </div>
         <div>
           <h2 className="text-xl font-bold lg:text-2xl">{title}</h2>
           <p className="text-base md:text-lg lg:text-xl">ジャンル:</p>
@@ -47,8 +49,10 @@ export const WorkLink: React.FC<WorkLinkProps> = ({
           </div>
           <p>
             <span className="text-base lg:text-lg">
-              {createdAt.toLocaleDateString()} 作成
-              {updatedAt ? ` (${updatedAt.toLocaleDateString()} 更新)` : ""}
+              {createdAt.toLocaleDateString("ja-JP")} 作成
+              {updatedAt
+                ? ` (${updatedAt.toLocaleDateString("ja-JP")} 更新)`
+                : ""}
             </span>
           </p>
         </div>

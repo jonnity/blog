@@ -39,9 +39,9 @@ export default async function Page({
               </h1>
               <p>
                 <span className="text-base md:text-lg">
-                  {work.metadata.createdAt.toLocaleDateString()} 作成
+                  {work.metadata.createdAt.toLocaleDateString("ja-JP")} 作成
                   {work.metadata.updatedAt
-                    ? ` (${work.metadata.updatedAt.toLocaleDateString()} 更新)`
+                    ? ` (${work.metadata.updatedAt.toLocaleDateString("ja-JP")} 更新)`
                     : ""}
                 </span>
               </p>
