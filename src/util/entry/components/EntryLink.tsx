@@ -10,8 +10,8 @@ export const EntryLink: React.FC<{ entry: EntryType }> = ({ entry }) => {
   return (
     <>
       <Link href={`/blog/${entry.slug}`}>
-        <article className="h-fit w-36 md:w-40 lg:w-48">
-          <div className="relative h-[108px] w-full md:h-[120px] lg:h-36">
+        <article className="h-fit w-full md:w-[336px] lg:w-[264px]">
+          <div className="relative h-[200px] w-full md:h-[180px]">
             <Image src={url} alt={alt} className="object-cover" fill></Image>
           </div>
           <div className="p-2">
