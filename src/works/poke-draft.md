@@ -10,7 +10,7 @@ createdAt: 2025/08/17
 thumbnailPath: pokedra-thumbnail.webp
 externalLink:
   url: https://pokedra.jonnity.com
-  message: リーグ開幕
+  message: おためし
 ---
 
 ## 概要
@@ -41,6 +41,8 @@ externalLink:
 - ドラフト対象ポケモンのカスタマイズ機能の拡充 (フィルタリング等)
 
 ## リリースノート
+
+内部バージョンで動作中です。動作が急に変わることもあります。
 
 ## プライバシーポリシー
 
