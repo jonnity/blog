@@ -49,8 +49,10 @@ export const WorkLink: React.FC<WorkLinkProps> = ({
           </div>
           <p>
             <span className="text-base lg:text-lg">
-              {createdAt.toLocaleDateString()} 作成
-              {updatedAt ? ` (${updatedAt.toLocaleDateString()} 更新)` : ""}
+              {createdAt.toLocaleDateString("ja-JP")} 作成
+              {updatedAt
+                ? ` (${updatedAt.toLocaleDateString("ja-JP")} 更新)`
+                : ""}
             </span>
           </p>
         </div>
