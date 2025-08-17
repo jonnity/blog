@@ -6,7 +6,7 @@ categories:
   - ブラウザで遊べる
 description: お絵かき + 神経衰弱！同じテーマでそれぞれ絵を描いて、その絵だけを見て神経衰弱をする
 createdAt: 2025/03/01
-# updatedAt
+updatedAt: 2025/08/16
 thumbnailPath: sketch-match.webp
 externalLink:
   url: https://sketch-match.jonnity.com
