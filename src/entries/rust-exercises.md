@@ -140,3 +140,12 @@ fn largest<T: PartialOrd>(list: &[T]) -> &T {
 * クロージャは、イテレータの関数 (`map`とか) の引数としては使ってる
 * notion-db-cliでも結構`clone`してるから、もっとうまいことイテレータを使えるのかもしれない
 * ちゃんとイテレータも速く動くってんならいいよね
+
+### 14. CargoとCrates.ioについてより詳しく
+
+* `Cargo.toml`で設定するプロファイルとしては、devで`opt-level = 0`、releaseで`opt-level = 3`がデフォルトなら、とりあえず何にも設定しなくていい？
+  * [Cargo ReferenceのProfiles](https://doc.rust-lang.org/cargo/reference/profiles.html)を見ると、debug情報を出せたりもするらしい。使わざるを得なくなるときもあるのかも
+* コメントとドキュメンテーションとテスト (ドキュメントが古くなってしまうのを防ぐ意味のほうが強いかもだけど) が兼ねられるの、すごく合理的な感じする
+* Cargoのサブコマンドの追加とかって何に使われるんだろ
+  * なんでもできる？からこそ難しそう
+  * [cargo-script](https://crates.io/crates/cargo-script)っていう、Rustのコードをスクリプト言語っぽく実行できるサブコマンドを追加するCrateあった。へ～
