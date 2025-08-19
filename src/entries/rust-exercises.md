@@ -1,6 +1,6 @@
 ---
 createdAt: 2025/04/23
-updatedAt: 2025/07/14
+updatedAt: 2025/08/19
 title: Rust演習の記録
 description: The Rust Programming Languageに沿ってRustの演習を行い、その内容を記録する
 tags: 
