@@ -1,6 +1,6 @@
 ---
 createdAt: 2025/04/23
-updatedAt: 2025/07/14
+updatedAt: 2025/08/20 
 title: Rust演習の記録
 description: The Rust Programming Languageに沿ってRustの演習を行い、その内容を記録する
 tags: 
@@ -17,8 +17,10 @@ thumbnail:
 
 あたりをモチベにRustの勉強をしてます。
 
-2025/04/23現在、[The Rust Programming Language 日本語版](https://doc.rust-jp.rs/book-ja/title-page.html)を12章まで読んだり写経したりそれを改造したりしたところ。
-ここまでで区切りにして、アウトプットとしてなにかツールを作ろうとしているので、一旦ここまでで公開します。
+## 変更履歴
+
+* 2025/04/23 (作成): [The Rust Programming Language 日本語版](https://doc.rust-jp.rs/book-ja/title-page.html)を12章まで読んだり写経したりそれを改造したりしたところ。ここまでで区切りにして、アウトプットとしてなにかツールを作ろうとしているので、一旦ここまでで公開します。
+* 2025/8/20: 13章の所感を追加
 
 やってて色々わかんなくなったら、また立ち返って追記/修正していく予定。
 
@@ -140,3 +142,12 @@ fn largest<T: PartialOrd>(list: &[T]) -> &T {
 * クロージャは、イテレータの関数 (`map`とか) の引数としては使ってる
 * notion-db-cliでも結構`clone`してるから、もっとうまいことイテレータを使えるのかもしれない
 * ちゃんとイテレータも速く動くってんならいいよね
+
+### 14. CargoとCrates.ioについてより詳しく
+
+* `Cargo.toml`で設定するプロファイルとしては、devで`opt-level = 0`、releaseで`opt-level = 3`がデフォルトなら、とりあえず何にも設定しなくていい？
+  * [Cargo ReferenceのProfiles](https://doc.rust-lang.org/cargo/reference/profiles.html)を見ると、debug情報を出せたりもするらしい。使わざるを得なくなるときもあるのかも
+* コメントとドキュメンテーションとテスト (ドキュメントが古くなってしまうのを防ぐ意味のほうが強いかもだけど) が兼ねられるの、すごく合理的な感じする
+* Cargoのサブコマンドの追加とかって何に使われるんだろ
+  * なんでもできる？からこそ難しそう
+  * [cargo-script](https://crates.io/crates/cargo-script)っていう、Rustのコードをスクリプト言語っぽく実行できるサブコマンドを追加するCrateあった。へ～
