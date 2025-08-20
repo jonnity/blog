@@ -1,6 +1,6 @@
 ---
 createdAt: 2025/04/23
-updatedAt: 2025/08/19
+updatedAt: 2025/08/20 
 title: Rust演習の記録
 description: The Rust Programming Languageに沿ってRustの演習を行い、その内容を記録する
 tags: 
@@ -17,8 +17,10 @@ thumbnail:
 
 あたりをモチベにRustの勉強をしてます。
 
-2025/04/23現在、[The Rust Programming Language 日本語版](https://doc.rust-jp.rs/book-ja/title-page.html)を12章まで読んだり写経したりそれを改造したりしたところ。
-ここまでで区切りにして、アウトプットとしてなにかツールを作ろうとしているので、一旦ここまでで公開します。
+## 変更履歴
+
+* 2025/04/23 (作成): [The Rust Programming Language 日本語版](https://doc.rust-jp.rs/book-ja/title-page.html)を12章まで読んだり写経したりそれを改造したりしたところ。ここまでで区切りにして、アウトプットとしてなにかツールを作ろうとしているので、一旦ここまでで公開します。
+* 2025/8/20: 13章の所感を追加
 
 やってて色々わかんなくなったら、また立ち返って追記/修正していく予定。
 
