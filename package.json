@@ -7,7 +7,9 @@
     "build": "next build",
     "postbuild": "next-sitemap --config next-sitemap.config.js",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "create-entry": "node scripts/create-entry.js",
+    "create-monthly": "node scripts/create-entry.js monthly"
   },
   "dependencies": {
     "front-matter": "^4.0.2",
