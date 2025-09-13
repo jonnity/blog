@@ -60,7 +60,7 @@ export default function Home() {
         <RouteBlock>
           <div className="flex h-fit gap-1">
             <div className="h-[26px] w-[26px] p-px md:h-[30px] md:w-[30px] lg:h-[34px] lg:w-[34px]">
-              <MonthDisplay />
+              <MonthDisplay date={new Date(monthlyTitle)} />
             </div>
             <HeadSubject>Monthly ({monthlyTitle})</HeadSubject>
           </div>
@@ -127,7 +127,7 @@ export default function Home() {
           <MoreLink path="blog" message="See more..." />
         </RouteBlock>
       </main>
-      <Hamburger />
+      <Hamburger date={new Date(monthlyTitle)} />
     </div>
   );
 }

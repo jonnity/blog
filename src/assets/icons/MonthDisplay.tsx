@@ -6,14 +6,15 @@ interface MonthDisplayProps {
   width?: number;
   height?: number;
   className?: string;
+  date?: Date;
 }
 
 const MonthDisplay: React.FC<MonthDisplayProps> = ({
   width,
   height,
   className = "",
+  date = new Date(),
 }) => {
-  const now = new Date();
   const months = [
     "JAN",
     "FEB",
@@ -28,7 +29,7 @@ const MonthDisplay: React.FC<MonthDisplayProps> = ({
     "NOV",
     "DEC",
   ];
-  const monthIndex = now.getMonth();
+  const monthIndex = date.getMonth();
   const monthAbbreviation = months[monthIndex];
 
   // Set container style based on whether width/height are provided

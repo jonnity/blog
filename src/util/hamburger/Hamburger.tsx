@@ -12,9 +12,10 @@ const iconSize = 35;
 
 type HamburgerProps = {
   children?: React.ReactNode;
+  date?: Date;
 };
 
-export const Hamburger: React.FC<HamburgerProps> = ({ children }) => {
+export const Hamburger: React.FC<HamburgerProps> = ({ children, date }) => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const startXRef = useRef<number | null>(null);
@@ -107,7 +108,7 @@ export const Hamburger: React.FC<HamburgerProps> = ({ children }) => {
                 href="/monthly"
                 icon={{
                   type: "component",
-                  resource: <MonthDisplay height={iconSize} width={iconSize} />,
+                  resource: <MonthDisplay height={iconSize} width={iconSize} date={date} />,
                 }}
               />
             </LinkWithLabel>
