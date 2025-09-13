@@ -8,6 +8,12 @@ import { MarkdownToc } from "@/util/entry/components/MarkdownToc";
 import { BlogEntry } from "@/util/entry/components/BlogEntry";
 import { SideBarInfo } from "@/util/entry/components/SideBarInfo";
 
+const latestMonthly = EntryManager.getInstance().getEntryList(undefined, "monthly")[0];
+const monthlyTitle = latestMonthly.slug.replace(
+  /^monthly-(\d{4}-\d{2})$/,
+  "$1",
+);
+
 type PageParams = { slug: string };
 
 const entryManager = EntryManager.getInstance();
@@ -40,7 +46,7 @@ export default async function Page({
         <aside className="side-bar">
           <SideBarInfo mdBody={entry.body} />
         </aside>
-        <Hamburger>
+        <Hamburger date={new Date(monthlyTitle)}>
           <hr className="mb-6 mt-1 w-full border-gray-900" />
           <div>
             <h2 className="text-xl font-bold">目次</h2>
