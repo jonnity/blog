@@ -13,10 +13,19 @@ import WorkIcon from "@/assets/icons/work.svg";
 import BlogIcon from "@/assets/icons/blog.svg";
 import { GoogleAdSense } from "@/util/adsense";
 import { ShareFAB } from "@/util/share";
+import { EntryManager } from "@/util/entry/Entry";
 
 const logoImagePath = "/logo_keyboard.svg";
 
 const inter = Inter({ subsets: ["latin"] });
+
+const entryManager = EntryManager.getInstance();
+
+const latestMonthly = entryManager.getEntryList(undefined, "monthly")[0];
+const monthlyTitle = latestMonthly.slug.replace(
+  /^monthly-(\d{4}-\d{2})$/,
+  "$1",
+);
 
 export const metadata = defaultMetadata;
 
@@ -65,7 +74,13 @@ export default function RootLayout({
                 href="/monthly"
                 icon={{
                   type: "component",
-                  resource: <MonthDisplay height={iconSize} width={iconSize} />,
+                  resource: (
+                    <MonthDisplay
+                      height={iconSize}
+                      width={iconSize}
+                      date={new Date(monthlyTitle)}
+                    />
+                  ),
                 }}
               />
               <IconLink
