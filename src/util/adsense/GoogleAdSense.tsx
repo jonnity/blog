@@ -48,6 +48,8 @@ export const GoogleAdSense: React.FC<GoogleAdSenseProps> = ({
     width: typeof width === "number" ? `${width}px` : width,
     height: typeof height === "number" ? `${height}px` : height,
     textAlign: inArticle ? "center" : undefined,
+    maxWidth: "100%",
+    overflow: "hidden",
     ...style,
   };
 

@@ -94,7 +94,7 @@ export const ReactMarkdown: React.FC<ReactMarkdownProps> = ({ mdBody }) => {
             }
             if (language === "adsense") {
               return (
-                <div className="my-3">
+                <div className="my-3 w-full max-w-full overflow-hidden">
                   <GoogleAdSense
                     adClient="ca-pub-7514123900838543"
                     adSlot="8119491494"
