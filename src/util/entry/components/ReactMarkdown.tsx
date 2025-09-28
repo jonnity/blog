@@ -1,6 +1,10 @@
 import React, { Suspense } from "react";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
+import "katex/dist/katex.min.css";
+
 import { z } from "zod";
 const srcSchema = z.string();
 const altSchema = z.string();
@@ -16,7 +20,8 @@ export const ReactMarkdown: React.FC<ReactMarkdownProps> = ({ mdBody }) => {
   return (
     <div className="entry-base">
       <Markdown
-        remarkPlugins={[remarkGfm]}
+        remarkPlugins={[remarkGfm, remarkMath]}
+        rehypePlugins={[rehypeKatex]}
         urlTransform={(url, _key, { tagName }) => {
           if (tagName === "img") {
             return /^https?:/.test(url) ? url : `/entry/${url}`;
