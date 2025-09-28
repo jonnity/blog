@@ -48,7 +48,7 @@ const EntryTOC: React.FC<{ mdBody: string }> = ({ mdBody }) => {
 const SideBarAd = () => (
   <div className="hidden md:block">
     <div className="w-full">
-      <GoogleAdSense adClient="ca-pub-7514123900838543" adSlot="8144135865" />
+      <GoogleAdSense adClient="ca-pub-7514123900838543" adSlot="3494651474" />
     </div>
   </div>
 );

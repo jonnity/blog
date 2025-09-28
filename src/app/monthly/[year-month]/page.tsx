@@ -50,7 +50,7 @@ export default async function Page({
             />
           </div>
         </aside>
-        <Hamburger>
+        <Hamburger date={new Date(yearMonth)}>
           <hr className="mb-6 mt-1 w-full border-gray-900" />
           <div>
             <h2 className="text-xl font-bold">目次</h2>
