@@ -68,6 +68,43 @@ summary:
 
 ## 開発状況
 
+月初にパソコンぶっ壊れて、インフルになって、マザボ変えたら上々じゃないですか？
+
+一応、思いつきのアプリを作ろうと、devcontainerでの環境構築と[spec-workflow-mcp](https://github.com/Pimzino/spec-workflow-mcp)を使った仕様書作成/タスク整備はやった。
+
+devcontainerの設定は、流用しやすくするため & パブリックなプロジェクトでも使えるようにという考えで、ベースの最低限の設定を用意しつつ、.gitignoreしてあるファイルで個人設定をできるようにしてみた。
+具体的には、↓みたいなファイル構成で、
+
+```text
+project/
+├── .devcontainer/
+│   ├── devcontainer.json
+│   ├── Dockerfile
+│   ├── docker-compose.yml
+│   └── docker-compose.override.yml
+├── src/
+└── others/
+```
+
+`devcontainer.json`に↓みたいに書いておいて、`docker-compose.yml`と`docker-compose.override.yml`を用意するようにした。
+
+```json
+{
+  "name": "Node.js 24 Development Container",
+  "dockerComposeFile": [
+    "docker-compose.yml",
+    "docker-compose.override.yml"
+  ],
+}
+```
+
+今は、`docker-compose.yml`では、`Dockerfile`で定義した最低限のNode環境を用意して、
+`docker-compose.override.yml`で、claude codeインストールしたり、uvでPython環境用意しつつserena-mcp動かすようにしてる。
+別プロジェクトにも移植しやすくていいんじゃないかな～と思ってるけど、どうなんだろ。
+
+[spec-workflow-mcp](https://github.com/Pimzino/spec-workflow-mcp)は、ある程度の箇条書きの要件から、かなりちゃんと仕様を出してくれるからかなりいいかもって感触。
+ただ、そこから作成されたタスクに沿って実行するのがどれだけスムーズかってのを見るべきかも。果たしてどうなるか。
+
 ## あり飼育状況
 
 ## 肉じゃが
