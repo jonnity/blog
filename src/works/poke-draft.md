@@ -9,7 +9,7 @@ categories:
   - 補助ツール
 description: 使用するポケモンをドラフトで決定してバトル！ドラフト対象ポケモンもカスタマイズ可能！
 createdAt: 2025/08/17
-updatedAt: 2025/09/13
+updatedAt: 2025/11/11
 thumbnailPath: pokedra-thumbnail.webp
 externalLink:
   url: https://pokedra.jonnity.com
