@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "next lint",
     "create-entry": "node scripts/create-entry.js",
-    "create-monthly": "node scripts/create-entry.js monthly"
+    "create-monthly": "node scripts/create-entry.js monthly",
+    "create-monthly-auto": "node scripts/create-entry.js monthly-auto"
   },
   "dependencies": {
     "front-matter": "^4.0.2",
