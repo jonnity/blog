@@ -7,6 +7,10 @@ on:
   workflow_dispatch:
     # 手動実行も可能
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   create_monthly_entry:
     runs-on: ubuntu-latest
@@ -28,17 +32,18 @@ jobs:
       - name: Create monthly entry
         run: npm run create-monthly-auto
 
-      - name: Configure Git
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-
-      - name: Commit and push changes
-        run: |
-          git add .
-          if git diff --staged --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "feat: auto-create monthly entry for $(date +'%Y-%m')"
-            git push
-          fi
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "feat: auto-create monthly entry for $(date +'%Y-%m')"
+          title: "Auto-create monthly entry for $(date +'%Y-%m')"
+          body: |
+            自動生成された月記エントリーです。
+            
+            - 生成日: $(date)
+            - 対象月: $(date +'%Y年%m月')
+            
+            🤖 自動生成
+          branch: auto-monthly-$(date +'%Y-%m')
+          base: dev
