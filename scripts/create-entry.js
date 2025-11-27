@@ -105,6 +105,24 @@ function promptMonthly() {
   });
 }
 
+function createMonthlyAutomatic() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth() + 1;
+
+  const filename = `monthly-${year}-${month.toString().padStart(2, '0')}.md`;
+  const filepath = path.join(__dirname, '..', 'src', 'entries', filename);
+
+  if (fs.existsSync(filepath)) {
+    console.error(`ファイル ${filename} は既に存在します。`);
+    process.exit(1);
+  }
+
+  const content = createMonthlyTemplate(year, month);
+  fs.writeFileSync(filepath, content, 'utf8');
+  console.log(`${filename} を作成しました。`);
+}
+
 function createRegularEntry(title) {
   if (!title) {
     console.error('タイトルを指定してください。');
@@ -128,14 +146,17 @@ function main() {
   const args = process.argv.slice(2);
 
   if (args.length === 0) {
-    console.error('使用方法: node create-entry.js [monthly] [タイトル]');
-    console.error('  monthly: 月記用テンプレートを作成');
+    console.error('使用方法: node create-entry.js [monthly] [monthly-auto] [タイトル]');
+    console.error('  monthly: 月記用テンプレートを作成（対話形式）');
+    console.error('  monthly-auto: 月記用テンプレートを作成（現在の月で自動）');
     console.error('  タイトル: 通常記事用テンプレートを作成');
     process.exit(1);
   }
 
   if (args[0] === 'monthly') {
     promptMonthly();
+  } else if (args[0] === 'monthly-auto') {
+    createMonthlyAutomatic();
   } else {
     const title = args.join(' ');
     createRegularEntry(title);
