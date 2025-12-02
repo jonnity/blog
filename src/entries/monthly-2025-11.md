@@ -102,6 +102,33 @@ summary:
 
 ## 開発状況
 
+ブログ記事書く用のちょっとしたWebアプリを作ってました。一通りできたけど、もう一捻り改善しつつ記事書く。
+
+その開発の中で、[Pimzino/spec-workflow-mcp](https://github.com/Pimzino/spec-workflow-mcp)を使ってSpec駆動開発っぽく進めてみた。
+仕様書があることが大事というよりも、AIに仕様書を書かせるにあたって諸々明確化できることが大事かも。そのへんを余裕で最初から明確化できますわって人は (少なくとも個人開発では) やらなくていいのかもネ。
+俺は隅々まで頭の中で考えるようなことはできないから、文書化してもらいつつ明確化して、それをベースにタスク化 (GitHub Projectsでissueとして管理) したらかなりやりやすかった。
+そのタスクをプロンプトとして使えばかなりいい感じに進められる印象。
+
+あとは↑のリポジトリの中で、DevContainerのconfigをうまいこと再利用性を高めるようにしてみた。
+具体的には、以下の↓な感じで、最低限の環境を共有しつつ、個別にカスタマイズできるような構成にしてみた。
+
+* `Dockerfile`/`docker-compose.yml`では最低限の環境 (今回だったらnodeベースで) を用意
+* `devcontainer.json`で、以下のように`dockerComposeFile`として、`docker-compose.yml`と、`docker-compose.override.yml`の両方を指定
+  * 複数人で開発する場合は、`docker-compose.override.yml`のほうはgitignoreしておくようなイメージ
+
+```json
+{
+  "name": "Node.js 24 Development Container",
+  "dockerComposeFile": [
+    "docker-compose.yml",
+    "docker-compose.override.yml"
+  ],
+}
+```
+
+これなら、個別カスタマイズ部分はどんな環境でもそのまま流用できたりしないかしらという目論見。
+`Dockerfile`/`docker-compose.yml`の方も、最低限の環境だから、すっと構築できるでしょうという面もある。ビバ、分割統治。
+
 ## 生活の所感
 
 ## あり飼育状況
