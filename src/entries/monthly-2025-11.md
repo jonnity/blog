@@ -1,11 +1,12 @@
 ---
-createdAt: 2025/11/27
+createdAt: 2025/12/03
 title: "月記 (2025年11月)"
 description: 2025年11月の活動の振り返り
 tags: 
   - 月記
 summary:
-  - 
+  - いっぱい大喜利した
+  - ちょっとネタっぽいWebアプリも作ってるけど出せてない
 ---
 
 ## 大喜利
@@ -113,25 +114,8 @@ summary:
 俺は隅々まで頭の中で考えるようなことはできないから、文書化してもらいつつ明確化して、それをベースにタスク化 (GitHub Projectsでissueとして管理) したらかなりやりやすかった。
 そのタスクをプロンプトとして使えばかなりいい感じに進められる印象。
 
-あとは↑のリポジトリの中で、DevContainerのconfigをうまいこと再利用性を高めるようにしてみた。
-具体的には、以下の↓な感じで、最低限の環境を共有しつつ、個別にカスタマイズできるような構成にしてみた。
-
-* `Dockerfile`/`docker-compose.yml`では最低限の環境 (今回だったらnodeベースで) を用意
-* `devcontainer.json`で、以下のように`dockerComposeFile`として、`docker-compose.yml`と、`docker-compose.override.yml`の両方を指定
-  * 複数人で開発する場合は、`docker-compose.override.yml`のほうはgitignoreしておくようなイメージ
-
-```json
-{
-  "name": "Node.js 24 Development Container",
-  "dockerComposeFile": [
-    "docker-compose.yml",
-    "docker-compose.override.yml"
-  ],
-}
-```
-
-これなら、個別カスタマイズ部分はどんな環境でもそのまま流用できたりしないかしらという目論見。
-`Dockerfile`/`docker-compose.yml`の方も、最低限の環境だから、すっと構築できるでしょうという面もある。ビバ、分割統治。
+ただ、どうせGitHubのissueで管理するなら、[spec-kit](https://github.com/github/spec-kit)のほうが手軽な可能性がある。使ってないからわからない。使ってみたい。
+spec-workflow-mcpは、タスク一覧のmdを出力してきて、それを編集していくことでタスク管理もやっちまおうという考えがあるっぽいので。
 
 ## 生活の所感
 
