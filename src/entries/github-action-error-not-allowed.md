@@ -32,7 +32,7 @@ Error: Missing download info for LoveToKnow/slackify-markdown-action@698a1d4d0ff
   * `rtCamp/action-slack-notify@v2`
 
 
-![このブログページのリポジトリの、GitHub Actionsに関する設定のページ。`Actions permissions`は`Allow jonnity, and select non-jonnity, actions and reusable workflows`が選択されており、`Allow specified actions and reusable workflows`としては、`lovetoknow/slackify-markdown-action@v1`および`rtCamp/action-slack-notify@v2`の２つが記載されている](github-actions-unalllowed-error.webp)
+![このブログページのリポジトリの、GitHub Actionsに関する設定のページ。`Actions permissions`は`Allow jonnity, and select non-jonnity, actions and reusable workflows`が選択されており、`Allow specified actions and reusable workflows`としては、`lovetoknow/slackify-markdown-action@v1`および`rtCamp/action-slack-notify@v2`の２つが記載されている](../../public/entry/github-actions-unalllowed-error.webp)
 許可リストは、メジャーバージョンのみで指定している
 
 そこから、[`rtCamp/action-slack-notify`の最新バージョン (v2.3.3, 2025/4/9リリース) での変更](https://github.com/rtCamp/action-slack-notify/compare/v2.3.1...v2.3.3)で、`LoveToKnow/slackify-markdown-action`の使用バージョンがバージョン指定ではなく、ハッシュで行われるように変更された (↓みたいに)。
@@ -49,7 +49,7 @@ Error: Missing download info for LoveToKnow/slackify-markdown-action@698a1d4d0ff
 
 `LoveToKnow/slackify-markdown-action@698a1d4d0ff1794152a93c03ee8ca5e03a310d4e`を上述の許可リストに追加した。
 
-![このブログページのリポジトリの、GitHub Actionsに関する設定のページ。前の画像から、許可リストに`LoveToKnow/slackify-markdown-action@698a1d4d0ff1794152a93c03ee8ca5e03a310d4e`が追加されている](github-actions-unalllowed-error-after-allowing.webp)
+![このブログページのリポジトリの、GitHub Actionsに関する設定のページ。前の画像から、許可リストに`LoveToKnow/slackify-markdown-action@698a1d4d0ff1794152a93c03ee8ca5e03a310d4e`が追加されている](../../public/entry/github-actions-unalllowed-error-after-allowing.webp)
 許可リストに追加
 
 `rtCamp/action-slack-notify`を`2.3.2`で指定したり、`LoveToKnow/slackify-markdown-action@*`とかの書き方で雑に許可しても動くとは思う。

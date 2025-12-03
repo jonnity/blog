@@ -29,7 +29,7 @@ summary:
 [motion](https://motion.dev)っていうライブラリを使ってみてる。ダウンロード数爆増してておもしろかったため。
 今のところ、結構不自由なくアニメーションつけれてていい感じ。位置動かしたり、回転させたり、サイズ変えたりしてるだけだけど。
 
-![npm trendsでmotionとreact-springの過去５年のダウンロード数を比較したグラフ。motionがここ数年で猛追している](npm-trends-motion-vs-react-spring.png)
+![npm trendsでmotionとreact-springの過去５年のダウンロード数を比較したグラフ。motionがここ数年で猛追している](../../public/entry/npm-trends-motion-vs-react-spring.png)
 react-springに追いついてる
 
 lottieでアニメーションを1ファイルに固めてしまうことと比べると、↓みたいな感じで、結構メリット大きい気がする。
