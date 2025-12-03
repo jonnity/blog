@@ -50,15 +50,16 @@ jobs:
 
       - name: Add issue to project
         run: |
-          gh project item-add 3 --owner jonnity --url https://github.com/${{ github.repository }}/issues/${{ steps.create_issue.outputs.ISSUE_NUMBER }}
+          echo "Attempting to add issue to project..."
+          gh project item-add 3 --owner jonnity --url https://github.com/${{ github.repository }}/issues/${{ steps.create_issue.outputs.ISSUE_NUMBER }} || echo "Failed to add to project - may need manual association"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         continue-on-error: true
 
       - name: Set project status
         run: |
-          # Set the issue status to "Planned in this Month" in the project
-          gh project item-edit --project-id 3 --owner jonnity --id ${{ steps.create_issue.outputs.ISSUE_NUMBER }} --field-name "Status" --text "Planned in this Month"
+          echo "Attempting to set project status..."
+          gh project item-edit --project-id 3 --owner jonnity --id ${{ steps.create_issue.outputs.ISSUE_NUMBER }} --field-name "Status" --text "Planned in this Month" || echo "Failed to set project status - may need manual setup"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         continue-on-error: true
