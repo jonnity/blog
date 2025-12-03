@@ -18,6 +18,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -31,7 +32,15 @@ jobs:
       - name: Create monthly entry
         run: npm run create-monthly-auto
 
-      - name: Configure Git
+      - name: Generate branch name
+        id: vars
+        run: echo "BRANCH=create-monthly-report-$(date +'%Y-%m')" >> $GITHUB_OUTPUT
+
+      - name: Create new branch
+        run: |
+          git switch -c ${{ steps.vars.outputs.BRANCH }}
+
+      - name: Configure Git Author
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
@@ -43,5 +52,5 @@ jobs:
             echo "No changes to commit"
           else
             git commit -m "feat: auto-create monthly entry for $(date +'%Y-%m')"
-            git push
+            git push --set-upstream origin ${{ steps.vars.outputs.BRANCH }}
           fi
