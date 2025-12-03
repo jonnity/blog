@@ -72,7 +72,7 @@ Firestoreには[`OnDisconnect`](https://firebase.google.com/docs/reference/js/v8
 その場合でも、Cloud Functionからクライアントが変更を監視しているRealtimeDBを操作することでバックエンド→フロントエンドで情報伝達をしており、
 フロント側でDBを監視する部分がキモになっています。
 
-![Sketch Matchの構成図。下方にユーザーが利用する端末があり、その上にFirebaseで利用しているサービスが列挙されており、Firebase HostingではWebページの配信/取得、Firebase Realtime Databaseではデータベースの更新/変更監視、Cloud Storage for Firebaseでは画像のアップロード/取得を行う旨が説明されている。またFirebase Realtime DatabeseはCloud Function for Firebaseにも矢印が引かれており、データベースの変更検知でCloud Functionが実行され、そこでデータベースの更新が行われる様子も説明されている。](structure.png)
+![Sketch Matchの構成図。下方にユーザーが利用する端末があり、その上にFirebaseで利用しているサービスが列挙されており、Firebase HostingではWebページの配信/取得、Firebase Realtime Databaseではデータベースの更新/変更監視、Cloud Storage for Firebaseでは画像のアップロード/取得を行う旨が説明されている。またFirebase Realtime DatabeseはCloud Function for Firebaseにも矢印が引かれており、データベースの変更検知でCloud Functionが実行され、そこでデータベースの更新が行われる様子も説明されている。](../../public/entry/structure.png)
 Sketch Matchの構成図
 
 「firebase SDK→`zod`でバリデーション→`jotai`で状態管理」というのを基本にしています。
