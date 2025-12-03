@@ -51,17 +51,17 @@ jobs:
       - name: Add issue to project
         run: |
           echo "Attempting to add issue to project..."
-          gh project item-add 3 --owner jonnity --url https://github.com/${{ github.repository }}/issues/${{ steps.create_issue.outputs.ISSUE_NUMBER }} || echo "Failed to add to project - may need manual association"
+          gh project item-add 3 --owner jonnity --url https://github.com/${{ github.repository }}/issues/${{ steps.create_issue.outputs.ISSUE_NUMBER }}
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.PROJECT_PAT || secrets.GITHUB_TOKEN }}
         continue-on-error: true
 
       - name: Set project status
         run: |
           echo "Attempting to set project status..."
-          gh project item-edit --project-id 3 --owner jonnity --id ${{ steps.create_issue.outputs.ISSUE_NUMBER }} --field-name "Status" --text "Planned in this Month" || echo "Failed to set project status - may need manual setup"
+          gh project item-edit --project-id 3 --owner jonnity --id ${{ steps.create_issue.outputs.ISSUE_NUMBER }} --field-name "Status" --text "Planned in this Month"
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.PROJECT_PAT || secrets.GITHUB_TOKEN }}
         continue-on-error: true
 
       - name: Generate branch name
