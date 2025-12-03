@@ -14,11 +14,14 @@
       "mcp__serena__think_about_collected_information",
       "mcp__serena__find_file",
       "mcp__serena__think_about_whether_you_are_done",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits"
   },
   "enableAllProjectMcpServers": true,
-  "enabledMcpjsonServers": ["serena"]
+  "enabledMcpjsonServers": [
+    "serena"
+  ]
 }

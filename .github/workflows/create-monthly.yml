@@ -9,6 +9,8 @@ on:
 
 permissions:
   contents: write
+  issues: write
+  projects: write
 
 jobs:
   create_monthly_entry:
@@ -32,9 +34,39 @@ jobs:
       - name: Create monthly entry
         run: npm run create-monthly-auto
 
+      - name: Generate issue title
+        id: issue_vars
+        run: echo "ISSUE_TITLE=create-monthly-report-$(date +'%Y-%m')" >> $GITHUB_OUTPUT
+
+      - name: Create issue
+        id: create_issue
+        run: |
+          ISSUE_NUMBER=$(gh issue create \
+            --title "${{ steps.issue_vars.outputs.ISSUE_TITLE }}" \
+            --body "月記$(date +'%Y-%m')を作成する" \
+            --assignee "@me" \
+            | grep -oE '[0-9]+$')
+          echo "ISSUE_NUMBER=${ISSUE_NUMBER}" >> $GITHUB_OUTPUT
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Add issue to project
+        run: |
+          gh project item-add 3 --owner jonnity --url https://github.com/${{ github.repository }}/issues/${{ steps.create_issue.outputs.ISSUE_NUMBER }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set project status
+        run: |
+          # Set the issue status to "Planned in this Month" in the project
+          gh project item-edit --project-id 3 --owner jonnity --id ${{ steps.create_issue.outputs.ISSUE_NUMBER }} --field-id "Status" --text "Planned in this Month"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
+
       - name: Generate branch name
         id: vars
-        run: echo "BRANCH=create-monthly-report-$(date +'%Y-%m')" >> $GITHUB_OUTPUT
+        run: echo "BRANCH=${{ steps.create_issue.outputs.ISSUE_NUMBER }}-create-monthly-report-$(date +'%Y-%m')" >> $GITHUB_OUTPUT
 
       - name: Create new branch
         run: |
@@ -51,6 +83,6 @@ jobs:
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "feat: auto-create monthly entry for $(date +'%Y-%m')"
+            git commit -m "feat: auto-create monthly entry for $(date +'%Y-%m') (#${{ steps.create_issue.outputs.ISSUE_NUMBER }})"
             git push --set-upstream origin ${{ steps.vars.outputs.BRANCH }}
           fi
