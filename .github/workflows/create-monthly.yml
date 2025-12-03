@@ -50,14 +50,16 @@ jobs:
 
       - name: Add issue to project
         run: |
-          gh project item-add 3 --owner jonnity --url https://github.com/${{ github.repository }}/issues/${{ steps.create_issue.outputs.ISSUE_NUMBER }}
+          # Try to add to project (may fail if project doesn't exist or no access)
+          gh project item-add https://github.com/users/jonnity/projects/3 --url https://github.com/${{ github.repository }}/issues/${{ steps.create_issue.outputs.ISSUE_NUMBER }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
 
       - name: Set project status
         run: |
           # Set the issue status to "Planned in this Month" in the project
-          gh project item-edit --project-id 3 --owner jonnity --id ${{ steps.create_issue.outputs.ISSUE_NUMBER }} --field-id "Status" --text "Planned in this Month"
+          gh project item-edit --project-url https://github.com/users/jonnity/projects/3 --url https://github.com/${{ github.repository }}/issues/${{ steps.create_issue.outputs.ISSUE_NUMBER }} --field-name "Status" --text "Planned in this Month"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         continue-on-error: true
