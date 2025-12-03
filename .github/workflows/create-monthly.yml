@@ -51,7 +51,11 @@ jobs:
       - name: Add issue to project
         run: |
           echo "Attempting to add issue to project..."
-          gh project item-add 3 --owner "jonnity" --url https://github.com/${{ github.repository }}/issues/${{ steps.create_issue.outputs.ISSUE_NUMBER }}
+          # Try user project format first
+          gh project item-add https://github.com/users/jonnity/projects/3 --url https://github.com/${{ github.repository }}/issues/${{ steps.create_issue.outputs.ISSUE_NUMBER }} || \
+          # Fallback to organization format
+          gh project item-add 3 --owner jonnity --url https://github.com/${{ github.repository }}/issues/${{ steps.create_issue.outputs.ISSUE_NUMBER }} || \
+          echo "Failed to add to project - manual association required"
         env:
           GH_TOKEN: ${{ secrets.PROJECT_PAT || secrets.GITHUB_TOKEN }}
         continue-on-error: true
