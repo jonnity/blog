@@ -10,7 +10,7 @@ tags:
 
 ずっとやろうと思い続けていたルール説明の改善に着手した。
 
-![絵を描くことを示すSVGアニメーションが自動で遷移するカルーセル](rule-animation.gif)
+![絵を描くことを示すSVGアニメーションが自動で遷移するカルーセル](../../public/entry/rule-animation.gif)
 何個かのSVGアニメーションをカルーセル表示することにして、こんな感じ。
 
 アニメーションは、[Synfig Studio](https://www.synfig.org)で作って[lottie](https://lottiefiles.com)に出力してる。
