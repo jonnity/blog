@@ -51,7 +51,7 @@ jobs:
       - name: Add issue to project
         run: |
           echo "Attempting to add issue to project..."
-          gh project item-add https://github.com/users/jonnity/projects/3 --url https://github.com/${{ github.repository }}/issues/${{ steps.create_issue.outputs.ISSUE_NUMBER }}
+          gh project item-add 3 --owner "@me" --url https://github.com/${{ github.repository }}/issues/${{ steps.create_issue.outputs.ISSUE_NUMBER }}
         env:
           GH_TOKEN: ${{ secrets.PROJECT_PAT || secrets.GITHUB_TOKEN }}
         continue-on-error: true
