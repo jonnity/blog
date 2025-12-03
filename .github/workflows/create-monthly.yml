@@ -43,7 +43,6 @@ jobs:
           ISSUE_NUMBER=$(gh issue create \
             --title "${{ steps.issue_vars.outputs.ISSUE_TITLE }}" \
             --body "月記$(date +'%Y-%m')を作成する" \
-            --assignee "@me" \
             | grep -oE '[0-9]+$')
           echo "ISSUE_NUMBER=${ISSUE_NUMBER}" >> $GITHUB_OUTPUT
         env:
