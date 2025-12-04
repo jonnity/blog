@@ -34,11 +34,41 @@ function extractYearMonth(filename) {
 }
 
 /**
+ * Register Japanese fonts
+ */
+function registerJapaneseFonts() {
+  try {
+    // Register Noto Sans CJK JP fonts
+    const regularFont =
+      "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc";
+    const boldFont = "/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc";
+
+    if (fs.existsSync(regularFont)) {
+      registerFont(regularFont, { family: "Noto Sans CJK JP" });
+      console.log("Registered regular font");
+    }
+
+    if (fs.existsSync(boldFont)) {
+      registerFont(boldFont, {
+        family: "Noto Sans CJK JP",
+        weight: "bold",
+      });
+      console.log("Registered bold font");
+    }
+  } catch (error) {
+    console.warn("Could not register Japanese fonts:", error.message);
+  }
+}
+
+/**
  * Generate OGP thumbnail image for monthly report
  */
 async function generateThumbnail(markdownPath) {
   const filename = path.basename(markdownPath);
   const { year, month } = extractYearMonth(filename);
+
+  // Register Japanese fonts
+  registerJapaneseFonts();
 
   // Parse frontmatter
   const frontmatter = parseFrontmatter(markdownPath);
@@ -77,14 +107,14 @@ async function generateThumbnail(markdownPath) {
 
   // Draw title
   ctx.fillStyle = "#000000";
-  ctx.font = "bold 60px sans-serif";
+  ctx.font = 'bold 60px "Noto Sans CJK JP", sans-serif';
   ctx.fillText(title, 40, 200);
 
   // Draw summary bullets
   const maxSummaryItems = 5;
   const summaryItems = summary.slice(0, maxSummaryItems);
 
-  ctx.font = "32px sans-serif";
+  ctx.font = '32px "Noto Sans CJK JP", sans-serif';
   let yPosition = 280;
   const lineHeight = 50;
   const maxWidth = width - 100;
