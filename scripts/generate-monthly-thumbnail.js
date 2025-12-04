@@ -34,6 +34,77 @@ function extractYearMonth(filename) {
 }
 
 /**
+ * Check if a character should not appear at the beginning of a line (行頭禁則文字)
+ */
+function isLineStartForbiddenChar(char) {
+  const forbiddenChars = [
+    "、",
+    "。",
+    "，",
+    "．",
+    ")",
+    "）",
+    "]",
+    "］",
+    "}",
+    "｝",
+    "」",
+    "』",
+    "】",
+    "〕",
+    "〉",
+    "》",
+    "！",
+    "？",
+    "!",
+    "?",
+  ];
+  return forbiddenChars.includes(char);
+}
+
+/**
+ * Wrap text with Japanese line breaking rules (禁則処理)
+ */
+function wrapTextWithKinsoku(ctx, text, maxWidth) {
+  const lines = [];
+  const chars = text.split("");
+  let currentLine = "";
+
+  for (let i = 0; i < chars.length; i++) {
+    const char = chars[i];
+    const testLine = currentLine + char;
+    const metrics = ctx.measureText(testLine);
+
+    if (metrics.width > maxWidth && currentLine.length > 0) {
+      // Check if current char is a line-start forbidden character
+      if (isLineStartForbiddenChar(char)) {
+        // Move the last character from current line to next line with this char
+        if (currentLine.length > 0) {
+          const lastChar = currentLine[currentLine.length - 1];
+          lines.push(currentLine.slice(0, -1));
+          currentLine = lastChar + char;
+        } else {
+          // Edge case: if somehow the line is empty, just add the char
+          currentLine = char;
+        }
+      } else {
+        // Normal line break
+        lines.push(currentLine);
+        currentLine = char;
+      }
+    } else {
+      currentLine = testLine;
+    }
+  }
+
+  if (currentLine.length > 0) {
+    lines.push(currentLine);
+  }
+
+  return lines;
+}
+
+/**
  * Register Japanese fonts
  */
 function registerJapaneseFonts() {
@@ -125,30 +196,21 @@ async function generateThumbnail(markdownPath) {
     // Draw bullet
     ctx.fillText("•", 50, yPosition);
 
-    // Wrap long text
+    // Wrap text with kinsoku rules
     const bulletText = item.toString();
-    const words = bulletText.split("");
-    let line = "";
-    let x = 90;
+    const lines = wrapTextWithKinsoku(ctx, bulletText, maxWidth - 90);
+    const x = 90;
 
-    for (let i = 0; i < words.length; i++) {
-      const testLine = line + words[i];
-      const metrics = ctx.measureText(testLine);
+    // Draw each line
+    for (let i = 0; i < lines.length; i++) {
+      if (yPosition + lineHeight > height - 40) break;
 
-      if (metrics.width > maxWidth - 90 && i > 0) {
-        ctx.fillText(line, x, yPosition);
-        line = words[i];
-        yPosition += lineHeight;
-        if (yPosition + lineHeight > height - 40) break;
-      } else {
-        line = testLine;
-      }
+      ctx.fillText(lines[i], x, yPosition);
+      yPosition += lineHeight;
     }
 
-    if (line && yPosition + lineHeight <= height - 40) {
-      ctx.fillText(line, x, yPosition);
-      yPosition += lineHeight + 10; // Extra spacing between items
-    }
+    // Add extra spacing after the item
+    yPosition += 10;
   });
 
   // Convert canvas to buffer
