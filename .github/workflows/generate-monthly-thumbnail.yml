@@ -1,0 +1,92 @@
+name: Generate Monthly Thumbnail
+
+on:
+  push:
+    paths:
+      - "src/entries/monthly-*.md"
+    branches:
+      - "**"
+  workflow_dispatch:
+    inputs:
+      monthly_file:
+        description: "Monthly markdown file path (e.g., src/entries/monthly-2025-11.md)"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  generate_thumbnail:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+          ref: ${{ github.head_ref || github.ref }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install system dependencies for canvas
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
+
+      - name: Get changed monthly files
+        id: changed_files
+        if: github.event_name == 'push'
+        run: |
+          # Get the list of changed files matching the pattern
+          CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^src/entries/monthly-.*\.md$' || true)
+          if [ -n "$CHANGED_FILES" ]; then
+            echo "files<<EOF" >> $GITHUB_OUTPUT
+            echo "$CHANGED_FILES" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          else
+            echo "files=" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Generate thumbnails for changed files
+        if: github.event_name == 'push' && steps.changed_files.outputs.files != ''
+        run: |
+          FILES="${{ steps.changed_files.outputs.files }}"
+          for FILE in $FILES; do
+            echo "Generating thumbnail for $FILE"
+            npm run generate-monthly-thumbnail "$FILE"
+          done
+
+      - name: Generate thumbnail for manual input
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          npm run generate-monthly-thumbnail "${{ github.event.inputs.monthly_file }}"
+
+      - name: Check for changes
+        id: check_changes
+        run: |
+          git add -A
+          if git diff --staged --quiet; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Configure Git Author
+        if: steps.check_changes.outputs.has_changes == 'true'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+      - name: Commit and push changes
+        if: steps.check_changes.outputs.has_changes == 'true'
+        run: |
+          git commit -m "chore: auto-generate monthly OGP thumbnails"
+          git push

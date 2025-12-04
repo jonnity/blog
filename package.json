@@ -8,9 +8,11 @@
     "postbuild": "next-sitemap --config next-sitemap.config.js",
     "start": "next start",
     "lint": "next lint",
+    "format": "prettier --write .",
     "create-entry": "node scripts/create-entry.js",
     "create-monthly": "node scripts/create-entry.js monthly",
-    "create-monthly-auto": "node scripts/create-entry.js monthly-auto"
+    "create-monthly-auto": "node scripts/create-entry.js monthly-auto",
+    "generate-monthly-thumbnail": "node scripts/generate-monthly-thumbnail.js"
   },
   "dependencies": {
     "front-matter": "^4.0.2",
@@ -26,16 +28,20 @@
     "zod": "^3.25.42"
   },
   "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
     "@types/node": "^22",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/react-syntax-highlighter": "^15.5.13",
     "autoprefixer": "^10",
+    "canvas": "^3.2.0",
     "eslint": "^9",
     "eslint-config-next": "^15.3.1",
+    "js-yaml": "^4.1.1",
     "postcss": "^8",
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
+    "sharp": "^0.34.5",
     "tailwindcss": "^3",
     "typescript": "5.8.3"
   },
