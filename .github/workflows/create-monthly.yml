@@ -52,7 +52,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.PROJECT_PAT }}
         run: |
-          gh project item-add 3 --owner jonnity --url https://github.com/${{ github.repository }}/issues/${{ steps.create_issue.outputs.ISSUE_NUMBER }}
+          gh project item-add https://github.com/users/jonnity/projects/3 --url https://github.com/${{ github.repository }}/issues/${{ steps.create_issue.outputs.ISSUE_NUMBER }}
 
       - name: Generate branch name
         id: vars
