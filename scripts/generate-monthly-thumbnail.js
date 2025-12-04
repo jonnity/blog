@@ -154,12 +154,94 @@ async function generateThumbnail(markdownPath) {
   const canvas = createCanvas(width, height);
   const ctx = canvas.getContext("2d");
 
-  // White background
-  ctx.fillStyle = "white";
-  ctx.fillRect(0, 0, width, height);
+  // Load and draw background image
+  const bgPath = path.join(
+    __dirname,
+    "..",
+    "public",
+    "bg-ant-nest_landscape.webp",
+  );
+  const { loadImage } = require("canvas");
 
-  // Load and draw logo in upper left
+  if (fs.existsSync(bgPath)) {
+    try {
+      // Convert WebP to PNG buffer using sharp
+      const bgBuffer = await sharp(bgPath)
+        .resize(width, height, { fit: "cover" })
+        .png()
+        .toBuffer();
+
+      const bgImage = await loadImage(bgBuffer);
+      // Draw background image to fill the canvas
+      ctx.drawImage(bgImage, 0, 0, width, height);
+    } catch (error) {
+      console.warn("Could not load background:", error.message);
+      // Fallback to white background
+      ctx.fillStyle = "white";
+      ctx.fillRect(0, 0, width, height);
+    }
+  } else {
+    // Fallback to white background
+    ctx.fillStyle = "white";
+    ctx.fillRect(0, 0, width, height);
+  }
+
+  // Draw rounded rectangle with white background (90% opacity)
+  const padding = 40;
+  const boxX = padding;
+  const boxY = padding;
+  const boxWidth = width - padding * 2;
+  const boxHeight = height - padding * 2;
+  const borderRadius = 12;
+
+  // Create rounded rectangle path
+  ctx.beginPath();
+  ctx.moveTo(boxX + borderRadius, boxY);
+  ctx.lineTo(boxX + boxWidth - borderRadius, boxY);
+  ctx.quadraticCurveTo(
+    boxX + boxWidth,
+    boxY,
+    boxX + boxWidth,
+    boxY + borderRadius,
+  );
+  ctx.lineTo(boxX + boxWidth, boxY + boxHeight - borderRadius);
+  ctx.quadraticCurveTo(
+    boxX + boxWidth,
+    boxY + boxHeight,
+    boxX + boxWidth - borderRadius,
+    boxY + boxHeight,
+  );
+  ctx.lineTo(boxX + borderRadius, boxY + boxHeight);
+  ctx.quadraticCurveTo(
+    boxX,
+    boxY + boxHeight,
+    boxX,
+    boxY + boxHeight - borderRadius,
+  );
+  ctx.lineTo(boxX, boxY + borderRadius);
+  ctx.quadraticCurveTo(boxX, boxY, boxX + borderRadius, boxY);
+  ctx.closePath();
+
+  // Fill with white at 90% opacity
+  ctx.globalAlpha = 0.9;
+  ctx.fillStyle = "white";
+  ctx.fill();
+
+  // Draw border
+  ctx.globalAlpha = 1.0;
+  ctx.strokeStyle = "#d1d5db"; // gray-300
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // Reset global alpha
+  ctx.globalAlpha = 1.0;
+
+  // Load and draw logo in upper left (inside the box)
   const logoPath = path.join(__dirname, "..", "public", "logo_keyboard.svg");
+  const contentPadding = 30; // Padding inside the box
+  const logoX = boxX + contentPadding;
+  const logoY = boxY + contentPadding;
+
   if (fs.existsSync(logoPath)) {
     try {
       // For SVG, we'll use sharp to convert it first
@@ -168,9 +250,8 @@ async function generateThumbnail(markdownPath) {
         .png()
         .toBuffer();
 
-      const { createCanvas: createTempCanvas, loadImage } = require("canvas");
       const logoImage = await loadImage(logoBuffer);
-      ctx.drawImage(logoImage, 40, 40, logoImage.width, logoImage.height);
+      ctx.drawImage(logoImage, logoX, logoY, logoImage.width, logoImage.height);
     } catch (error) {
       console.warn("Could not load logo:", error.message);
     }
@@ -179,33 +260,36 @@ async function generateThumbnail(markdownPath) {
   // Draw title
   ctx.fillStyle = "#000000";
   ctx.font = 'bold 60px "Noto Sans CJK JP", sans-serif';
-  ctx.fillText(title, 40, 200);
+  const titleY = boxY + contentPadding + 150;
+  ctx.fillText(title, logoX, titleY);
 
   // Draw summary bullets
   const maxSummaryItems = 5;
   const summaryItems = summary.slice(0, maxSummaryItems);
 
   ctx.font = '32px "Noto Sans CJK JP", sans-serif';
-  let yPosition = 280;
+  let yPosition = titleY + 60;
   const lineHeight = 50;
-  const maxWidth = width - 100;
+  const maxWidth = boxWidth - contentPadding * 2 - 50; // Account for bullet space
 
   summaryItems.forEach((item, index) => {
-    if (yPosition + lineHeight > height - 40) return; // Don't overflow
+    const boxBottom = boxY + boxHeight - contentPadding;
+    if (yPosition + lineHeight > boxBottom) return; // Don't overflow the box
 
     // Draw bullet
-    ctx.fillText("•", 50, yPosition);
+    const bulletX = logoX + 10;
+    ctx.fillText("•", bulletX, yPosition);
 
     // Wrap text with kinsoku rules
     const bulletText = item.toString();
-    const lines = wrapTextWithKinsoku(ctx, bulletText, maxWidth - 90);
-    const x = 90;
+    const lines = wrapTextWithKinsoku(ctx, bulletText, maxWidth);
+    const textX = bulletX + 40;
 
     // Draw each line
     for (let i = 0; i < lines.length; i++) {
-      if (yPosition + lineHeight > height - 40) break;
+      if (yPosition + lineHeight > boxBottom) break;
 
-      ctx.fillText(lines[i], x, yPosition);
+      ctx.fillText(lines[i], textX, yPosition);
       yPosition += lineHeight;
     }
 
