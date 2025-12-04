@@ -9,6 +9,7 @@ on:
 
 permissions:
   contents: write
+  issues: write
 
 jobs:
   create_monthly_entry:
@@ -32,9 +33,29 @@ jobs:
       - name: Create monthly entry
         run: npm run create-monthly-auto
 
+      - name: Generate date variables
+        id: date_vars
+        run: echo "DATE=$(date +'%Y-%m')" >> $GITHUB_OUTPUT
+
+      - name: Create issue for monthly report
+        id: create_issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ISSUE_TITLE="create-monthly-report-${{ steps.date_vars.outputs.DATE }}"
+          ISSUE_BODY="Monthly report for ${{ steps.date_vars.outputs.DATE }}"
+          ISSUE_NUMBER=$(gh issue create --title "$ISSUE_TITLE" --body "$ISSUE_BODY" --json number -q .number)
+          echo "ISSUE_NUMBER=$ISSUE_NUMBER" >> $GITHUB_OUTPUT
+
+      - name: Add issue to project
+        env:
+          GH_TOKEN: ${{ secrets.PROJECT_PAT }}
+        run: |
+          gh project item-add 3 --owner jonnity --url https://github.com/${{ github.repository }}/issues/${{ steps.create_issue.outputs.ISSUE_NUMBER }}
+
       - name: Generate branch name
         id: vars
-        run: echo "BRANCH=create-monthly-report-$(date +'%Y-%m')" >> $GITHUB_OUTPUT
+        run: echo "BRANCH=${{ steps.create_issue.outputs.ISSUE_NUMBER }}-create-monthly-report-${{ steps.date_vars.outputs.DATE }}" >> $GITHUB_OUTPUT
 
       - name: Create new branch
         run: |
