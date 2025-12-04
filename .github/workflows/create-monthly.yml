@@ -52,7 +52,21 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.PROJECT_PAT }}
         run: |
-          gh project item-add 3 --owner @me --url https://github.com/${{ github.repository }}/issues/${{ steps.create_issue.outputs.ISSUE_NUMBER }}
+          ITEM_ID=$(gh project item-add 3 --owner @me --url https://github.com/${{ github.repository }}/issues/${{ steps.create_issue.outputs.ISSUE_NUMBER }} --format json | jq -r '.id')
+          echo "ITEM_ID=$ITEM_ID" >> $GITHUB_OUTPUT
+        id: add_to_project
+
+      - name: Set project item status
+        env:
+          GH_TOKEN: ${{ secrets.PROJECT_PAT }}
+        run: |
+          # Get project fields to find Status field and option IDs
+          FIELDS=$(gh project field-list 3 --owner @me --format json)
+          STATUS_FIELD_ID=$(echo "$FIELDS" | jq -r '.fields[] | select(.name == "Status") | .id')
+          PLANNED_OPTION_ID=$(echo "$FIELDS" | jq -r '.fields[] | select(.name == "Status") | .options[] | select(.name == "Planned in this Month") | .id')
+          
+          # Set the status to "Planned in this Month"
+          gh project item-edit 3 --owner @me --id "${{ steps.add_to_project.outputs.ITEM_ID }}" --field-id "$STATUS_FIELD_ID" --single-select-option-id "$PLANNED_OPTION_ID"
 
       - name: Generate branch name
         id: vars
