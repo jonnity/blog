@@ -44,7 +44,8 @@ jobs:
         run: |
           ISSUE_TITLE="create-monthly-report-${{ steps.date_vars.outputs.DATE }}"
           ISSUE_BODY="Monthly report for ${{ steps.date_vars.outputs.DATE }}"
-          ISSUE_NUMBER=$(gh issue create --title "$ISSUE_TITLE" --body "$ISSUE_BODY" --json number -q .number)
+          ISSUE_URL=$(gh issue create --title "$ISSUE_TITLE" --body "$ISSUE_BODY")
+          ISSUE_NUMBER=$(echo "$ISSUE_URL" | grep -o '[0-9]*$')
           echo "ISSUE_NUMBER=$ISSUE_NUMBER" >> $GITHUB_OUTPUT
 
       - name: Add issue to project
