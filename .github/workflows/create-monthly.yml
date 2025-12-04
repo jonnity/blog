@@ -9,6 +9,7 @@ on:
 
 permissions:
   contents: write
+  issues: write
 
 jobs:
   create_monthly_entry:
@@ -32,9 +33,41 @@ jobs:
       - name: Create monthly entry
         run: npm run create-monthly-auto
 
+      - name: Generate date variables
+        id: date_vars
+        run: echo "DATE=$(date +'%Y-%m')" >> $GITHUB_OUTPUT
+
+      - name: Create issue for monthly report
+        id: create_issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ISSUE_TITLE="create-monthly-report-${{ steps.date_vars.outputs.DATE }}"
+          ISSUE_BODY="Monthly report for ${{ steps.date_vars.outputs.DATE }}"
+          ISSUE_URL=$(gh issue create --title "$ISSUE_TITLE" --body "$ISSUE_BODY")
+          ISSUE_NUMBER=$(echo "$ISSUE_URL" | grep -o '[0-9]*$')
+          echo "ISSUE_NUMBER=$ISSUE_NUMBER" >> $GITHUB_OUTPUT
+
+      - name: Add issue to project
+        env:
+          GH_TOKEN: ${{ secrets.PROJECT_PAT }}
+        run: |
+          ITEM_ID=$(gh project item-add 3 --owner @me --url https://github.com/${{ github.repository }}/issues/${{ steps.create_issue.outputs.ISSUE_NUMBER }} --format json | jq -r '.id')
+          echo "ITEM_ID=$ITEM_ID" >> $GITHUB_OUTPUT
+        id: add_to_project
+
+      - name: Set project item status
+        env:
+          GH_TOKEN: ${{ secrets.PROJECT_PAT }}
+        run: |
+          # Get project ID
+          PROJECT_ID=$(gh project view 3 --owner @me --format json | jq -r '.id')
+          # Set the status to "Planned in this Month"
+          gh project item-edit --id "${{ steps.add_to_project.outputs.ITEM_ID }}" --project-id "$PROJECT_ID" --field-id "PVTSSF_lAHOAVYCf84AxeEczgnk4_U" --single-select-option-id "3f85c235"
+
       - name: Generate branch name
         id: vars
-        run: echo "BRANCH=create-monthly-report-$(date +'%Y-%m')" >> $GITHUB_OUTPUT
+        run: echo "BRANCH=${{ steps.create_issue.outputs.ISSUE_NUMBER }}-create-monthly-report-${{ steps.date_vars.outputs.DATE }}" >> $GITHUB_OUTPUT
 
       - name: Create new branch
         run: |
