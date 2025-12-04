@@ -60,8 +60,10 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.PROJECT_PAT }}
         run: |
+          # Get project ID
+          PROJECT_ID=$(gh project view 3 --owner @me --format json | jq -r '.id')
           # Set the status to "Planned in this Month"
-          gh project item-edit 3 --owner @me --id "${{ steps.add_to_project.outputs.ITEM_ID }}" --field-id "PVTSSF_lAHOAVYCf84AxeEczgnk4_U" --single-select-option-id "3f85c235"
+          gh project item-edit --id "${{ steps.add_to_project.outputs.ITEM_ID }}" --project-id "$PROJECT_ID" --field-id "PVTSSF_lAHOAVYCf84AxeEczgnk4_U" --single-select-option-id "3f85c235"
 
       - name: Generate branch name
         id: vars
