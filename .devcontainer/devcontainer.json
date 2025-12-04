@@ -40,7 +40,6 @@
     }
   },
   "mounts": [
-    "source=${localWorkspaceFolder}/.git,target=/workspaces/${localWorkspaceFolderBasename}/.git,type=bind,consistency=cached",
-    "source=${localEnv:USERPROFILE}/.claude,target=/home/node/.claude,type=bind,consistency=cached"
+    "source=${localWorkspaceFolder}/.git,target=/workspaces/${localWorkspaceFolderBasename}/.git,type=bind,consistency=cached"
   ]
 }
