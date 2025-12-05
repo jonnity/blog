@@ -28,14 +28,16 @@ export const ReactMarkdown: React.FC<ReactMarkdownProps> = ({ mdBody }) => {
             if (/^https?:/.test(url)) {
               return url;
             }
-            
+
             // If it's a relative path pointing to public/entry/ or public/work/, extract the folder and filename
-            const publicMatch = url.match(/\.\.\/\.\.\/public\/(entry|work)\/(.+)$/);
+            const publicMatch = url.match(
+              /\.\.\/\.\.\/public\/(entry|work)\/(.+)$/,
+            );
             if (publicMatch) {
               const [, folder, filename] = publicMatch;
               return `/${folder}/${filename}`;
             }
-            
+
             // For other relative paths, add /entry/ prefix as before (for backward compatibility)
             return `/entry/${url}`;
           }

@@ -108,7 +108,13 @@ export const Hamburger: React.FC<HamburgerProps> = ({ children, date }) => {
                 href="/monthly"
                 icon={{
                   type: "component",
-                  resource: <MonthDisplay height={iconSize} width={iconSize} date={date} />,
+                  resource: (
+                    <MonthDisplay
+                      height={iconSize}
+                      width={iconSize}
+                      date={date}
+                    />
+                  ),
                 }}
               />
             </LinkWithLabel>
