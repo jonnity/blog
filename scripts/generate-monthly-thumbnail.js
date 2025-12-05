@@ -343,12 +343,17 @@ function updateMarkdownFrontmatter(markdownPath, thumbnailPath) {
   const frontmatterContent = frontmatterBlock.slice(4, -4); // Remove --- markers
   const frontmatter = yaml.load(frontmatterContent);
 
-  // Add thumbnail and thumbnailAlt
+  // Add thumbnail as an object with url and alt
   const filename = path.basename(markdownPath);
   const { year, month } = extractYearMonth(filename);
 
-  frontmatter.thumbnail = thumbnailPath;
-  frontmatter.thumbnailAlt = `月記 (${year}年${month}月) のサマリー`;
+  // Remove /entry/ prefix since getThumbnail() in Entry.ts adds it
+  const thumbnailUrl = thumbnailPath.replace(/^\/entry\//, '');
+
+  frontmatter.thumbnail = {
+    url: thumbnailUrl,
+    alt: `月記 (${year}年${month}月) のサマリー`
+  };
 
   // Convert back to YAML
   const newFrontmatter = yaml.dump(frontmatter, {
