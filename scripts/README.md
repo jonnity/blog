@@ -42,11 +42,11 @@ node scripts/create-entry.js monthly
 createdAt: yyyy/mm/dd
 title: "記事のタイトル"
 description: TODO
-tags: 
+tags:
   - TODO
 ---
 
-## 
+##
 ```
 
 ### 月記
@@ -56,10 +56,10 @@ tags:
 createdAt: yyyy/mm/dd
 title: "月記 (yyyy年m月)"
 description: yyyy年m月の活動の振り返り
-tags: 
+tags:
   - 月記
 summary:
-  - 
+  -
 ---
 
 ## 生活の所感
