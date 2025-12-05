@@ -1,16 +1,16 @@
 #!/usr/bin/env node
 
-const fs = require('fs');
-const path = require('path');
-const readline = require('readline');
+const fs = require("fs");
+const path = require("path");
+const readline = require("readline");
 
 const rl = readline.createInterface({
   input: process.stdin,
-  output: process.stdout
+  output: process.stdout,
 });
 
 function formatDate(date) {
-  return `${date.getFullYear()}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getDate().toString().padStart(2, '0')}`;
+  return `${date.getFullYear()}/${(date.getMonth() + 1).toString().padStart(2, "0")}/${date.getDate().toString().padStart(2, "0")}`;
 }
 
 function formatMonthlyTitle(year, month) {
@@ -69,40 +69,43 @@ function promptMonthly() {
   const currentYear = now.getFullYear();
   const currentMonth = now.getMonth() + 1;
 
-  rl.question(`年月を入力してください (デフォルト: ${currentYear}/${currentMonth.toString().padStart(2, '0')}): `, (input) => {
-    let year = currentYear;
-    let month = currentMonth;
+  rl.question(
+    `年月を入力してください (デフォルト: ${currentYear}/${currentMonth.toString().padStart(2, "0")}): `,
+    (input) => {
+      let year = currentYear;
+      let month = currentMonth;
 
-    if (input.trim()) {
-      const parts = input.trim().split('/');
-      if (parts.length >= 1 && parts[0]) {
-        year = parseInt(parts[0]);
+      if (input.trim()) {
+        const parts = input.trim().split("/");
+        if (parts.length >= 1 && parts[0]) {
+          year = parseInt(parts[0]);
+        }
+        if (parts.length >= 2 && parts[1]) {
+          month = parseInt(parts[1]);
+        }
       }
-      if (parts.length >= 2 && parts[1]) {
-        month = parseInt(parts[1]);
+
+      if (isNaN(year) || isNaN(month) || month < 1 || month > 12) {
+        console.error("無効な年月です。");
+        rl.close();
+        return;
       }
-    }
 
-    if (isNaN(year) || isNaN(month) || month < 1 || month > 12) {
-      console.error('無効な年月です。');
+      const filename = `monthly-${year}-${month.toString().padStart(2, "0")}.md`;
+      const filepath = path.join(__dirname, "..", "src", "entries", filename);
+
+      if (fs.existsSync(filepath)) {
+        console.error(`ファイル ${filename} は既に存在します。`);
+        rl.close();
+        return;
+      }
+
+      const content = createMonthlyTemplate(year, month);
+      fs.writeFileSync(filepath, content, "utf8");
+      console.log(`${filename} を作成しました。`);
       rl.close();
-      return;
-    }
-
-    const filename = `monthly-${year}-${month.toString().padStart(2, '0')}.md`;
-    const filepath = path.join(__dirname, '..', 'src', 'entries', filename);
-
-    if (fs.existsSync(filepath)) {
-      console.error(`ファイル ${filename} は既に存在します。`);
-      rl.close();
-      return;
-    }
-
-    const content = createMonthlyTemplate(year, month);
-    fs.writeFileSync(filepath, content, 'utf8');
-    console.log(`${filename} を作成しました。`);
-    rl.close();
-  });
+    },
+  );
 }
 
 function createMonthlyAutomatic() {
@@ -110,8 +113,8 @@ function createMonthlyAutomatic() {
   const year = now.getFullYear();
   const month = now.getMonth() + 1;
 
-  const filename = `monthly-${year}-${month.toString().padStart(2, '0')}.md`;
-  const filepath = path.join(__dirname, '..', 'src', 'entries', filename);
+  const filename = `monthly-${year}-${month.toString().padStart(2, "0")}.md`;
+  const filepath = path.join(__dirname, "..", "src", "entries", filename);
 
   if (fs.existsSync(filepath)) {
     console.error(`ファイル ${filename} は既に存在します。`);
@@ -119,18 +122,18 @@ function createMonthlyAutomatic() {
   }
 
   const content = createMonthlyTemplate(year, month);
-  fs.writeFileSync(filepath, content, 'utf8');
+  fs.writeFileSync(filepath, content, "utf8");
   console.log(`${filename} を作成しました。`);
 }
 
 function createRegularEntry(title) {
   if (!title) {
-    console.error('タイトルを指定してください。');
+    console.error("タイトルを指定してください。");
     process.exit(1);
   }
 
   const filename = `${title}.md`;
-  const filepath = path.join(__dirname, '..', 'src', 'entries', filename);
+  const filepath = path.join(__dirname, "..", "src", "entries", filename);
 
   if (fs.existsSync(filepath)) {
     console.error(`ファイル ${filename} は既に存在します。`);
@@ -138,7 +141,7 @@ function createRegularEntry(title) {
   }
 
   const content = createRegularTemplate(title);
-  fs.writeFileSync(filepath, content, 'utf8');
+  fs.writeFileSync(filepath, content, "utf8");
   console.log(`${filename} を作成しました。`);
 }
 
@@ -146,19 +149,21 @@ function main() {
   const args = process.argv.slice(2);
 
   if (args.length === 0) {
-    console.error('使用方法: node create-entry.js [monthly] [monthly-auto] [タイトル]');
-    console.error('  monthly: 月記用テンプレートを作成（対話形式）');
-    console.error('  monthly-auto: 月記用テンプレートを作成（現在の月で自動）');
-    console.error('  タイトル: 通常記事用テンプレートを作成');
+    console.error(
+      "使用方法: node create-entry.js [monthly] [monthly-auto] [タイトル]",
+    );
+    console.error("  monthly: 月記用テンプレートを作成（対話形式）");
+    console.error("  monthly-auto: 月記用テンプレートを作成（現在の月で自動）");
+    console.error("  タイトル: 通常記事用テンプレートを作成");
     process.exit(1);
   }
 
-  if (args[0] === 'monthly') {
+  if (args[0] === "monthly") {
     promptMonthly();
-  } else if (args[0] === 'monthly-auto') {
+  } else if (args[0] === "monthly-auto") {
     createMonthlyAutomatic();
   } else {
-    const title = args.join(' ');
+    const title = args.join(" ");
     createRegularEntry(title);
   }
 }
