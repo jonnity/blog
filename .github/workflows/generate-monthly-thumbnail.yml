@@ -61,7 +61,20 @@ jobs:
           FILES="${{ steps.changed_files.outputs.files }}"
           for FILE in $FILES; do
             echo "Generating thumbnail for $FILE"
+            echo "=== File hash before generation ==="
+            md5sum "$FILE" 2>/dev/null || echo "File not found"
+            md5sum public/entry/monthly-report-*.webp 2>/dev/null || echo "No existing thumbnail"
+            echo ""
+
             npm run generate-monthly-thumbnail "$FILE"
+
+            echo ""
+            echo "=== File hash after generation ==="
+            md5sum "$FILE"
+            md5sum public/entry/monthly-report-*.webp
+            echo ""
+            echo "=== File content diff ==="
+            git diff "$FILE" | head -50
           done
           echo ""
           echo "=== Generated files ==="
