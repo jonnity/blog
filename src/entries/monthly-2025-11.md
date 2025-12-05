@@ -158,5 +158,3 @@ spec-workflow-mcpは、タスク一覧のmdを出力してきて、それを編�
 ```twitter
 1991104873539182791
 ```
-
-<!-- GitHub Actions workflow test - checking file hashes -->

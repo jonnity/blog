@@ -61,71 +61,24 @@ jobs:
           FILES="${{ steps.changed_files.outputs.files }}"
           for FILE in $FILES; do
             echo "Generating thumbnail for $FILE"
-            echo "=== File hash before generation ==="
-            md5sum "$FILE" 2>/dev/null || echo "File not found"
-            md5sum public/entry/monthly-report-*.webp 2>/dev/null || echo "No existing thumbnail"
-            echo ""
-
             npm run generate-monthly-thumbnail "$FILE"
-
-            echo ""
-            echo "=== File hash after generation ==="
-            md5sum "$FILE"
-            md5sum public/entry/monthly-report-*.webp
-            echo ""
-            echo "=== File content diff ==="
-            git diff "$FILE" | head -50
           done
-          echo ""
-          echo "=== Generated files ==="
-          ls -lh public/entry/monthly-report-*.webp 2>/dev/null || echo "No thumbnails found"
-          echo ""
-          echo "=== Git status immediately after generation ==="
-          git status
-          echo ""
-          echo "=== Changed files (git diff) ==="
-          git diff --name-only
-          echo ""
-          echo "=== Untracked files ==="
-          git ls-files --others --exclude-standard
 
       - name: Generate thumbnail for manual input
         if: github.event_name == 'workflow_dispatch'
         run: |
           npm run generate-monthly-thumbnail "${{ github.event.inputs.monthly_file }}"
-          echo ""
-          echo "=== Generated files ==="
-          ls -lh public/entry/monthly-report-*.webp 2>/dev/null || echo "No thumbnails found"
-          echo ""
-          echo "=== Git status immediately after generation ==="
-          git status
-          echo ""
-          echo "=== Changed files (git diff) ==="
-          git diff --name-only
-          echo ""
-          echo "=== Untracked files ==="
-          git ls-files --others --exclude-standard
 
       - name: Check for changes
         id: check_changes
         run: |
-          echo "=== Git status before staging ==="
-          git status
-          echo ""
-          echo "=== Staging all changes ==="
           git add -A
-          echo ""
-          echo "=== Git status after staging ==="
-          git status
-          echo ""
-          echo "=== Staged changes ==="
-          git diff --staged --name-only
-          echo ""
           if git diff --staged --quiet; then
             echo "No changes to commit"
             echo "has_changes=false" >> $GITHUB_OUTPUT
           else
-            echo "Changes detected!"
+            echo "Changes detected"
+            git diff --staged --name-only
             echo "has_changes=true" >> $GITHUB_OUTPUT
           fi
 
