@@ -7,8 +7,9 @@ tags:
 summary:
   - 最初から楽しかった大喜利が、さらにどんどん楽しくなってきていて、かなり大喜利した
   - ブログ記事のネタにってくらいのWebアプリも作ってるけど出せてない
-thumbnail: /entry/monthly-report-2025-11-thumbnail.webp
-thumbnailAlt: 月記 (2025年11月) のサマリー
+thumbnail:
+  url: monthly-report-2025-11-thumbnail.webp
+  alt: 月記 (2025年11月) のサマリー
 ---
 
 ## 大喜利
