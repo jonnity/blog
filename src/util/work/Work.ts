@@ -65,6 +65,10 @@ class Work {
 export class WorkManager {
   public static instance: WorkManager | null = null;
   public static getInstance() {
+    if (process.env.NODE_ENV === "development") {
+      return new WorkManager();
+    }
+
     if (WorkManager.instance) {
       return WorkManager.instance;
     } else {
