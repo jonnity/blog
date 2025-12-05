@@ -159,4 +159,4 @@ spec-workflow-mcpは、タスク一覧のmdを出力してきて、それを編�
 1991104873539182791
 ```
 
-<!-- GitHub Actions workflow test -->
+<!-- GitHub Actions workflow test with debug logging -->
