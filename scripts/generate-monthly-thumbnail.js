@@ -236,11 +236,17 @@ async function generateThumbnail(markdownPath) {
   // Reset global alpha
   ctx.globalAlpha = 1.0;
 
-  // Load and draw logo in upper left (inside the box)
-  const logoPath = path.join(__dirname, "..", "public", "logo_keyboard.svg");
   const contentPadding = 30; // Padding inside the box
-  const logoX = boxX + contentPadding;
-  const logoY = boxY + contentPadding;
+
+  // Draw title in upper left (inside the box)
+  ctx.fillStyle = "#000000";
+  ctx.font = 'bold 60px "Noto Sans CJK JP", sans-serif';
+  const titleX = boxX + contentPadding;
+  const titleY = boxY + contentPadding + 50; // 50px from top for baseline
+  ctx.fillText(title, titleX, titleY);
+
+  // Load and draw logo in upper right (inside the box)
+  const logoPath = path.join(__dirname, "..", "public", "logo_keyboard.svg");
 
   if (fs.existsSync(logoPath)) {
     try {
@@ -251,17 +257,14 @@ async function generateThumbnail(markdownPath) {
         .toBuffer();
 
       const logoImage = await loadImage(logoBuffer);
+      // Position logo in the upper right
+      const logoX = boxX + boxWidth - logoImage.width - contentPadding;
+      const logoY = boxY + contentPadding;
       ctx.drawImage(logoImage, logoX, logoY, logoImage.width, logoImage.height);
     } catch (error) {
       console.warn("Could not load logo:", error.message);
     }
   }
-
-  // Draw title
-  ctx.fillStyle = "#000000";
-  ctx.font = 'bold 60px "Noto Sans CJK JP", sans-serif';
-  const titleY = boxY + contentPadding + 150;
-  ctx.fillText(title, logoX, titleY);
 
   // Draw summary bullets
   const maxSummaryItems = 5;
@@ -277,7 +280,7 @@ async function generateThumbnail(markdownPath) {
     if (yPosition + lineHeight > boxBottom) return; // Don't overflow the box
 
     // Draw bullet
-    const bulletX = logoX + 10;
+    const bulletX = titleX + 10;
     ctx.fillText("•", bulletX, yPosition);
 
     // Wrap text with kinsoku rules
