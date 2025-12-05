@@ -66,6 +66,15 @@ jobs:
           echo ""
           echo "=== Generated files ==="
           ls -lh public/entry/monthly-report-*.webp 2>/dev/null || echo "No thumbnails found"
+          echo ""
+          echo "=== Git status immediately after generation ==="
+          git status
+          echo ""
+          echo "=== Changed files (git diff) ==="
+          git diff --name-only
+          echo ""
+          echo "=== Untracked files ==="
+          git ls-files --others --exclude-standard
 
       - name: Generate thumbnail for manual input
         if: github.event_name == 'workflow_dispatch'
@@ -74,6 +83,15 @@ jobs:
           echo ""
           echo "=== Generated files ==="
           ls -lh public/entry/monthly-report-*.webp 2>/dev/null || echo "No thumbnails found"
+          echo ""
+          echo "=== Git status immediately after generation ==="
+          git status
+          echo ""
+          echo "=== Changed files (git diff) ==="
+          git diff --name-only
+          echo ""
+          echo "=== Untracked files ==="
+          git ls-files --others --exclude-standard
 
       - name: Check for changes
         id: check_changes
