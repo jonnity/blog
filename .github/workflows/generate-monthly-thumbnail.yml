@@ -63,19 +63,38 @@ jobs:
             echo "Generating thumbnail for $FILE"
             npm run generate-monthly-thumbnail "$FILE"
           done
+          echo ""
+          echo "=== Generated files ==="
+          ls -lh public/entry/monthly-report-*.webp 2>/dev/null || echo "No thumbnails found"
 
       - name: Generate thumbnail for manual input
         if: github.event_name == 'workflow_dispatch'
         run: |
           npm run generate-monthly-thumbnail "${{ github.event.inputs.monthly_file }}"
+          echo ""
+          echo "=== Generated files ==="
+          ls -lh public/entry/monthly-report-*.webp 2>/dev/null || echo "No thumbnails found"
 
       - name: Check for changes
         id: check_changes
         run: |
+          echo "=== Git status before staging ==="
+          git status
+          echo ""
+          echo "=== Staging all changes ==="
           git add -A
+          echo ""
+          echo "=== Git status after staging ==="
+          git status
+          echo ""
+          echo "=== Staged changes ==="
+          git diff --staged --name-only
+          echo ""
           if git diff --staged --quiet; then
+            echo "No changes to commit"
             echo "has_changes=false" >> $GITHUB_OUTPUT
           else
+            echo "Changes detected!"
             echo "has_changes=true" >> $GITHUB_OUTPUT
           fi
 
