@@ -179,3 +179,5 @@ fn largest<T: PartialOrd>(list: &[T]) -> &T {
   * 順に見ていっている人にとって気持ちよくなさすぎるけど、このへんのマルチスレッド動作で安全性を確保するのがそれだけ大変なのかね
 * [jonnity/rust-exercise - main /concurrency/src/main.rs#L25](https://github.com/jonnity/rust-exercise/blob/main/concurrency/src/main.rs#L25)からのコードで、デッドロック発生させたうえで、タイムアウトで異常終了させるコード書いてみた
   * 基本的な考え方はちゃんとわかった気がする
+
+### 17. Rustのオブジェクト指向プログラミング機能
