@@ -31,9 +31,10 @@ export function ShareFAB() {
         const footerRect = footer.getBoundingClientRect();
         const windowHeight = window.innerHeight;
         const footerTop = footerRect.top;
-        
+
         // フッターが画面の下部近くにある場合、FABを調整
-        if (footerTop < windowHeight - 80) { // 80px = FABのサイズ + マージン
+        if (footerTop < windowHeight - 80) {
+          // 80px = FABのサイズ + マージン
           setFooterOffset(windowHeight - footerTop + 16); // 16px マージン
         } else {
           setFooterOffset(0);
@@ -72,13 +73,13 @@ export function ShareFAB() {
   if (!pageInfo) {
     return null;
   }
-  
+
   // メインコンテンツの幅に基づいて右端の位置を計算
   const getPositionClass = () => {
     // コンテンツ幅: モバイル 368px, タブレット 752px, デスクトップ 880px/960px
     // 画面中央からコンテンツ右端までの距離を計算し、そこからFABを少し内側に配置
     const baseClass = "fixed z-50";
-    
+
     const bottomClass = isConsentVisible
       ? "bottom-36 md:bottom-24"
       : "bottom-4";

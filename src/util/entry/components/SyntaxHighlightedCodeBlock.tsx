@@ -11,7 +11,7 @@ export const SyntaxHighlightedCodeBlock: React.FC<{
     <>
       {filename && (
         <div
-          className="text-monokai-filename-text bg-monokai-filename-bg m-0 rounded-t px-4 font-bold"
+          className="m-0 rounded-t bg-monokai-filename-bg px-4 font-bold text-monokai-filename-text"
           // global.cssより優先するため、styleで指定
           style={{ marginBottom: 0 }}
         >

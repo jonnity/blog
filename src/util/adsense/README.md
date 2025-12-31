@@ -38,7 +38,7 @@ NEXT_PUBLIC_GOOGLE_ADSENSE_SLOT=xxxxxxxxxx
 ### 基本的な使用方法
 
 ```tsx
-import { GoogleAdSense } from '@/util/adsense';
+import { GoogleAdSense } from "@/util/adsense";
 
 function MyComponent() {
   return (
@@ -56,11 +56,11 @@ function MyComponent() {
 ### レスポンシブ広告
 
 ```tsx
-import { ResponsiveAdSense } from '@/util/adsense';
+import { ResponsiveAdSense } from "@/util/adsense";
 
 function MyComponent() {
   return (
-    <div className="flex justify-center my-4">
+    <div className="my-4 flex justify-center">
       <ResponsiveAdSense
         size="responsive"
         adClient="ca-pub-xxxxxxxxxxxxxxxx"
@@ -74,22 +74,22 @@ function MyComponent() {
 ### プリセットサイズの使用
 
 ```tsx
-import { ResponsiveAdSense } from '@/util/adsense';
+import { ResponsiveAdSense } from "@/util/adsense";
 
 function MyComponent() {
   return (
     <>
       {/* 中レクタングル広告 */}
-      <div className="flex justify-center my-6">
+      <div className="my-6 flex justify-center">
         <ResponsiveAdSense
           size="medium-rectangle"
           adClient="ca-pub-xxxxxxxxxxxxxxxx"
           adSlot="xxxxxxxxxx"
         />
       </div>
-      
+
       {/* モバイルバナー */}
-      <div className="flex justify-center my-2 sm:my-4">
+      <div className="my-2 flex justify-center sm:my-4">
         <ResponsiveAdSense
           size="mobile-banner"
           adClient="ca-pub-xxxxxxxxxxxxxxxx"
@@ -136,20 +136,24 @@ function MyComponent() {
 安全にテストできる専用コンポーネントも提供しています：
 
 ```tsx
-import { TestAdSense, TestResponsiveAdSense, AdSensePreview } from "@/util/adsense";
+import {
+  TestAdSense,
+  TestResponsiveAdSense,
+  AdSensePreview,
+} from "@/util/adsense";
 
 function TestPage() {
   return (
     <>
       {/* テスト用AdSense（自動的にテストモード有効） */}
       <TestAdSense width={728} height={90} />
-      
+
       {/* テスト用レスポンシブAdSense */}
       <TestResponsiveAdSense size="responsive" />
-      
+
       {/* 広告エリアのプレビュー（実際の広告は表示されない） */}
-      <AdSensePreview 
-        size="medium-rectangle" 
+      <AdSensePreview
+        size="medium-rectangle"
         label="中レクタングル広告エリア"
       />
     </>
@@ -161,25 +165,25 @@ function TestPage() {
 
 ### GoogleAdSenseProps
 
-| プロパティ | 型 | 必須 | デフォルト | 説明 |
-|------------|----|----|-----------|------|
-| adClient | string | ✓ | - | AdSenseクライアントID |
-| adSlot | string | ✓ | - | 広告スロットID |
-| width | number \| string | | 'auto' | 広告の幅 |
-| height | number \| string | | 'auto' | 広告の高さ |
-| adFormat | 'auto' \| 'rectangle' \| 'vertical' \| 'horizontal' | | 'auto' | 広告フォーマット |
-| fullWidthResponsive | boolean | | true | 全幅レスポンシブ対応 |
-| className | string | | '' | CSSクラス名 |
-| style | React.CSSProperties | | {} | インラインスタイル |
-| testMode | boolean | | false | テストモード（開発環境では自動で有効） |
+| プロパティ          | 型                                                  | 必須 | デフォルト | 説明                                   |
+| ------------------- | --------------------------------------------------- | ---- | ---------- | -------------------------------------- |
+| adClient            | string                                              | ✓    | -          | AdSenseクライアントID                  |
+| adSlot              | string                                              | ✓    | -          | 広告スロットID                         |
+| width               | number \| string                                    |      | 'auto'     | 広告の幅                               |
+| height              | number \| string                                    |      | 'auto'     | 広告の高さ                             |
+| adFormat            | 'auto' \| 'rectangle' \| 'vertical' \| 'horizontal' |      | 'auto'     | 広告フォーマット                       |
+| fullWidthResponsive | boolean                                             |      | true       | 全幅レスポンシブ対応                   |
+| className           | string                                              |      | ''         | CSSクラス名                            |
+| style               | React.CSSProperties                                 |      | {}         | インラインスタイル                     |
+| testMode            | boolean                                             |      | false      | テストモード（開発環境では自動で有効） |
 
 ### ResponsiveAdSenseProps
 
-| プロパティ | 型 | 必須 | デフォルト | 説明 |
-|------------|----|----|-----------|------|
-| size | AdSize | ✓ | - | プリセットサイズ |
-| customWidth | number \| string | | - | カスタム幅（プリセットを上書き） |
-| customHeight | number \| string | | - | カスタム高さ（プリセットを上書き） |
+| プロパティ   | 型               | 必須 | デフォルト | 説明                               |
+| ------------ | ---------------- | ---- | ---------- | ---------------------------------- |
+| size         | AdSize           | ✓    | -          | プリセットサイズ                   |
+| customWidth  | number \| string |      | -          | カスタム幅（プリセットを上書き）   |
+| customHeight | number \| string |      | -          | カスタム高さ（プリセットを上書き） |
 
 ### AdSize（プリセットサイズ）
 
