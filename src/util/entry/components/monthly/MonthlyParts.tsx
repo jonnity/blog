@@ -1,5 +1,5 @@
 "use client";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 type MonthlyPartsProp = {
   yearMonthList: string[];
@@ -10,10 +10,11 @@ export const MonthlyParts: React.FC<MonthlyPartsProp> = ({
   yearMonthList,
   currentYearMonth,
 }) => {
+  const router = useRouter();
   const selectorId = "yearMonthSelector";
   const yearMonthHandler = () => {
     const selector = document.getElementById(selectorId) as HTMLSelectElement;
-    redirect(`/monthly/${selector.value}`);
+    router.push(`/monthly/${selector.value}`);
   };
   return (
     <div className="m-0 flex justify-end gap-2">
