@@ -1,9 +1,9 @@
 ---
 createdAt: 2026/01/04
-title: "oogiri-log-new-year-2026"
-description: TODO
+title: 第3回大喜利ベータ杯 ～ニューイヤーカップ～ - 大喜利会参加ログ
+description: 2026/1/4に開催された「第3回大喜利ベータ杯 ～ニューイヤーカップ～」の参加ログ/jonnityの感想です
 tags: 
-  - TODO
+  - 大喜利会参加ログ
 ---
 
 ## 大会概要
