@@ -43,19 +43,9 @@ type Metadata = z.infer<typeof metadataSchema>;
 
 const entriesDir = path.join(process.cwd(), "/src/entries");
 
-interface FrontMatterAttributes {
-  title?: string;
-  tags?: string[];
-  createdAt?: string;
-  updatedAt?: string;
-  description?: string;
-  summary?: string[];
-  thumbnail?: {
-    url: string;
-    alt: string;
-  };
+type FrontMatterAttributes = z.input<typeof metadataSchema> & {
   [key: string]: unknown;
-}
+};
 
 interface ParsedFrontMatter {
   attributes: FrontMatterAttributes;
