@@ -16,13 +16,12 @@
       "mcp__serena__think_about_whether_you_are_done",
       "Bash(mkdir:*)",
       "WebFetch(domain:github.com)",
-      "Bash(git stash:*)"
+      "Bash(git stash:*)",
+      "Bash(npm run format:*)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits"
   },
   "enableAllProjectMcpServers": true,
-  "enabledMcpjsonServers": [
-    "serena"
-  ]
+  "enabledMcpjsonServers": ["serena"]
 }
