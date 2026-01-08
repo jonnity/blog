@@ -22,7 +22,5 @@
     "defaultMode": "acceptEdits"
   },
   "enableAllProjectMcpServers": true,
-  "enabledMcpjsonServers": [
-    "serena"
-  ]
+  "enabledMcpjsonServers": ["serena"]
 }
