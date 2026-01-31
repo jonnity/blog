@@ -1,11 +1,14 @@
 ---
 createdAt: 2026/01/31
-title: "月記 (2026年1月)"
+title: 月記 (2026年1月)
 description: 2026年1月の活動の振り返り
-tags: 
+tags:
   - 月記
 summary:
   - あけましておめでとうございます。今年もよろしくお願いします
+thumbnail:
+  url: monthly-report-2026-01-thumbnail.webp
+  alt: 月記 (2026年01月) のサマリー
 ---
 
 ## 大喜利
