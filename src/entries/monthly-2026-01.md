@@ -6,6 +6,8 @@ tags:
   - 月記
 summary:
   - あけましておめでとうございます。今年もよろしくお願いします
+  - GoogleのAIツール群は頑なに日本語を使わないこと以外けっこういい
+  - 大喜利も結局めっちゃ行っちゃう。楽しすぎる
 thumbnail:
   url: monthly-report-2026-01-thumbnail.webp
   alt: 月記 (2026年01月) のサマリー
