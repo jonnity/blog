@@ -43,6 +43,13 @@ type Metadata = z.infer<typeof metadataSchema>;
 
 const entriesDir = path.join(process.cwd(), "/src/entries");
 
+type FrontMatterAttributes = z.input<typeof metadataSchema>
+
+interface ParsedFrontMatter {
+  attributes: FrontMatterAttributes;
+  body: string;
+}
+
 class Entry {
   public readonly metadata: Metadata;
   public readonly body: string;
@@ -50,7 +57,9 @@ class Entry {
     public readonly slug: string,
     mdContents: string,
   ) {
-    const parsedData = frontMatter<any>(mdContents);
+    const parsedData = frontMatter<FrontMatterAttributes>(
+      mdContents,
+    ) as ParsedFrontMatter;
     this.metadata = metadataSchema.parse(parsedData.attributes);
     this.body = parsedData.body;
   }
