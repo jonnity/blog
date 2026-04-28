@@ -1,11 +1,14 @@
 ---
 createdAt: 2026/04/01
-title: "月記 (2026年4月)"
+title: 月記 (2026年4月)
 description: 2026年4月の活動の振り返り
-tags: 
+tags:
   - 月記
 summary:
   - TODO
+thumbnail:
+  url: monthly-report-2026-04-thumbnail.webp
+  alt: 月記 (2026年04月) のサマリー
 ---
 
 ## 大喜利
