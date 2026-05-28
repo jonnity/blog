@@ -7,7 +7,7 @@ categories:
 description: スプレッドシート大喜利の不便を解消し、オンライン大喜利をリアルタイムに進行できるWebアプリケーション
 createdAt: 2026/05/28
 # updatedAt
-# thumbnailPath:
+thumbnailPath: doc.webp
 externalLink:
   url: https://oogiri-doc.jonnity.com
   message: 今すぐ遊ぶ
