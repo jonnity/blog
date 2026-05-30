@@ -17,11 +17,15 @@
       "Bash(mkdir:*)",
       "WebFetch(domain:github.com)",
       "Bash(git stash:*)",
-      "Bash(npm run format:*)"
+      "Bash(npm run format:*)",
+      "Bash(python3 -c ' *)",
+      "Bash(identify /workspaces/blog/public/work/doc.webp)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits"
   },
   "enableAllProjectMcpServers": true,
-  "enabledMcpjsonServers": ["serena"]
+  "enabledMcpjsonServers": [
+    "serena"
+  ]
 }
