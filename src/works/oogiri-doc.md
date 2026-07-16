@@ -6,7 +6,7 @@ categories:
   - リアルタイム通信
 description: スプレッドシート大喜利の不便を解消し、オンライン大喜利をリアルタイムに進行できるWebアプリケーション
 createdAt: 2026/05/28
-updatedAt: 2026/07/17
+updatedAt: 2026/07/16
 thumbnailPath: doc.webp
 externalLink:
   url: https://oogiri-doc.jonnity.com
@@ -38,7 +38,7 @@ externalLink:
 
 ## リリースノート
 
-### 0.0.8 (2026/07/17)
+### 0.0.8 (2026/07/16)
 
 * テキストお題の追加方法を「一括追加」と「単一追加」から選べるように改良
 * お題ストックの未使用お題を編集できる機能を追加
