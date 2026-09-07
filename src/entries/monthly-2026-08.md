@@ -1,5 +1,5 @@
 ---
-createdAt: 2026/08/01
+createdAt: 2026/09/07
 title: 月記 (2026年8月)
 description: 2026年8月の活動の振り返り
 tags:
