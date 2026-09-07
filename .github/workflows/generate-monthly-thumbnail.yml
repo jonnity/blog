@@ -15,6 +15,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 jobs:
   generate_thumbnail:
@@ -89,7 +90,21 @@ jobs:
           git config --local user.name "GitHub Action"
 
       - name: Commit and push changes
-        if: steps.check_changes.outputs.has_changes == 'true'
+        if: steps.check_changes.outputs.has_changes == 'true' && github.ref_name != 'dev' && github.ref_name != 'main'
         run: |
           git commit -m "chore: auto-generate monthly OGP thumbnails"
           git push
+
+      - name: Open PR for protected branch
+        if: steps.check_changes.outputs.has_changes == 'true' && (github.ref_name == 'dev' || github.ref_name == 'main')
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: auto-generate monthly OGP thumbnails"
+          branch: "auto/monthly-thumbnail-${{ github.ref_name }}"
+          delete-branch: true
+          base: ${{ github.ref_name }}
+          title: "chore: auto-generate monthly OGP thumbnails (${{ github.ref_name }})"
+          body: |
+            月記の更新に伴うOGPサムネイル画像の自動再生成です。
+            `${{ github.ref_name }}` はprotected branchで直接pushできないため、PRとして作成しています。
