@@ -12,7 +12,8 @@
     "create-entry": "node scripts/create-entry.js",
     "create-monthly": "node scripts/create-entry.js monthly",
     "create-monthly-auto": "node scripts/create-entry.js monthly-auto",
-    "generate-monthly-thumbnail": "node scripts/generate-monthly-thumbnail.js"
+    "generate-monthly-thumbnail": "node scripts/generate-monthly-thumbnail.js",
+    "check-monthly-summary": "node scripts/check-monthly-summary.js"
   },
   "dependencies": {
     "front-matter": "^4.0.2",
