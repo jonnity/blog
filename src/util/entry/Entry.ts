@@ -28,7 +28,20 @@ const thumbnailSchema = z
     alt: z.string(),
   })
   .optional();
-const summarySchema = z.string().array().optional();
+// 雛形の`summary:`や空の箇条書きは未記入として扱い、ビルドは通す。
+// 記入漏れはCIのcheck-monthly-summaryがPRの時点で検出する。
+const summarySchema = z.preprocess((value) => {
+  if (value === null) {
+    return undefined;
+  }
+  if (Array.isArray(value)) {
+    const items = value.filter(
+      (item) => typeof item === "string" && item.trim() !== "",
+    );
+    return items.length === 0 ? undefined : items;
+  }
+  return value;
+}, z.string().array().optional());
 
 const metadataSchema = z.object({
   title: titleSchema,
@@ -43,7 +56,7 @@ type Metadata = z.infer<typeof metadataSchema>;
 
 const entriesDir = path.join(process.cwd(), "/src/entries");
 
-type FrontMatterAttributes = z.input<typeof metadataSchema>
+type FrontMatterAttributes = z.input<typeof metadataSchema>;
 
 interface ParsedFrontMatter {
   attributes: FrontMatterAttributes;

@@ -105,7 +105,7 @@ export const ReactMarkdown: React.FC<ReactMarkdownProps> = ({ mdBody }) => {
               return <IframeYoutubePlayer videoId={code} />;
             }
             if (language === "twitter") {
-              return <EmbeddedTweet id={code.trim()} />;
+              return <EmbeddedTweet idOrUrl={code.trim()} />;
             }
             if (language === "adsense") {
               return (
