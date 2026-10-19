@@ -6,7 +6,7 @@ categories:
   - リアルタイム通信
 description: スプレッドシート大喜利の不便を解消し、オンライン大喜利をリアルタイムに進行できるWebアプリケーション
 createdAt: 2026/05/28
-updatedAt: 2026/10/14
+updatedAt: 2026/10/19
 thumbnailPath: doc.webp
 externalLink:
   url: https://oogiri-doc.jonnity.com
@@ -37,6 +37,11 @@ externalLink:
 - ルーム設定とルーム削除
 
 ## リリースノート
+
+### 0.2.5 (2026/10/19)
+
+* 回線やタブの復帰時に、通信状態が不安定でも素早く再接続するよう改善
+* 参加直後に離席中の表示が残ることがある不具合を修正
 
 ### 0.2.4 (2026/10/14)
 
