@@ -2,8 +2,8 @@
 import { useEffect, useRef } from "react";
 import Script from "next/script";
 
-type Prop = { idOrUrl: string };
-export const EmbeddedTweet: React.FC<Prop> = ({ idOrUrl }) => {
+type EmbeddedTweetProps = { idOrUrl: string };
+export const EmbeddedTweet: React.FC<EmbeddedTweetProps> = ({ idOrUrl }) => {
   const ref = useRef<HTMLDivElement>(null);
   const id = parseTweetId(idOrUrl);
 

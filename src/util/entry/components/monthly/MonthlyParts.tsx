@@ -2,12 +2,12 @@
 import { useRouter } from "next/navigation";
 import { useRef } from "react";
 
-type MonthlyPartsProp = {
+type MonthlyPartsProps = {
   yearMonthList: string[];
   currentYearMonth: string;
 };
 
-export const MonthlyParts: React.FC<MonthlyPartsProp> = ({
+export const MonthlyParts: React.FC<MonthlyPartsProps> = ({
   yearMonthList,
   currentYearMonth,
 }) => {
