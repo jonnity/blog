@@ -58,8 +58,12 @@ const ImageModal: React.FC<{
   );
 };
 
-type Prop = { src: string; alt: string; caption: React.ReactNode };
-export const ImageViewer: React.FC<Prop> = ({ src, alt, caption }) => {
+type ImageViewerProps = { src: string; alt: string; caption: React.ReactNode };
+export const ImageViewer: React.FC<ImageViewerProps> = ({
+  src,
+  alt,
+  caption,
+}) => {
   const router = useRouter();
   const pathname = usePathname();
   const currentSearchParams = useSearchParams();

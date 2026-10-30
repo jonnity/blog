@@ -1,5 +1,7 @@
-type Prop = { videoId: string };
-export const IframeYoutubePlayer: React.FC<Prop> = ({ videoId }) => {
+type IframeYoutubePlayerProps = { videoId: string };
+export const IframeYoutubePlayer: React.FC<IframeYoutubePlayerProps> = ({
+  videoId,
+}) => {
   return (
     <div className="flex w-full justify-center">
       <iframe
