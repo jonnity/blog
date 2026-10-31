@@ -5,6 +5,7 @@ import { EntryManager } from "@/util/entry/Entry";
 import { SNSLogo } from "@/util/profile/SNSLogo";
 import { WorkManager } from "@/util/work/Work";
 import { Hamburger } from "@/util/hamburger/Hamburger";
+import { iconSizeClass } from "@/util/iconSizeClass";
 
 import ProfileIcon from "@/assets/icons/profile.svg";
 import MonthDisplay from "@/assets/icons/MonthDisplay";
@@ -35,7 +36,7 @@ export default function Home() {
               <Image
                 src={ProfileIcon}
                 alt="Profileページのアイコン"
-                className="h-[26px] w-[26px] p-px md:h-[30px] md:w-[30px] lg:h-[34px] lg:w-[34px]"
+                className={iconSizeClass}
               />
               <HeadSubject>Profile</HeadSubject>
             </div>
@@ -59,7 +60,7 @@ export default function Home() {
         </RouteBlock>
         <RouteBlock>
           <div className="flex h-fit gap-1">
-            <div className="h-[26px] w-[26px] p-px md:h-[30px] md:w-[30px] lg:h-[34px] lg:w-[34px]">
+            <div className={iconSizeClass}>
               <MonthDisplay date={new Date(monthlyTitle)} />
             </div>
             <HeadSubject>Monthly ({monthlyTitle})</HeadSubject>
@@ -83,7 +84,7 @@ export default function Home() {
             <Image
               src={WorkIcon}
               alt="Workページのアイコン"
-              className="h-[26px] w-[26px] p-px md:h-[30px] md:w-[30px] lg:h-[34px] lg:w-[34px]"
+              className={iconSizeClass}
             />
             <HeadSubject>Work</HeadSubject>
           </div>
@@ -107,7 +108,7 @@ export default function Home() {
             <Image
               src={BlogIcon}
               alt="Blogページのアイコン"
-              className="h-[26px] w-[26px] p-px md:h-[30px] md:w-[30px] lg:h-[34px] lg:w-[34px]"
+              className={iconSizeClass}
             />
             <HeadSubject>Blog</HeadSubject>
           </div>
