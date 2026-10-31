@@ -5,7 +5,9 @@ import { EntryType } from "../Entry";
 import { TagListSpan } from "./TagList";
 import { DateInfoSpan } from "./DateInfoSpan";
 
-export const EntryLink: React.FC<{ entry: EntryType }> = ({ entry }) => {
+type EntryLinkProps = { entry: EntryType };
+
+export const EntryLink: React.FC<EntryLinkProps> = ({ entry }) => {
   const { url, alt } = entry.getThumbnail();
   return (
     <>

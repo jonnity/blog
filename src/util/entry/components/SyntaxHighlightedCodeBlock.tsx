@@ -2,11 +2,15 @@ import { CSSProperties } from "react";
 import SyntaxHighlighter from "react-syntax-highlighter/dist/esm/default-highlight";
 import { monokai } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
-export const SyntaxHighlightedCodeBlock: React.FC<{
+type SyntaxHighlightedCodeBlockProps = {
   code: string;
   language: string;
   filename?: string;
-}> = ({ code, language, filename }) => {
+};
+
+export const SyntaxHighlightedCodeBlock: React.FC<
+  SyntaxHighlightedCodeBlockProps
+> = ({ code, language, filename }) => {
   return (
     <>
       {filename && (
