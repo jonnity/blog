@@ -133,9 +133,9 @@ export default function Home() {
   );
 }
 
-const HeadSubject: React.FC<{ children?: React.ReactNode }> = ({
-  children,
-}) => {
+type HeadSubjectProps = { children?: React.ReactNode };
+
+const HeadSubject: React.FC<HeadSubjectProps> = ({ children }) => {
   return (
     <h3 className="flex items-center gap-4 text-xl md:text-2xl lg:text-3xl">
       {children}
@@ -143,11 +143,13 @@ const HeadSubject: React.FC<{ children?: React.ReactNode }> = ({
   );
 };
 
-const EntryLink: React.FC<{
+type EntryLinkProps = {
   slug: string;
   thumbnail: { url: string; alt: string };
   title: string;
-}> = ({ slug, thumbnail, title }) => {
+};
+
+const EntryLink: React.FC<EntryLinkProps> = ({ slug, thumbnail, title }) => {
   return (
     <a href={`${slug}`}>
       <article className="flex h-fit w-[160px] flex-col items-center lg:w-[224px]">
@@ -162,16 +164,17 @@ const EntryLink: React.FC<{
   );
 };
 
-const RouteBlock: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+type RouteBlockProps = { children: React.ReactNode };
+
+const RouteBlock: React.FC<RouteBlockProps> = ({ children }) => {
   return <div className="relative mb-2 h-full pb-5">{children}</div>;
 };
 
 const Divider: React.FC = () => <hr className="mb-1 w-full border-gray-400" />;
 
-const MoreLink: React.FC<{ path: string; message: string }> = ({
-  path,
-  message,
-}) => (
+type MoreLinkProps = { path: string; message: string };
+
+const MoreLink: React.FC<MoreLinkProps> = ({ path, message }) => (
   <div className="entry-base absolute bottom-0 right-0">
     <Link href={`/${path}`}>{message}</Link>
   </div>

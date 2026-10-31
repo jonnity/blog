@@ -152,10 +152,12 @@ export const Hamburger: React.FC<HamburgerProps> = ({ children, date }) => {
   );
 };
 
-const LinkWithLabel: React.FC<{
+type LinkWithLabelProps = {
   children: ReactNode;
   label: { href: string; message: string };
-}> = ({ children, label }) => (
+};
+
+const LinkWithLabel: React.FC<LinkWithLabelProps> = ({ children, label }) => (
   <div className="flex items-center">
     {children}
     <Link href={label.href} className="w-full">

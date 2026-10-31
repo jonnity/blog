@@ -10,10 +10,12 @@ const showModalValue = "1";
 const HEADER_HEIGHT_MOBILE = 48; // h-12 (3rem)
 const HEADER_HEIGHT_DESKTOP = 64; // md:h-16 (4rem)
 
-const ImageModal: React.FC<{
+type ImageModalProps = {
   src: string;
   alt: string;
-}> = ({ src, alt }) => {
+};
+
+const ImageModal: React.FC<ImageModalProps> = ({ src, alt }) => {
   const router = useRouter();
   useEffect(() => {
     const escapeKeyListener = (event: KeyboardEvent) => {

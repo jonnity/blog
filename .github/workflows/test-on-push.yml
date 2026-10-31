@@ -21,6 +21,10 @@ jobs:
         run: |
           npm ci
 
+      - name: test eslint rules
+        run: |
+          npm run test:eslint-rules
+
       - name: next lint
         run: |
           npm run lint

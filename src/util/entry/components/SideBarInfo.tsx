@@ -3,7 +3,9 @@ import { MarkdownToc } from "@/util/entry/components/MarkdownToc";
 import { RandomSelfIntroduction } from "@/util/profile/RandomSelfIntroduction";
 import { GoogleAdSense } from "@/util/adsense";
 
-export const SideBarInfo: React.FC<{ mdBody: string }> = ({ mdBody }) => {
+type SideBarInfoProps = { mdBody: string };
+
+export const SideBarInfo: React.FC<SideBarInfoProps> = ({ mdBody }) => {
   return (
     <>
       <div className="flex flex-col gap-2">
@@ -31,7 +33,9 @@ const Profile = () => (
   </div>
 );
 
-const EntryTOC: React.FC<{ mdBody: string }> = ({ mdBody }) => {
+type EntryTOCProps = { mdBody: string };
+
+const EntryTOC: React.FC<EntryTOCProps> = ({ mdBody }) => {
   return (
     <>
       <div className="contents-base hidden p-2 md:block">

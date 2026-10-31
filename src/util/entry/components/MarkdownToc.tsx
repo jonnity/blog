@@ -2,7 +2,9 @@ import Link from "next/link";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
-export const MarkdownToc: React.FC<{ mdBody: string }> = ({ mdBody }) => {
+type MarkdownTocProps = { mdBody: string };
+
+export const MarkdownToc: React.FC<MarkdownTocProps> = ({ mdBody }) => {
   return (
     <Markdown
       remarkPlugins={[remarkGfm]}
