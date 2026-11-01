@@ -1,7 +1,7 @@
-type Prop = { tags: string[] };
+type TagListSpanProps = { tags: string[] };
 
-export const TagListSpan: React.FC<Prop> = (prop) => {
-  const { tags } = prop;
+export const TagListSpan: React.FC<TagListSpanProps> = (props) => {
+  const { tags } = props;
   if (tags.length === 0) {
     return <span className="bg-gray-200 text-black">no tags</span>;
   }

@@ -3,7 +3,9 @@ import { DateInfoSpan } from "@/util/entry/components/DateInfoSpan";
 import { ReactMarkdown } from "@/util/entry/components/ReactMarkdown";
 import { TagListSpan } from "@/util/entry/components/TagList";
 
-export const BlogEntry: React.FC<{ entry: EntryType }> = ({ entry }) => {
+type BlogEntryProps = { entry: EntryType };
+
+export const BlogEntry: React.FC<BlogEntryProps> = ({ entry }) => {
   return (
     <>
       <div className="contents-base p-4">

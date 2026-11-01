@@ -1,11 +1,11 @@
 import { MonthlyParts } from "./MonthlyParts";
 
-type MonthlySelectorProp = {
+type MonthlySelectorProps = {
   yearMonthList: string[];
   currentYearMonth: string;
 };
 
-export const MonthlySelector: React.FC<MonthlySelectorProp> = ({
+export const MonthlySelector: React.FC<MonthlySelectorProps> = ({
   yearMonthList,
   currentYearMonth,
 }) => {

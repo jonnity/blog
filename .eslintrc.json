@@ -1,4 +1,8 @@
 {
   "extends": "next/core-web-vitals",
-  "rules": { "@next/next/no-img-element": "off" }
+  "plugins": ["blog-local"],
+  "rules": {
+    "@next/next/no-img-element": "off",
+    "blog-local/component-props-name": "error"
+  }
 }

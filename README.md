@@ -14,7 +14,7 @@ jonnity ([Github](https://github.com/jonnity), [X](https://x.com/jonnied_man), [
   * Typescript
   * tailwindcss
   * react-markdown
-* Github Actions (自動デプロイ/プッシュ時のlint)
+* Github Actions (自動デプロイ/PR時のlint)
 * Cloudflare Pages
 
 ### 主な機能

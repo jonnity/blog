@@ -1,11 +1,15 @@
 name: Generate Monthly Thumbnail
 
 on:
-  push:
+  pull_request:
+    branches: [dev]
+    types: [opened, synchronize, reopened, ready_for_review]
     paths:
       - "src/entries/monthly-*.md"
-    branches:
-      - "**"
+  push:
+    branches: [dev, main]
+    paths:
+      - "src/entries/monthly-*.md"
   workflow_dispatch:
     inputs:
       monthly_file:
@@ -13,20 +17,46 @@ on:
         required: true
         type: string
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number && format('pr-{0}', github.event.pull_request.number) || format('run-{0}', github.run_id) }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 permissions:
   contents: write
   pull-requests: write
 
 jobs:
   generate_thumbnail:
+    # A deleted push has no source branch to update.
+    if: >-
+      ${{ github.event.deleted != true &&
+          (github.event_name != 'pull_request' ||
+           (!github.event.pull_request.draft &&
+            github.event.pull_request.head.repo.full_name == github.repository &&
+            github.event.pull_request.head.ref != 'dev' &&
+            github.event.pull_request.head.ref != 'main')) }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Reject manual runs on tags
+        if: ${{ github.event_name == 'workflow_dispatch' && github.ref_type != 'branch' }}
+        run: |
+          echo "Manual thumbnail generation requires a branch ref."
+          exit 1
+
+      - name: Checkout source commit
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
-          ref: ${{ github.head_ref || github.ref }}
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+
+      - name: Resolve source branch
+        env:
+          TARGET_BRANCH: ${{ github.event.pull_request.head.ref || github.ref_name }}
+          SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          git check-ref-format --branch "$TARGET_BRANCH"
+          git switch -C "$TARGET_BRANCH" "$SOURCE_SHA"
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -42,45 +72,79 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev fonts-noto-cjk
 
-      - name: Get changed monthly files
-        id: changed_files
-        if: github.event_name == 'push'
+      - name: Get changed monthly files for PR
+        if: ${{ github.event_name == 'pull_request' }}
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          SOURCE_SHA: ${{ github.event.pull_request.head.sha }}
+        shell: bash
         run: |
-          # Get the list of changed files matching the pattern
-          CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^src/entries/monthly-.*\.md$' || true)
-          if [ -n "$CHANGED_FILES" ]; then
-            echo "files<<EOF" >> $GITHUB_OUTPUT
-            echo "$CHANGED_FILES" >> $GITHUB_OUTPUT
-            echo "EOF" >> $GITHUB_OUTPUT
-          else
-            echo "files=" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Generate thumbnails for changed files
-        if: github.event_name == 'push' && steps.changed_files.outputs.files != ''
-        run: |
-          FILES="${{ steps.changed_files.outputs.files }}"
-          for FILE in $FILES; do
-            echo "Generating thumbnail for $FILE"
-            npm run generate-monthly-thumbnail "$FILE"
+          set -euo pipefail
+          for sha in "$BASE_SHA" "$SOURCE_SHA"; do
+            if ! git cat-file -e "$sha^{commit}"; then
+              git fetch --no-tags origin "$sha"
+            fi
           done
+          git diff --name-only -z --no-renames --diff-filter=ACMRT \
+            "$BASE_SHA...$SOURCE_SHA" -- ':(glob)src/entries/monthly-*.md' \
+            > "$RUNNER_TEMP/monthly-files"
 
-      - name: Generate thumbnail for manual input
-        if: github.event_name == 'workflow_dispatch'
+      - name: Get changed monthly files for push
+        if: ${{ github.event_name == 'push' }}
+        env:
+          BEFORE_SHA: ${{ github.event.before }}
+          SOURCE_SHA: ${{ github.sha }}
+        shell: bash
         run: |
-          npm run generate-monthly-thumbnail "${{ github.event.inputs.monthly_file }}"
+          set -euo pipefail
+          if [[ "$BEFORE_SHA" =~ ^0+$ ]]; then
+            BEFORE_SHA=$(git hash-object -w -t tree /dev/null)
+          elif ! git cat-file -e "$BEFORE_SHA^{commit}"; then
+            git fetch --no-tags origin "$BEFORE_SHA"
+          fi
+          git diff --name-only -z --no-renames --diff-filter=ACMRT \
+            "$BEFORE_SHA" "$SOURCE_SHA" -- ':(glob)src/entries/monthly-*.md' \
+            > "$RUNNER_TEMP/monthly-files"
+
+      - name: Validate manual input
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        env:
+          MONTHLY_FILE: ${{ inputs.monthly_file }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ ! "$MONTHLY_FILE" =~ ^src/entries/monthly-[0-9]{4}-(0[1-9]|1[0-2])\.md$ ]] ||
+             [[ ! -f "$MONTHLY_FILE" || -L "$MONTHLY_FILE" || -L src || -L src/entries ]]; then
+            echo "Expected a regular src/entries/monthly-YYYY-MM.md file (month 01-12)."
+            exit 1
+          fi
+          printf '%s\0' "$MONTHLY_FILE" > "$RUNNER_TEMP/monthly-files"
+
+      - name: Generate thumbnails
+        shell: bash
+        run: |
+          set -euo pipefail
+          while IFS= read -r -d '' file; do
+            npm run generate-monthly-thumbnail -- "$file"
+          done < "$RUNNER_TEMP/monthly-files"
 
       - name: Check for changes
         id: check_changes
+        shell: bash
         run: |
-          git add -A
-          if git diff --staged --quiet; then
+          set -euo pipefail
+          while IFS= read -r -d '' file; do
+            month="${file##*monthly-}"
+            month="${month%.md}"
+            git add -- "$file" "public/entry/monthly-report-${month}-thumbnail.webp"
+          done < "$RUNNER_TEMP/monthly-files"
+          if git diff --cached --quiet; then
             echo "No changes to commit"
-            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
           else
             echo "Changes detected"
-            git diff --staged --name-only
-            echo "has_changes=true" >> $GITHUB_OUTPUT
+            git diff --cached --name-only
+            echo "has_changes=true" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Configure Git Author
@@ -89,14 +153,36 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
 
-      - name: Commit and push changes
-        if: steps.check_changes.outputs.has_changes == 'true' && github.ref_name != 'dev' && github.ref_name != 'main'
+      - name: Commit and push to source branch
+        if: >-
+          ${{ steps.check_changes.outputs.has_changes == 'true' &&
+              (github.event.pull_request.head.ref || github.ref_name) != 'dev' &&
+              (github.event.pull_request.head.ref || github.ref_name) != 'main' }}
+        env:
+          TARGET_BRANCH: ${{ github.event.pull_request.head.ref || github.ref_name }}
+          SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        shell: bash
         run: |
+          set -euo pipefail
+          REMOTE_SHA=$(git ls-remote origin "refs/heads/$TARGET_BRANCH" | cut -f1)
+          if [[ "$REMOTE_SHA" != "$SOURCE_SHA" ]]; then
+            echo "Source branch changed or was deleted; skipping stale thumbnail changes."
+            exit 0
+          fi
           git commit -m "chore: auto-generate monthly OGP thumbnails"
-          git push
+          if ! git push origin "HEAD:refs/heads/$TARGET_BRANCH"; then
+            REMOTE_SHA=$(git ls-remote origin "refs/heads/$TARGET_BRANCH" | cut -f1)
+            if [[ "$REMOTE_SHA" != "$SOURCE_SHA" ]]; then
+              echo "Source branch changed during push; generated commit was not pushed."
+            fi
+            exit 1
+          fi
 
       - name: Open PR for protected branch
-        if: steps.check_changes.outputs.has_changes == 'true' && (github.ref_name == 'dev' || github.ref_name == 'main')
+        if: >-
+          ${{ steps.check_changes.outputs.has_changes == 'true' &&
+              (github.ref_name == 'dev' || github.ref_name == 'main') &&
+              github.event_name != 'pull_request' }}
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -105,6 +191,9 @@ jobs:
           delete-branch: true
           base: ${{ github.ref_name }}
           title: "chore: auto-generate monthly OGP thumbnails (${{ github.ref_name }})"
+          add-paths: |
+            src/entries/monthly-*.md
+            public/entry/monthly-report-*-thumbnail.webp
           body: |
             月記の更新に伴うOGPサムネイル画像の自動再生成です。
             `${{ github.ref_name }}` はprotected branchで直接pushできないため、PRとして作成しています。

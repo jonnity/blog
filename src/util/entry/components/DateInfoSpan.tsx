@@ -1,10 +1,10 @@
-type Prop = {
+type DateInfoSpanProps = {
   createdAt: Date;
   updatedAt?: Date;
 };
 
-export const DateInfoSpan: React.FC<Prop> = (prop) => {
-  const { createdAt, updatedAt } = prop;
+export const DateInfoSpan: React.FC<DateInfoSpanProps> = (props) => {
+  const { createdAt, updatedAt } = props;
   if (!updatedAt) {
     return <span>{getDateString(createdAt)}</span>;
   } else {

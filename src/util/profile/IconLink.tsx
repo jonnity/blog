@@ -1,12 +1,14 @@
 import Link from "next/link";
 import Image from "next/image";
 
-export const IconLink: React.FC<{
+type IconLinkProps = {
   href: string;
   icon:
     | { type: "img"; resource: { src: string; alt: string }; size: number }
     | { type: "component"; resource: React.ReactNode };
-}> = ({ href, icon }) => {
+};
+
+export const IconLink: React.FC<IconLinkProps> = ({ href, icon }) => {
   switch (icon.type) {
     case "img":
       return (

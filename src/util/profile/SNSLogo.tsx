@@ -37,11 +37,11 @@ const snsInfo: { [key in ServiceName]: ServiceInfo } = {
   },
 };
 
-type Prop = {
+type SNSLogoProps = {
   serviceName: ServiceName;
   height?: number;
 };
-export const SNSLogo: React.FC<Prop> = ({ serviceName, height }) => {
+export const SNSLogo: React.FC<SNSLogoProps> = ({ serviceName, height }) => {
   const { logo, alt, url } = snsInfo[serviceName];
   const fixedHeight = height || 20;
   return (
